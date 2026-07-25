@@ -1740,7 +1740,6 @@
             </label>
             <div class="provider-filters" id="providerFilters" aria-label="Filter by provider"></div>
             <div class="sort-group" aria-label="Sort leaderboard">
-              <button class="sort-choice" type="button" data-sort="rank">Rank</button>
               <button class="sort-choice is-active" type="button" data-sort="benchmarkElo">ELO</button>
               <button class="sort-choice" type="button" data-sort="acpl">ACPL</button>
             </div>
@@ -2034,7 +2033,6 @@
 
       return filtered.sort((a, b) => {
         let delta = 0;
-        if (state.sort === "rank") delta = a.rank - b.rank;
         if (state.sort === "benchmarkElo") delta = a.benchmarkElo - b.benchmarkElo;
         if (state.sort === "acpl") delta = a.acpl - b.acpl;
         if (state.sort === "model") delta = a.model.localeCompare(b.model);
@@ -2119,7 +2117,7 @@
       }).join("");
 
       resultCount.textContent = `${models.length} model${models.length === 1 ? "" : "s"} shown`;
-      const sortNames = { rank: "ELO rank", benchmarkElo: "benchmark ELO", acpl: "ACPL" };
+      const sortNames = { benchmarkElo: "benchmark ELO", acpl: "ACPL" };
       sortStatus.textContent = `Sorted by ${sortNames[state.sort]} · ${state.direction === "asc" ? "ascending" : "descending"}`;
 
       document.querySelectorAll("[data-open]").forEach(button => {
@@ -2141,7 +2139,7 @@
         state.direction = state.direction === "asc" ? "desc" : "asc";
       } else {
         state.sort = sort;
-        state.direction = sort === "rank" || sort === "acpl" || sort === "model" ? "asc" : "desc";
+        state.direction = sort === "acpl" || sort === "model" ? "asc" : "desc";
       }
       document.querySelectorAll("[data-sort]").forEach(button => button.classList.toggle("is-active", button.dataset.sort === state.sort));
       renderTable();
