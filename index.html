@@ -436,6 +436,18 @@
       font-size: 26px;
       font-weight: 650;
     }
+    .podium-score small {
+      display: block;
+      max-width: 170px;
+      margin-top: 6px;
+      color: rgba(11,11,13,0.64);
+      font-family: var(--mono);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.035em;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
 
     .leaderboard-frame {
       overflow: hidden;
@@ -712,6 +724,12 @@
       letter-spacing: 0.04em;
       text-transform: uppercase;
       white-space: nowrap;
+    }
+    .elo-stack small.checkpoint-info {
+      max-width: 132px;
+      margin-left: auto;
+      line-height: 1.35;
+      white-space: normal;
     }
     .elo-track {
       width: min(120px, 42%);
@@ -1911,6 +1929,23 @@
         </header>
 
         <div class="blog-list">
+          <article class="blog-entry" id="blog-gemini-37-flash" data-reveal>
+            <div class="blog-meta">
+              <span>Entry 007</span>
+              <time datetime="2026-08-13">13 August 2026</time>
+              <small>Benchmark update</small>
+            </div>
+            <div class="blog-copy">
+              <h3>Gemini 3.7 Flash joins ChessBench.</h3>
+              <p>Gemini 3.7 Flash has been added to ChessBench with a benchmark ELO of 2,230 and an ACPL of 39.65. It enters at rank 16, between MiniMax M3 and ChatGPT 5.4 Pro.</p>
+              <p>The leaderboard now consolidates GPT-5.6 Sol Pro (Max) and its Stealth Testing checkpoint into a single rank-one entry, with the checkpoint’s 2,650 ELO shown as secondary information. Claude Fable 5 (Max) therefore moves to rank 2.</p>
+              <a href="#leaderboard">View the updated leaderboard
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            </div>
+            <div class="blog-number" aria-hidden="true">07</div>
+          </article>
+
           <article class="blog-entry" id="blog-grok-46-xhigh" data-reveal>
             <div class="blog-meta">
               <span>Entry 006</span>
@@ -1919,7 +1954,7 @@
             </div>
             <div class="blog-copy">
               <h3>Grok 4.6 (xhigh) joins ChessBench.</h3>
-              <p>Grok 4.6 (xhigh) has been added to ChessBench with a benchmark ELO of 2,480 and an ACPL of 9.59. The result places it at rank 8, between Qwen 3.8 Max and Opus 5 (high), and makes it the strongest xAI model in the current field.</p>
+              <p>Grok 4.6 (xhigh) has been added to ChessBench with a benchmark ELO of 2,480 and an ACPL of 9.59. The result places it at rank 7, between Qwen 3.8 Max and Opus 5 (high), and makes it the strongest xAI model in the current field.</p>
               <a href="#leaderboard">View the updated leaderboard
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </a>
@@ -1935,7 +1970,7 @@
             </div>
             <div class="blog-copy">
               <h3>Qwen 3.8 Max joins ChessBench.</h3>
-              <p>Qwen 3.8 Max has been added to ChessBench with a benchmark ELO of 2,500 and an ACPL of 8.18. The result places it at rank 7, between Gemini 3.1 Pro (High) and Grok 4.6 (xhigh), and adds Alibaba to the current provider field.</p>
+              <p>Qwen 3.8 Max has been added to ChessBench with a benchmark ELO of 2,500 and an ACPL of 8.18. The result places it at rank 6, between Gemini 3.1 Pro (High) and Grok 4.6 (xhigh), and adds Alibaba to the current provider field.</p>
               <a href="#leaderboard">View the updated leaderboard
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </a>
@@ -1984,7 +2019,7 @@
             </div>
             <div class="blog-copy">
               <h3>Claude Fable 5 (Max) and Kimi K3 (Max) join ChessBench.</h3>
-              <p>ChessBench has expanded its field with Claude Fable 5 (Max) from Anthropic and Kimi K3 (Max) from Moonshot AI. Both models debut in the leading group, combining high playing strength with exceptionally low move-error rates. Claude Fable 5 (Max) enters at rank 3 with 2,640 benchmark ELO and 4.01 ACPL, while Kimi K3 (Max) opens at rank 5 with 2,590 benchmark ELO and 5.35 ACPL. Fable’s result is especially notable: it is an unexpectedly strong ChessBench showing for an Anthropic model and places substantially ahead of the other Anthropic entries in the current field. Kimi’s debut is similarly convincing, establishing Moonshot AI as an immediate top-five contender. Together, the two additions broaden the provider mix near the top of the table and add two new high-strength, high-precision reference points to the performance map.</p>
+              <p>ChessBench has expanded its field with Claude Fable 5 (Max) from Anthropic and Kimi K3 (Max) from Moonshot AI. Both models debut in the leading group, combining high playing strength with exceptionally low move-error rates. Claude Fable 5 (Max) now holds rank 2 with 2,640 benchmark ELO and 4.01 ACPL, while Kimi K3 (Max) holds rank 4 with 2,590 benchmark ELO and 5.35 ACPL. Fable’s result is especially notable: it is an unexpectedly strong ChessBench showing for an Anthropic model and places substantially ahead of the other Anthropic entries in the current field. Kimi’s debut is similarly convincing, establishing Moonshot AI as an immediate top-five contender. Together, the two additions broaden the provider mix near the top of the table and add two new high-strength, high-precision reference points to the performance map.</p>
               <a href="#leaderboard">View the updated leaderboard
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </a>
@@ -2022,22 +2057,22 @@
 
   <script>
     const MODELS = [
-      {"rank":1,"model":"GPT-5.6 Sol Pro (Max)","provider":"OpenAI","benchmarkElo":2660,"acpl":3.62},
-      {"rank":2,"model":"GPT-5.6 Sol Pro (Max) Stealth Testing","provider":"OpenAI","benchmarkElo":2650,"acpl":3.87},
-      {"rank":3,"model":"Claude Fable 5 (Max)","provider":"Anthropic","benchmarkElo":2640,"acpl":4.01},
-      {"rank":4,"model":"GPT-5.5 Pro","provider":"OpenAI","benchmarkElo":2630,"acpl":4.28},
-      {"rank":5,"model":"Kimi K3 (Max)","provider":"Moonshot AI","benchmarkElo":2590,"acpl":5.35},
-      {"rank":6,"model":"Gemini 3.1 Pro (High)","provider":"Google","benchmarkElo":2570,"acpl":5.96},
-      {"rank":7,"model":"Qwen 3.8 Max","provider":"Alibaba","benchmarkElo":2500,"acpl":8.18},
-      {"rank":8,"model":"Grok 4.6 (xhigh)","provider":"xAI","benchmarkElo":2480,"acpl":9.59},
-      {"rank":9,"model":"Opus 5 (high)","provider":"Anthropic","benchmarkElo":2400,"acpl":17.53},
-      {"rank":10,"model":"Gemma 4","provider":"Google","benchmarkElo":2380,"acpl":17.75},
-      {"rank":11,"model":"Gemini 3.6 Flash","provider":"Google","benchmarkElo":2300,"acpl":24.81},
-      {"rank":12,"model":"GPT-4.5","provider":"OpenAI","benchmarkElo":2280,"acpl":31.08},
-      {"rank":13,"model":"Claude Opus 4.7 (Adaptive Thinking)","provider":"Anthropic","benchmarkElo":2260,"acpl":26.78},
-      {"rank":14,"model":"Claude Opus 4.8 (Adaptive Thinking)","provider":"Anthropic","benchmarkElo":2250,"acpl":31.94},
-      {"rank":15,"model":"Gemini 3.1 Pro","provider":"Google","benchmarkElo":2240,"acpl":34.14},
-      {"rank":16,"model":"Minimax M3","provider":"MiniMax","benchmarkElo":2235,"acpl":33.87},
+      {"rank":1,"model":"GPT-5.6 Sol Pro (Max)","provider":"OpenAI","benchmarkElo":2660,"acpl":3.62,"checkpointLabel":"Stealth Testing","checkpointElo":2650,"note":"The Stealth Testing checkpoint is consolidated into this entry and recorded at 2,650 benchmark ELO."},
+      {"rank":2,"model":"Claude Fable 5 (Max)","provider":"Anthropic","benchmarkElo":2640,"acpl":4.01},
+      {"rank":3,"model":"GPT-5.5 Pro","provider":"OpenAI","benchmarkElo":2630,"acpl":4.28},
+      {"rank":4,"model":"Kimi K3 (Max)","provider":"Moonshot AI","benchmarkElo":2590,"acpl":5.35},
+      {"rank":5,"model":"Gemini 3.1 Pro (High)","provider":"Google","benchmarkElo":2570,"acpl":5.96},
+      {"rank":6,"model":"Qwen 3.8 Max","provider":"Alibaba","benchmarkElo":2500,"acpl":8.18},
+      {"rank":7,"model":"Grok 4.6 (xhigh)","provider":"xAI","benchmarkElo":2480,"acpl":9.59},
+      {"rank":8,"model":"Opus 5 (high)","provider":"Anthropic","benchmarkElo":2400,"acpl":17.53},
+      {"rank":9,"model":"Gemma 4","provider":"Google","benchmarkElo":2380,"acpl":17.75},
+      {"rank":10,"model":"Gemini 3.6 Flash","provider":"Google","benchmarkElo":2300,"acpl":24.81},
+      {"rank":11,"model":"GPT-4.5","provider":"OpenAI","benchmarkElo":2280,"acpl":31.08},
+      {"rank":12,"model":"Claude Opus 4.7 (Adaptive Thinking)","provider":"Anthropic","benchmarkElo":2260,"acpl":26.78},
+      {"rank":13,"model":"Claude Opus 4.8 (Adaptive Thinking)","provider":"Anthropic","benchmarkElo":2250,"acpl":31.94},
+      {"rank":14,"model":"Gemini 3.1 Pro","provider":"Google","benchmarkElo":2240,"acpl":34.14},
+      {"rank":15,"model":"Minimax M3","provider":"MiniMax","benchmarkElo":2235,"acpl":33.87},
+      {"rank":16,"model":"Gemini 3.7 Flash","provider":"Google","benchmarkElo":2230,"acpl":39.65},
       {"rank":17,"model":"ChatGPT 5.4 Pro","provider":"OpenAI","benchmarkElo":2223,"acpl":49.61},
       {"rank":18,"model":"Gemini 3.5 Flash-Lite","provider":"Google","benchmarkElo":2200,"acpl":16.4,"note":"Its lower ACPL than Gemini 3.6 Flash did not translate into a higher benchmark rating because illegal moves and quick terminations affected game outcomes."},
       {"rank":19,"model":"GPT-5.3 Instant","provider":"OpenAI","benchmarkElo":2105,"acpl":47.36},
@@ -2127,7 +2162,7 @@
           <div class="podium-rank"><span>ELO rank</span><strong>${String(model.rank).padStart(2, "0")}</strong></div>
           <h3>${escapeHtml(model.model)}</h3>
           <div class="podium-provider"><span class="podium-provider-logo provider-${providerMeta(model.provider).slug}">${providerLogoMarkup(model.provider, "provider-logo")}</span><span>${escapeHtml(model.provider)}</span></div>
-          <div class="podium-score"><span>Benchmark ELO</span><strong>${model.benchmarkElo.toLocaleString("en-US")}</strong></div>
+          <div class="podium-score"><span>Benchmark ELO</span><strong>${model.benchmarkElo.toLocaleString("en-US")}</strong>${model.checkpointElo ? `<small>${escapeHtml(model.checkpointLabel)} · ${model.checkpointElo.toLocaleString("en-US")} ELO</small>` : ""}</div>
         </article>
       `).join("");
     }
@@ -2161,7 +2196,7 @@
           <td colspan="5">
             <div class="detail-panel">
               <div class="detail-main"><span>Model detail</span><strong>${escapeHtml(model.model)}</strong><p>Rank is based on benchmark ELO. ${gap === 0 ? "This model leads the benchmark." : `${gap.toLocaleString("en-US")} ELO behind the benchmark leader.`} ACPL is evaluated move by move; lower values indicate more accurate choices.${model.note ? ` ${escapeHtml(model.note)}` : ""}</p></div>
-              <div class="detail-stat"><span>Benchmark ELO</span><strong>${model.benchmarkElo.toLocaleString("en-US")}</strong><small>Rank ${model.rank} of ${MODELS.length}</small></div>
+              <div class="detail-stat"><span>Benchmark ELO</span><strong>${model.benchmarkElo.toLocaleString("en-US")}</strong><small>Rank ${model.rank} of ${MODELS.length}</small>${model.checkpointElo ? `<small>${escapeHtml(model.checkpointLabel)} checkpoint · ${model.checkpointElo.toLocaleString("en-US")} ELO</small>` : ""}</div>
               <div class="detail-stat"><span>Precision class</span><strong>${tier.label.replace(" precision", "")}</strong><small>${model.acpl.toFixed(2)} ACPL</small></div>
               <div class="detail-stat"><span>Provider</span><strong class="provider-inline provider-${providerMeta(model.provider).slug}">${providerLogoMarkup(model.provider, "provider-logo")}${escapeHtml(model.provider)}</strong><small>AI provider</small></div>
             </div>
@@ -2187,7 +2222,7 @@
                 <span class="model-copy"><strong>${escapeHtml(model.model)}</strong><small>${escapeHtml(model.provider)}</small></span>
               </button>
             </td>
-            <td class="elo-cell" data-label="Benchmark ELO"><div class="elo-value"><span class="elo-track" aria-hidden="true"><i style="--value:${eloPosition(model.benchmarkElo).toFixed(1)}%"></i></span><span class="elo-stack"><strong>${model.benchmarkElo.toLocaleString("en-US")}</strong></span></div></td>
+            <td class="elo-cell" data-label="Benchmark ELO"><div class="elo-value"><span class="elo-track" aria-hidden="true"><i style="--value:${eloPosition(model.benchmarkElo).toFixed(1)}%"></i></span><span class="elo-stack"><strong>${model.benchmarkElo.toLocaleString("en-US")}</strong>${model.checkpointElo ? `<small class="checkpoint-info">${escapeHtml(model.checkpointLabel)} · ${model.checkpointElo.toLocaleString("en-US")} ELO</small>` : ""}</span></div></td>
             <td class="acpl-cell" data-label="ACPL"><span class="acpl-value ${tier.key}"><strong>${model.acpl.toFixed(2)}</strong><small>${tier.label}</small></span></td>
             <td class="open-cell"><button class="row-open" type="button" data-open="${model.rank}" aria-label="${selected ? "Close" : "Open"} details for ${escapeHtml(model.model)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></td>
           </tr>
@@ -2279,7 +2314,7 @@
         const selected = state.selectedRank === model.rank;
         const group = svgElement("g", {
           tabindex: "0", role: "button",
-          "aria-label": `${model.model}, rank ${model.rank}, ${model.benchmarkElo} benchmark ELO, ${model.acpl.toFixed(2)} ACPL`,
+          "aria-label": `${model.model}, rank ${model.rank}, ${model.benchmarkElo} benchmark ELO${model.checkpointElo ? `, ${model.checkpointLabel} checkpoint ${model.checkpointElo} benchmark ELO` : ""}, ${model.acpl.toFixed(2)} ACPL`,
           opacity: active ? "1" : "0.12", style: "cursor:pointer"
         });
         const pointX = x(model.benchmarkElo);
@@ -2329,7 +2364,7 @@
     }
 
     function showTooltip(model, svgX, svgY, event) {
-      tooltip.innerHTML = `<strong>${escapeHtml(model.model)}</strong><div class="tooltip-provider">${providerLogoMarkup(model.provider, "provider-logo")}<span>${escapeHtml(model.provider)} · rank ${String(model.rank).padStart(2, "0")}</span></div><span>${model.benchmarkElo.toLocaleString("en-US")} benchmark ELO</span><span>${model.acpl.toFixed(2)} ACPL</span>`;
+      tooltip.innerHTML = `<strong>${escapeHtml(model.model)}</strong><div class="tooltip-provider">${providerLogoMarkup(model.provider, "provider-logo")}<span>${escapeHtml(model.provider)} · rank ${String(model.rank).padStart(2, "0")}</span></div><span>${model.benchmarkElo.toLocaleString("en-US")} benchmark ELO</span>${model.checkpointElo ? `<span>${escapeHtml(model.checkpointLabel)} checkpoint · ${model.checkpointElo.toLocaleString("en-US")} ELO</span>` : ""}<span>${model.acpl.toFixed(2)} ACPL</span>`;
       tooltip.classList.add("is-visible");
       if (event && typeof event.clientX === "number" && event.clientX) {
         positionTooltip(event.clientX, event.clientY);
