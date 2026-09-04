@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Compare AI models by ChessBench rating and average centipawn loss. Explore benchmark results, methodology, and complete model-vs-model chess replays.">
+  <meta name="description" content="Compare AI models by ChessBench rating. Explore benchmark results, methodology, and complete model-vs-model chess replays.">
   <meta name="theme-color" content="#fafaf7">
   <title>ChessBench — AI Chess Leaderboard</title>
   <style>
@@ -71,7 +71,6 @@ select { min-height: 42px; max-width: 100%; border: 1px solid #ccd2c6; border-ra
 table { border-collapse: collapse; width: 100%; table-layout: fixed; }
 .col-rank { width: 72px; }
 .col-elo { width: 180px; }
-.col-acpl { width: 144px; }
 th { height: 48px; padding: 0 24px 0 14px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; text-align: left; font-weight: 500; background: var(--paper); }
 th.rank-cell { padding-left: 20px; }
 .column-hint { color: #7b8175; font-weight: 400; }
@@ -213,7 +212,7 @@ dialog::backdrop { background: rgba(20, 28, 17, .4); }
 .dialog-topline form { margin: 0; }
 dialog h2 { font-size: 26px; line-height: 1.35; }
 #model-description { color: var(--muted); font-size: 13px; }
-.model-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 24px 0; margin: 24px 0 0; border-block: 1px solid var(--line); }
+.model-metrics { display: grid; grid-template-columns: 1fr; gap: 24px; padding: 24px 0; margin: 24px 0 0; border-block: 1px solid var(--line); }
 .model-metrics dt { color: var(--muted); font-size: 12px; }
 .model-metrics dd { margin: 7px 0 0; font: 28px/1.3 var(--mono); letter-spacing: -1px; }
 .model-note { margin: 22px 0 0; font-size: 13px; color: var(--muted); line-height: 1.75; }
@@ -229,7 +228,6 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
   .match-heading h3 { font-size: 16px; }
   .score-labels, .move-pair { grid-template-columns: 38px 1fr 1fr; }
   .col-elo { width: 156px; }
-  .col-acpl { width: 115px; }
 }
 @media (max-width: 700px) {
   html { scroll-padding-top: 116px; }
@@ -256,7 +254,6 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
   .reset-button { grid-column: 1 / -1; padding: 0 0 3px; text-align: left; }
   .col-rank { width: 34px; }
   .col-elo { width: 74px; }
-  .col-acpl { width: 67px; }
   th { padding: 0 7px; font-size: 11px; height: 44px; }
   th.rank-cell { padding: 0 4px 0 5px; font-size: 10px; }
   td { padding: 13px 7px; }
@@ -319,7 +316,6 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
   .replay-options .icon-button { width: 32px; }
   .replay-options select { min-width: 54px; }
   .col-elo { width: 65px; }
-  .col-acpl { width: 61px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
 @media print {
@@ -344,7 +340,6 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
       <a class="wordmark" href="#" aria-label="ChessBench home"><span class="brand-piece" aria-hidden="true">♞</span>ChessBench</a>
       <nav class="site-nav" aria-label="Main navigation">
         <a href="#leaderboard" aria-current="location">Leaderboard</a>
-        <a href="#performance">Performance</a>
         <a href="#methodology">Methodology</a>
         <a href="#tv">TV</a>
         <a href="#blog">Updates</a>
@@ -355,8 +350,8 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
   <main id="main" class="container">
     <section class="intro" aria-labelledby="page-title">
       <div class="intro-heading"><h1 id="page-title">AI chess leaderboard</h1><a class="text-link intro-link" href="#tv">Watch a game <span aria-hidden="true">↗</span></a></div>
-      <p class="intro-copy">Complete games. Every move reviewed by Stockfish. Compare playing strength and move accuracy across the field.</p>
-      <p class="dataset-meta"><span id="dataset-count">29 models · 7 providers</span><span class="meta-divider" aria-hidden="true">/</span><span>Updated <time id="dataset-date" datetime="2026-08-13">13 Aug 2026</time></span></p>
+      <p class="intro-copy">Complete games. Compare playing strength across the field.</p>
+      <p class="dataset-meta"><span id="dataset-count">30 models · 7 providers</span><span class="meta-divider" aria-hidden="true">/</span><span>Updated <time id="dataset-date" datetime="2026-09-04">4 Sep 2026</time></span></p>
     </section>
 
     <section id="leaderboard" class="leaderboard-section" aria-labelledby="leaderboard-title">
@@ -369,42 +364,31 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
         </div>
         <div class="provider-control"><label class="sr-only" for="provider">Filter by provider</label><select id="provider"><option value="All">All providers</option></select></div>
         <button id="reset-filters" class="text-button reset-button" type="button" hidden>Clear filters</button>
-        <p id="result-count" class="result-count" role="status" aria-live="polite" aria-atomic="true">29 models</p>
+        <p id="result-count" class="result-count" role="status" aria-live="polite" aria-atomic="true">30 models</p>
       </div>
       <div class="table-wrap">
         <table id="leaderboard-table">
-          <caption class="sr-only">ChessBench model results. Select a model for details. Benchmark Elo measures field-relative strength; lower average centipawn loss is better.</caption>
-          <colgroup><col class="col-rank"><col class="col-model"><col class="col-elo"><col class="col-acpl"></colgroup>
+          <caption class="sr-only">ChessBench model results. Select a model for details. Benchmark Elo measures field-relative strength.</caption>
+          <colgroup><col class="col-rank"><col class="col-model"><col class="col-elo"></colgroup>
           <thead><tr>
             <th scope="col" class="rank-cell">Rank</th>
             <th scope="col">Model <span class="column-hint">/ provider</span></th>
             <th scope="col" class="numeric" id="elo-heading" aria-sort="descending"><button type="button" class="sort-button" data-sort="benchmarkElo" aria-label="Sort by benchmark Elo" disabled><span><span class="desktop-label">Benchmark </span>Elo</span><span class="sort-direction" aria-hidden="true">↓</span></button></th>
-            <th scope="col" class="numeric" id="acpl-heading"><button type="button" class="sort-button" data-sort="acpl" aria-label="Sort by average centipawn loss" disabled><span>ACPL</span><span class="sort-direction" aria-hidden="true">↕</span></button></th>
           </tr></thead>
           <tbody id="model-rows"></tbody>
         </table>
         <div class="empty-state" id="empty-state" hidden><h3>No models found</h3><p>Try a different model name or provider.</p><button class="button" type="button" id="empty-reset">Reset filters</button></div>
         <noscript><p class="noscript-note">Enable JavaScript to explore the leaderboard, performance map, and game replay. Methodology and benchmark updates are available below.</p></noscript>
       </div>
-      <div class="table-footnote"><p>Higher Elo is better. Lower ACPL is better.</p><a href="#methodology">How to read these results <span aria-hidden="true">↗</span></a></div>
-    </section>
-
-    <section id="performance" class="section" aria-labelledby="performance-title">
-      <span id="chart" class="anchor-alias" aria-hidden="true"></span>
-      <div class="section-heading"><div><h2 id="performance-title">Strength and precision</h2><p>Benchmark Elo against average centipawn loss. The chart follows your filters.</p></div><span class="chart-direction">Better play ↗</span></div>
-      <div class="chart-frame" id="chart-frame"><div id="performance-chart" class="performance-chart"></div><div class="chart-tooltip" id="chart-tooltip" role="tooltip" hidden></div><p id="chart-empty" class="chart-empty" hidden>No matching models to plot.</p></div>
-      <div id="chart-legend" class="chart-legend" aria-label="Provider colors"></div>
-      <p class="section-note">ACPL uses a logarithmic scale. Hover or focus a point for its score; select it for model details.</p>
+      <div class="table-footnote"><p>Higher Elo is better.</p><a href="#methodology">How to read these results <span aria-hidden="true">↗</span></a></div>
     </section>
 
     <section id="methodology" class="section" aria-labelledby="methodology-title">
-      <div class="section-heading"><div><h2 id="methodology-title">What the numbers mean</h2><p>Two measurements of model performance, not a human chess rating.</p></div></div>
+      <div class="section-heading"><div><h2 id="methodology-title">What the numbers mean</h2><p>A field-relative measure of model performance, not a human chess rating.</p></div></div>
       <dl class="methodology-list">
         <div><dt>Complete games</dt><dd>Models play full games. Planning, tactical calculation, recovery, and consistency all affect the result.</dd></div>
         <div><dt>Benchmark Elo</dt><dd>A field-relative rating calculated within ChessBench. It compares performance among the tested models and is not a direct equivalent of a human chess rating.</dd></div>
-        <div><dt>Average centipawn loss</dt><dd>Stockfish reviews each decision. ACPL measures how much value a model gives away compared with stronger engine choices. Lower is better.</dd></div>
       </dl>
-      <p class="methodology-note">Read both metrics together. A model can have low ACPL but a lower benchmark rating when illegal moves or early game terminations affect its results.</p>
     </section>
 
     <section id="tv" class="section tv-section" aria-labelledby="tv-title">
@@ -440,12 +424,12 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
     <section id="blog" class="section updates-section" aria-labelledby="updates-title">
       <div class="section-heading"><div><h2 id="updates-title">Benchmark updates</h2><p>New results, corrections, and product notes.</p></div></div>
       <div class="updates-list">
-        <details class="update" open><summary><time datetime="2026-08-13">13 Aug 2026</time><h3>Gemini 3.7 Flash (High) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Gemini 3.7 Flash (High) has been added to ChessBench with a benchmark ELO of 2,230 and an ACPL of 39.65. It enters at rank 16, between MiniMax M3 and ChatGPT 5.4 Pro.</p><p>The leaderboard now consolidates GPT-5.6 Sol Pro (Max) and its Stealth Testing checkpoint into a single rank-one entry, with the checkpoint’s 2,650 ELO shown as secondary information. Claude Fable 5 (Max) therefore moves to rank 2.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
-        <details class="update"><summary><time datetime="2026-08-13">13 Aug 2026</time><h3>Grok 4.6 (xhigh) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Grok 4.6 (xhigh) has been added to ChessBench with a benchmark ELO of 2,480 and an ACPL of 9.59. The result places it at rank 7, between Qwen 3.8 Max and Opus 5 (high), and makes it the strongest xAI model in the current field.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
-        <details class="update"><summary><time datetime="2026-08-05">5 Aug 2026</time><h3>Qwen 3.8 Max joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Qwen 3.8 Max joins with 2,500 benchmark ELO and 8.18 ACPL. It places at rank 6, between Gemini 3.1 Pro (High) and Grok 4.6 (xhigh), and adds Alibaba to the provider field.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
-        <details class="update"><summary><time datetime="2026-07-26">26 Jul 2026</time><h3>Claude Opus 5 (high) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Claude Opus 5 (high) enters at 2,400 benchmark ELO and 17.53 ACPL. Compared to the original Opus 5 configuration, this represents a substantial improvement in playing strength, moving the entry closer to the current frontier.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
-        <details class="update"><summary><time datetime="2026-07-24">24 Jul 2026</time><h3>Gemini Flash additions and a Grok 4.5 correction</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Gemini 3.6 Flash joins at 2,300 benchmark ELO and 24.81 ACPL, alongside Gemini 3.5 Flash-Lite at 2,200 benchmark ELO and 16.40 ACPL. Flash-Lite records the lower ACPL, but its benchmark ELO is lower because it produced many illegal moves and several games ended quickly.</p><p>Grok 4.5 was rebenchmarked after errors were found in the original evaluation. Its benchmark ELO changes from 1,457 to 1,680 and ACPL from 125.26 to 53.00.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
-        <details class="update"><summary><time datetime="2026-07-19">19 Jul 2026</time><h3>Claude Fable 5 (Max) and Kimi K3 (Max) join ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Claude Fable 5 (Max) from Anthropic and Kimi K3 (Max) from Moonshot AI join the leading group. Claude Fable 5 (Max) holds rank 2 with 2,640 benchmark ELO and 4.01 ACPL, while Kimi K3 (Max) holds rank 4 with 2,590 benchmark ELO and 5.35 ACPL.</p><p>The additions broaden the provider mix near the top of the table and add two high-strength, high-precision reference points to the performance map.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
+        <details class="update" open><summary><time datetime="2026-08-13">13 Aug 2026</time><h3>Gemini 3.7 Flash (High) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Gemini 3.7 Flash (High) has been added to ChessBench with a benchmark ELO of 2,230 It enters at rank 17, between MiniMax M3 and ChatGPT 5.4 Pro.</p><p>The leaderboard consolidates GPT-5.6 Sol Pro (Max) and its Stealth Testing checkpoint into a single rank-one entry, with the checkpoint’s 2,650 ELO shown as secondary information. Claude Fable 5 (Max) therefore moves to rank 2.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
+        <details class="update"><summary><time datetime="2026-08-13">13 Aug 2026</time><h3>Grok 4.6 (xhigh) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Grok 4.6 (xhigh) has been added to ChessBench with a benchmark ELO of 2,480 The result places it at rank 7, between Qwen 3.8 Max and Opus 5 (high), and makes it the strongest xAI model in the current field.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
+        <details class="update"><summary><time datetime="2026-08-05">5 Aug 2026</time><h3>Qwen 3.8 Max joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Qwen 3.8 Max joins with 2,500 benchmark ELO. It places at rank 6, between Gemini 3.1 Pro (High) and Grok 4.6 (xhigh), and adds Alibaba to the provider field.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
+        <details class="update"><summary><time datetime="2026-07-26">26 Jul 2026</time><h3>Claude Opus 5 (high) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Claude Opus 5 (high) enters at 2,400 benchmark ELO. Compared to the original Opus 5 configuration, this represents a substantial improvement in playing strength, moving the entry closer to the current frontier.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
+        <details class="update"><summary><time datetime="2026-07-24">24 Jul 2026</time><h3>Gemini Flash additions and a Grok 4.5 correction</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Gemini 3.6 Flash joins at 2,300 benchmark ELO, alongside Gemini 3.5 Flash-Lite at 2,200 benchmark ELO. Flash-Lite’s benchmark ELO is lower because illegal moves and several quick terminations affected game outcomes.</p><p>Grok 4.5 was rebenchmarked after errors were found in the original evaluation. Its benchmark ELO changes from 1,457 to 1,680.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
+        <details class="update"><summary><time datetime="2026-07-19">19 Jul 2026</time><h3>Claude Fable 5 (Max) and Kimi K3 (Max) join ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Claude Fable 5 (Max) from Anthropic and Kimi K3 (Max) from Moonshot AI join the leading group. Claude Fable 5 (Max) holds rank 2 with 2,640 benchmark ELO, while Kimi K3 (Max) holds rank 4 with 2,590 benchmark ELO.</p><p>The additions broaden the provider mix near the top of the table and add two high-strength reference points to the leaderboard.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
         <details class="update"><summary><time datetime="2026-07-12">12 Jul 2026</time><h3>Introducing ChessBench TV</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>ChessBench TV replays complete model-vs-model games on an interactive board, with the full move score and playback controls. The first replay features GPT-5.6 Sol Pro against Gemini 3.1 Pro.</p><a class="text-link" href="#tv">Watch Match 001 <span aria-hidden="true">↗</span></a></div></details>
       </div>
     </section>
@@ -453,12 +437,12 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
 
   <footer class="site-footer"><div class="container footer-inner"><a class="footer-brand" href="#">ChessBench</a><p>Measuring how AI models play chess.</p><a href="https://github.com/chessbench-ai/chessbench-ai.github.io" target="_blank" rel="noopener noreferrer">Source on GitHub <span aria-hidden="true">↗</span></a></div></footer>
 
-  <dialog id="model-dialog" aria-labelledby="model-title" aria-describedby="model-description"><div class="dialog-topline"><span id="model-provider"></span><form method="dialog"><button class="icon-button" aria-label="Close model details" autofocus><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></form></div><h2 id="model-title"></h2><p id="model-description"></p><dl class="model-metrics"><div><dt>Benchmark Elo</dt><dd id="model-elo"></dd></div><div><dt>ACPL</dt><dd id="model-acpl"></dd></div></dl><p id="model-note" class="model-note" hidden></p><p class="dialog-note">Elo is relative to the ChessBench field. ACPL measures move accuracy; lower is better.</p></dialog>
+  <dialog id="model-dialog" aria-labelledby="model-title" aria-describedby="model-description"><div class="dialog-topline"><span id="model-provider"></span><form method="dialog"><button class="icon-button" aria-label="Close model details" autofocus><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></form></div><h2 id="model-title"></h2><p id="model-description"></p><dl class="model-metrics"><div><dt>Benchmark Elo</dt><dd id="model-elo"></dd></div></dl><p id="model-note" class="model-note" hidden></p><p class="dialog-note">Elo is relative to the ChessBench field.</p></dialog>
 <script>
 // Published ChessBench data, preserved from the original source commit.
 // Update scores and replay data here; presentation lives in app.js and styles.css.
 window.ChessBenchData = {
-  "updated": "2026-08-13",
+  "updated": "2026-09-04",
   "sourceCommit": "473e1230f6654e5e50304d7178c8cc1680f33ea6",
   "models": [
     {"rank":1,"model":"GPT-5.6 Sol Pro (Max)","provider":"OpenAI","benchmarkElo":2660,"acpl":3.62,"checkpointLabel":"Stealth Testing","checkpointElo":2650,"note":"The Stealth Testing checkpoint is consolidated into this entry and recorded at 2,650 benchmark ELO."},
@@ -470,27 +454,27 @@ window.ChessBenchData = {
     {"rank":7,"model":"Grok 4.6 (xhigh)","provider":"xAI","benchmarkElo":2480,"acpl":9.59},
     {"rank":8,"model":"Opus 5 (high)","provider":"Anthropic","benchmarkElo":2400,"acpl":17.53},
     {"rank":9,"model":"Gemma 4","provider":"Google","benchmarkElo":2380,"acpl":17.75},
-    {"rank":10,"model":"Gemini 3.6 Flash","provider":"Google","benchmarkElo":2300,"acpl":24.81},
-    {"rank":11,"model":"GPT-4.5","provider":"OpenAI","benchmarkElo":2280,"acpl":31.08},
-    {"rank":12,"model":"Claude Opus 4.7 (Adaptive Thinking)","provider":"Anthropic","benchmarkElo":2260,"acpl":26.78},
-    {"rank":13,"model":"Claude Opus 4.8 (Adaptive Thinking)","provider":"Anthropic","benchmarkElo":2250,"acpl":31.94},
-    {"rank":14,"model":"Gemini 3.1 Pro","provider":"Google","benchmarkElo":2240,"acpl":34.14},
-    {"rank":15,"model":"Minimax M3","provider":"MiniMax","benchmarkElo":2235,"acpl":33.87},
-    {"rank":16,"model":"Gemini 3.7 Flash (High)","provider":"Google","benchmarkElo":2230,"acpl":39.65},
-    {"rank":17,"model":"ChatGPT 5.4 Pro","provider":"OpenAI","benchmarkElo":2223,"acpl":49.61},
-    {"rank":18,"model":"Gemini 3.5 Flash-Lite","provider":"Google","benchmarkElo":2200,"acpl":16.4,"note":"Its lower ACPL than Gemini 3.6 Flash did not translate into a higher benchmark rating because illegal moves and quick terminations affected game outcomes."},
-    {"rank":19,"model":"GPT-5.3 Instant","provider":"OpenAI","benchmarkElo":2105,"acpl":47.36},
-    {"rank":20,"model":"Grok 4.3","provider":"xAI","benchmarkElo":2060,"acpl":18.39},
-    {"rank":21,"model":"GPT-4o","provider":"OpenAI","benchmarkElo":1690,"acpl":49.49},
-    {"rank":22,"model":"Grok 4.20","provider":"xAI","benchmarkElo":1681,"acpl":70.14},
-    {"rank":23,"model":"Grok 4.5","provider":"xAI","benchmarkElo":1680,"acpl":53.0,"note":"Rebenchmarked after errors in the original run; benchmark ELO changed from 1,457 to 1,680 and ACPL from 125.26 to 53.00."},
-    {"rank":24,"model":"Claude Sonnet 5 (Max)","provider":"Anthropic","benchmarkElo":1680,"acpl":70.02},
-    {"rank":25,"model":"Claude Opus 4.8 (Max) 1M","provider":"Anthropic","benchmarkElo":1670,"acpl":52.56},
-    {"rank":26,"model":"Gemini 3.5 Flash","provider":"Google","benchmarkElo":1650,"acpl":59.32},
-    {"rank":27,"model":"GPT-OSS-120b","provider":"OpenAI","benchmarkElo":1460,"acpl":64.94},
-    {"rank":28,"model":"Claude Opus 4.7 xhigh","provider":"Anthropic","benchmarkElo":1459,"acpl":93.18},
-    {"rank":29,"model":"Claude Opus 4.7 (no thinking)","provider":"Anthropic","benchmarkElo":1455,"acpl":142.98}
-  ],
+    {"rank":10,"model":"GPT-6 Pro (Max)","provider":"OpenAI","benchmarkElo":2340,"acpl":23.45},
+    {"rank":11,"model":"Gemini 3.6 Flash","provider":"Google","benchmarkElo":2300,"acpl":24.81},
+    {"rank":12,"model":"GPT-4.5","provider":"OpenAI","benchmarkElo":2280,"acpl":31.08},
+    {"rank":13,"model":"Claude Opus 4.7 (Adaptive Thinking)","provider":"Anthropic","benchmarkElo":2260,"acpl":26.78},
+    {"rank":14,"model":"Claude Opus 4.8 (Adaptive Thinking)","provider":"Anthropic","benchmarkElo":2250,"acpl":31.94},
+    {"rank":15,"model":"Gemini 3.1 Pro","provider":"Google","benchmarkElo":2240,"acpl":34.14},
+    {"rank":16,"model":"Minimax M3","provider":"MiniMax","benchmarkElo":2235,"acpl":33.87},
+    {"rank":17,"model":"Gemini 3.7 Flash (High)","provider":"Google","benchmarkElo":2230,"acpl":39.65},
+    {"rank":18,"model":"ChatGPT 5.4 Pro","provider":"OpenAI","benchmarkElo":2223,"acpl":49.61},
+    {"rank":19,"model":"Gemini 3.5 Flash-Lite","provider":"Google","benchmarkElo":2200,"acpl":16.4,"note":"Illegal moves and quick terminations affected game outcomes and lowered its benchmark rating."},
+    {"rank":20,"model":"GPT-5.3 Instant","provider":"OpenAI","benchmarkElo":2105,"acpl":47.36},
+    {"rank":21,"model":"Grok 4.3","provider":"xAI","benchmarkElo":2060,"acpl":18.39},
+    {"rank":22,"model":"GPT-4o","provider":"OpenAI","benchmarkElo":1690,"acpl":49.49},
+    {"rank":23,"model":"Grok 4.20","provider":"xAI","benchmarkElo":1681,"acpl":70.14},
+    {"rank":24,"model":"Grok 4.5","provider":"xAI","benchmarkElo":1680,"acpl":53.0,"note":"Rebenchmarked after errors in the original run; benchmark ELO changed from 1,457 to 1,680."},
+    {"rank":25,"model":"Claude Sonnet 5 (Max)","provider":"Anthropic","benchmarkElo":1680,"acpl":70.02},
+    {"rank":26,"model":"Claude Opus 4.8 (Max) 1M","provider":"Anthropic","benchmarkElo":1670,"acpl":52.56},
+    {"rank":27,"model":"Gemini 3.5 Flash","provider":"Google","benchmarkElo":1650,"acpl":59.32},
+    {"rank":28,"model":"GPT-OSS-120b","provider":"OpenAI","benchmarkElo":1460,"acpl":64.94},
+    {"rank":29,"model":"Claude Opus 4.7 xhigh","provider":"Anthropic","benchmarkElo":1459,"acpl":93.18},
+    {"rank":30,"model":"Claude Opus 4.7 (no thinking)","provider":"Anthropic","benchmarkElo":1455,"acpl":142.98}  ],
   "game": {
     "event": "GPT-5.6 Sol Pro vs Gemini 3.1 Pro",
     "white": "GPT-5.6 Sol Pro",
@@ -585,13 +569,8 @@ window.ChessBenchData = {
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   }[char]));
   const elo = (value) => Number(value).toLocaleString('en-US');
-  const acpl = (value) => Number(value).toFixed(2);
   const normalized = (value) => String(value).normalize('NFKC').toLocaleLowerCase('en').trim();
   const state = { query: '', provider: 'All', sort: 'benchmarkElo', direction: 'desc', selectedRank: null };
-  const providerColors = {
-    'OpenAI': '#35654a', 'Anthropic': '#9a6950', 'Google': '#547e9a',
-    'Moonshot AI': '#7a729b', 'Alibaba': '#b38837', 'xAI': '#6b7475', 'MiniMax': '#a46683'
-  };
   const providers = [...new Set(models.map((model) => model.provider))].sort((a, b) => a.localeCompare(b));
   let visibleModels = [...models];
 
@@ -628,7 +607,6 @@ window.ChessBenchData = {
         <td class="rank-cell">${model.rank}</td>
         <td><button type="button" class="model-button" data-model="${model.rank}" aria-label="${escapeHTML(model.model)}, view results${model.note ? ' and evaluation note' : ''}">${escapeHTML(model.model)}${model.note ? '<span class="model-note-indicator" aria-hidden="true">†</span>' : ''}</button><span class="model-provider">${escapeHTML(model.provider)}</span></td>
         <td class="numeric elo-value">${elo(model.benchmarkElo)}</td>
-        <td class="numeric">${acpl(model.acpl)}</td>
       </tr>`).join('');
     $('empty-state').hidden = visibleModels.length > 0;
     $('result-count').textContent = visibleModels.length === models.length ? `${models.length} models` : `${visibleModels.length} of ${models.length} models`;
@@ -639,11 +617,10 @@ window.ChessBenchData = {
       header.removeAttribute('aria-sort');
       if (selected) header.setAttribute('aria-sort', state.direction === 'asc' ? 'ascending' : 'descending');
       button.querySelector('.sort-direction').textContent = selected ? (state.direction === 'asc' ? '↑' : '↓') : '↕';
-      const label = button.dataset.sort === 'acpl' ? 'average centipawn loss' : 'benchmark Elo';
-      const nextDirection = selected ? (state.direction === 'asc' ? 'descending' : 'ascending') : (button.dataset.sort === 'acpl' ? 'ascending' : 'descending');
+      const label = 'benchmark Elo';
+      const nextDirection = selected ? (state.direction === 'asc' ? 'descending' : 'ascending') : 'descending';
       button.setAttribute('aria-label', `Sort by ${label}, ${nextDirection}`);
     });
-    renderChart();
   }
 
   function resetFilters() {
@@ -661,7 +638,7 @@ window.ChessBenchData = {
   document.querySelectorAll('[data-sort]').forEach((button) => {
     button.addEventListener('click', () => {
       const key = button.dataset.sort;
-      state.direction = state.sort === key ? (state.direction === 'desc' ? 'asc' : 'desc') : (key === 'acpl' ? 'asc' : 'desc');
+      state.direction = state.sort === key ? (state.direction === 'desc' ? 'asc' : 'desc') : 'desc';
       state.sort = key;
       renderResults();
     });
@@ -675,11 +652,8 @@ window.ChessBenchData = {
     $('model-provider').textContent = model.provider;
     $('model-description').textContent = `Rank ${model.rank} of ${models.length} tested models, by benchmark Elo.`;
     $('model-elo').textContent = elo(model.benchmarkElo);
-    $('model-acpl').textContent = acpl(model.acpl);
     $('model-note').hidden = !model.note;
     $('model-note').textContent = model.note || '';
-    $('chart-tooltip').hidden = true;
-    document.querySelectorAll('.chart-point').forEach((point) => point.classList.toggle('is-selected', Number(point.dataset.rank) === model.rank));
     $('model-dialog').showModal();
   }
   $('model-rows').addEventListener('click', (event) => {
@@ -693,98 +667,6 @@ window.ChessBenchData = {
     }
   });
 
-  // Stable axes keep filtered results comparable to the full benchmark field.
-  const SVG_NS = 'http://www.w3.org/2000/svg';
-  function svgElement(tag, attributes = {}, text = null) {
-    const element = document.createElementNS(SVG_NS, tag);
-    Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
-    if (text !== null) element.textContent = text;
-    return element;
-  }
-  let lastChartWidth = 0;
-  function renderChart() {
-    const frame = $('chart-frame');
-    const width = Math.max(260, frame.clientWidth);
-    lastChartWidth = width;
-    const height = width < 550 ? 280 : 350;
-    const pad = { left: width < 550 ? 43 : 54, right: 26, top: 42, bottom: 50 };
-    const plotWidth = width - pad.left - pad.right;
-    const plotHeight = height - pad.top - pad.bottom;
-    const minElo = Math.floor((Math.min(...models.map((m) => m.benchmarkElo)) - 35) / 100) * 100;
-    const maxElo = Math.ceil((Math.max(...models.map((m) => m.benchmarkElo)) + 35) / 100) * 100;
-    const minAcpl = Math.min(3, Math.min(...models.map((m) => m.acpl)) * 0.85);
-    const maxAcpl = Math.max(160, Math.max(...models.map((m) => m.acpl)) * 1.08);
-    const x = (value) => pad.left + (value - minElo) / (maxElo - minElo) * plotWidth;
-    const y = (value) => pad.top + Math.log(value / minAcpl) / Math.log(maxAcpl / minAcpl) * plotHeight;
-    const svg = svgElement('svg', { viewBox: `0 0 ${width} ${height}`, role: 'group', 'aria-labelledby': 'chart-title chart-description' });
-    svg.append(svgElement('title', { id: 'chart-title' }, 'Benchmark Elo and average centipawn loss'));
-    svg.append(svgElement('desc', { id: 'chart-description' }, `${visibleModels.length} models shown. Higher Elo is farther right; lower ACPL is higher. Each point opens model details.`));
-    const xStep = width < 550 ? 400 : 200;
-    for (let tick = minElo; tick <= maxElo; tick += xStep) {
-      svg.append(svgElement('line', { x1: x(tick), x2: x(tick), y1: pad.top, y2: height - pad.bottom, class: 'chart-grid' }));
-      svg.append(svgElement('text', { x: x(tick), y: height - pad.bottom + 20, 'text-anchor': 'middle', class: 'chart-tick' }, elo(tick)));
-    }
-    [3, 10, 30, 100].filter((tick) => tick >= minAcpl && tick <= maxAcpl).forEach((tick) => {
-      svg.append(svgElement('line', { x1: pad.left, x2: width - pad.right, y1: y(tick), y2: y(tick), class: 'chart-grid' }));
-      svg.append(svgElement('text', { x: pad.left - 11, y: y(tick) + 4, 'text-anchor': 'end', class: 'chart-tick' }, String(tick)));
-    });
-    svg.append(svgElement('text', { x: pad.left, y: 22, class: 'chart-label' }, 'ACPL · lower is better'));
-    svg.append(svgElement('text', { x: width - pad.right, y: height - 10, 'text-anchor': 'end', class: 'chart-label' }, 'Benchmark Elo →'));
-    svg.append(svgElement('line', { x1: pad.left, x2: width - pad.right, y1: height - pad.bottom, y2: height - pad.bottom, class: 'chart-axis' }));
-    $('chart-tooltip').hidden = true;
-    [...visibleModels].reverse().forEach((model) => {
-      const point = svgElement('circle', {
-        cx: x(model.benchmarkElo), cy: y(model.acpl), r: width < 550 ? 5 : 5.5,
-        fill: providerColors[model.provider] || '#63695f', tabindex: '0', role: 'button',
-        class: `chart-point${model.rank === state.selectedRank ? ' is-selected' : ''}`,
-        'data-rank': model.rank, 'aria-label': `${model.model}. Elo ${model.benchmarkElo}, ACPL ${acpl(model.acpl)}. Open details.`
-      });
-      point.append(svgElement('title', {}, `${model.model} · ${elo(model.benchmarkElo)} Elo · ${acpl(model.acpl)} ACPL`));
-      const showTooltip = () => {
-        const tooltip = $('chart-tooltip');
-        tooltip.replaceChildren();
-        const title = document.createElement('strong');
-        title.textContent = model.model;
-        const scores = document.createElement('span');
-        scores.textContent = `${elo(model.benchmarkElo)} Elo · ${acpl(model.acpl)} ACPL`;
-        tooltip.append(title, scores);
-        tooltip.hidden = false;
-        const left = Math.max(8, Math.min(width - tooltip.offsetWidth - 8, x(model.benchmarkElo) + 13));
-        const top = Math.max(7, Math.min(height - tooltip.offsetHeight - 7, y(model.acpl) - tooltip.offsetHeight - 12));
-        tooltip.style.left = `${left}px`;
-        tooltip.style.top = `${top}px`;
-      };
-      point.addEventListener('mouseenter', showTooltip);
-      point.addEventListener('focus', showTooltip);
-      point.addEventListener('mouseleave', () => { $('chart-tooltip').hidden = true; });
-      point.addEventListener('blur', () => { $('chart-tooltip').hidden = true; });
-      point.addEventListener('click', () => openModel(model.rank));
-      point.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openModel(model.rank); }
-        if (event.key === 'Escape') $('chart-tooltip').hidden = true;
-      });
-      svg.append(point);
-    });
-    $('performance-chart').replaceChildren(svg);
-    $('chart-empty').hidden = visibleModels.length > 0;
-    $('chart-legend').replaceChildren(...providers.map((name) => {
-      const item = document.createElement('span');
-      item.className = 'legend-item';
-      const dot = document.createElement('span');
-      dot.className = 'legend-dot';
-      dot.style.backgroundColor = providerColors[name] || '#63695f';
-      dot.setAttribute('aria-hidden', 'true');
-      item.append(dot, document.createTextNode(name));
-      return item;
-    }));
-  }
-  if ('ResizeObserver' in window) {
-    new ResizeObserver(() => {
-      if (Math.abs($('chart-frame').clientWidth - lastChartWidth) > 1) renderChart();
-    }).observe($('chart-frame'));
-  } else {
-    window.addEventListener('resize', renderChart);
-  }
 
   // Replay recorded positions rather than reinterpreting chess moves in the browser.
   const replay = { index: 0, flipped: false, timer: null };
@@ -960,7 +842,7 @@ window.ChessBenchData = {
     navFrame = false;
     let current = 'leaderboard';
     const offset = document.querySelector('.site-header').offsetHeight + 70;
-    for (const id of ['leaderboard', 'performance', 'methodology', 'tv', 'blog']) {
+    for (const id of ['leaderboard', 'methodology', 'tv', 'blog']) {
       if ($(id).getBoundingClientRect().top <= offset) current = id;
     }
     navLinks.forEach((link) => {
