@@ -360,7 +360,7 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
     <section class="intro" aria-labelledby="page-title">
       <div class="intro-heading"><h1 id="page-title">AI chess leaderboard</h1><a class="text-link intro-link" href="#tv">Watch a game <span aria-hidden="true">↗</span></a></div>
       <p class="intro-copy">Complete games. Compare playing strength across the field.</p>
-      <p class="dataset-meta"><span id="dataset-count">37 models · 9 named providers + 1 anonymous model</span><span class="meta-divider" aria-hidden="true">/</span><span>Updated <time id="dataset-date" datetime="2026-09-23">23 Sep 2026</time></span></p>
+      <p class="dataset-meta"><span id="dataset-count">38 models · 9 named providers + 1 anonymous model</span><span class="meta-divider" aria-hidden="true">/</span><span>Updated <time id="dataset-date" datetime="2026-09-26">26 Sep 2026</time></span></p>
     </section>
 
     <section id="leaderboard" class="leaderboard-section" aria-labelledby="leaderboard-title">
@@ -373,7 +373,7 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
         </div>
         <div class="provider-control"><label class="sr-only" for="provider">Filter by provider</label><select id="provider"><option value="All">All providers</option></select></div>
         <button id="reset-filters" class="text-button reset-button" type="button" hidden>Clear filters</button>
-        <p id="result-count" class="result-count" role="status" aria-live="polite" aria-atomic="true">37 models</p>
+        <p id="result-count" class="result-count" role="status" aria-live="polite" aria-atomic="true">38 models</p>
       </div>
       <div class="table-wrap">
         <table id="leaderboard-table">
@@ -435,6 +435,15 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
     <section id="blog" class="section updates-section" aria-labelledby="updates-title">
       <div class="section-heading"><div><h2 id="updates-title">Benchmark updates</h2><p>New results, corrections, and product notes.</p></div></div>
       <div class="updates-list">
+        <details class="update" id="claude-opus-5-5-adaptive-thinking" open>
+          <summary><time datetime="2026-09-26">26 Sep 2026</time><h3>Claude Opus 5.5 (Adaptive Thinking) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary>
+          <div class="update-body">
+            <p>Claude Opus 5.5 (Adaptive Thinking) joins the 38-model ChessBench field with 2,280 benchmark Elo, an average centipawn loss (ACPL) of 31.18, and a reported cost of $0.58/task. It is listed at rank 19, level on Elo with GPT-4.5 at rank 18.</p>
+            <p>Among the adaptive-thinking Claude entries, it scores 20 Elo above Opus 4.7 and 30 Elo above Opus 4.8. Compared with Opus 4.8, its ACPL is 0.76 lower (31.18 versus 31.94). Opus 4.7 has a lower ACPL of 26.78 despite its lower Elo; the two metrics capture different aspects of the recorded games.</p>
+            <p>The $0.58/task figure is the reported cost for this evaluation. Benchmark Elo compares models within this ChessBench field and is not a human chess rating.</p>
+            <a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a>
+          </div>
+        </details>
         <details class="update" id="space-bunny-alpha-gpt-6-sol-max" open>
           <summary><time datetime="2026-09-23">23 Sep 2026</time><h3>Space Bunny Alpha and GPT-6 Sol (Max) join ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary>
           <div class="update-body">
@@ -477,7 +486,7 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
 // Update scores, costPerTask (USD; null = not reported), and replay data here.
 // Added-provider references: https://unbiased.ai/ and https://huggingface.co/zai-org/GLM-5.3-Flash
 window.ChessBenchData = {
-  "updated": "2026-09-23",
+  "updated": "2026-09-26",
   "sourceCommit": "473e1230f6654e5e50304d7178c8cc1680f33ea6",
   "models": [
     {"rank":1,"model":"GPT-5.6 Sol Pro (Max)","provider":"OpenAI","benchmarkElo":2660,"acpl":3.62,"checkpointLabel":"Stealth Testing","checkpointElo":2650,"note":"The Stealth Testing checkpoint is consolidated into this entry and recorded at 2,650 benchmark ELO.","costPerTask":null},
@@ -498,25 +507,26 @@ window.ChessBenchData = {
     {"rank":16,"model":"Gemini 3.6 Flash","provider":"Google","benchmarkElo":2300,"acpl":24.81,"costPerTask":null},
     {"rank":17,"model":"Gemini 3.8 Flash (medium)","provider":"Google","benchmarkElo":2300,"acpl":30.74,"costPerTask":0.08},
     {"rank":18,"model":"GPT-4.5","provider":"OpenAI","benchmarkElo":2280,"acpl":31.08,"costPerTask":null},
-    {"rank":19,"model":"Claude Opus 4.7 (Adaptive Thinking)","provider":"Anthropic","benchmarkElo":2260,"acpl":26.78,"costPerTask":null},
-    {"rank":20,"model":"Claude Opus 4.8 (Adaptive Thinking)","provider":"Anthropic","benchmarkElo":2250,"acpl":31.94,"costPerTask":null},
-    {"rank":21,"model":"Gemini 3.1 Pro","provider":"Google","benchmarkElo":2240,"acpl":34.14,"costPerTask":null},
-    {"rank":22,"model":"Minimax M3","provider":"MiniMax","benchmarkElo":2235,"acpl":33.87,"costPerTask":null},
-    {"rank":23,"model":"Gemini 3.7 Flash (High)","provider":"Google","benchmarkElo":2230,"acpl":39.65,"costPerTask":null},
-    {"rank":24,"model":"ChatGPT 5.4 Pro","provider":"OpenAI","benchmarkElo":2223,"acpl":49.61,"costPerTask":null},
-    {"rank":25,"model":"Gemini 3.5 Flash-Lite","provider":"Google","benchmarkElo":2200,"acpl":16.4,"note":"Illegal moves and quick terminations affected game outcomes and lowered its benchmark rating.","costPerTask":null},
-    {"rank":26,"model":"GPT-5.3 Instant","provider":"OpenAI","benchmarkElo":2105,"acpl":47.36,"costPerTask":null},
-    {"rank":27,"model":"Grok 4.3","provider":"xAI","benchmarkElo":2060,"acpl":18.39,"costPerTask":null},
-    {"rank":28,"model":"GPT-4o","provider":"OpenAI","benchmarkElo":1690,"acpl":49.49,"costPerTask":null},
-    {"rank":29,"model":"Grok 4.20","provider":"xAI","benchmarkElo":1681,"acpl":70.14,"costPerTask":null},
-    {"rank":30,"model":"Grok 4.5","provider":"xAI","benchmarkElo":1680,"acpl":53.0,"note":"Rebenchmarked after errors in the original run; benchmark ELO changed from 1,457 to 1,680.","costPerTask":null},
-    {"rank":31,"model":"Claude Sonnet 5 (Max)","provider":"Anthropic","benchmarkElo":1680,"acpl":70.02,"costPerTask":null},
-    {"rank":32,"model":"Claude Opus 4.8 (Max) 1M","provider":"Anthropic","benchmarkElo":1670,"acpl":52.56,"costPerTask":null},
-    {"rank":33,"model":"Gemini 3.5 Flash","provider":"Google","benchmarkElo":1650,"acpl":59.32,"costPerTask":null},
-    {"rank":34,"model":"Space Bunny Alpha","provider":"Anonymous","benchmarkElo":1550,"acpl":81.24,"costPerTask":0.00,"note":"The provider is anonymous. OpenRouter routes requests to this stealth model but is not its developer, owner, or provider. $0.00/task is the reported cost for this evaluation."},
-    {"rank":35,"model":"GPT-OSS-120b","provider":"OpenAI","benchmarkElo":1460,"acpl":64.94,"costPerTask":null},
-    {"rank":36,"model":"Claude Opus 4.7 xhigh","provider":"Anthropic","benchmarkElo":1459,"acpl":93.18,"costPerTask":null},
-    {"rank":37,"model":"Claude Opus 4.7 (no thinking)","provider":"Anthropic","benchmarkElo":1455,"acpl":142.98,"costPerTask":null}
+    {"rank":19,"model":"Claude Opus 5.5 (Adaptive Thinking)","provider":"Anthropic","benchmarkElo":2280,"acpl":31.18,"costPerTask":0.58},
+    {"rank":20,"model":"Claude Opus 4.7 (Adaptive Thinking)","provider":"Anthropic","benchmarkElo":2260,"acpl":26.78,"costPerTask":null},
+    {"rank":21,"model":"Claude Opus 4.8 (Adaptive Thinking)","provider":"Anthropic","benchmarkElo":2250,"acpl":31.94,"costPerTask":null},
+    {"rank":22,"model":"Gemini 3.1 Pro","provider":"Google","benchmarkElo":2240,"acpl":34.14,"costPerTask":null},
+    {"rank":23,"model":"Minimax M3","provider":"MiniMax","benchmarkElo":2235,"acpl":33.87,"costPerTask":null},
+    {"rank":24,"model":"Gemini 3.7 Flash (High)","provider":"Google","benchmarkElo":2230,"acpl":39.65,"costPerTask":null},
+    {"rank":25,"model":"ChatGPT 5.4 Pro","provider":"OpenAI","benchmarkElo":2223,"acpl":49.61,"costPerTask":null},
+    {"rank":26,"model":"Gemini 3.5 Flash-Lite","provider":"Google","benchmarkElo":2200,"acpl":16.4,"note":"Illegal moves and quick terminations affected game outcomes and lowered its benchmark rating.","costPerTask":null},
+    {"rank":27,"model":"GPT-5.3 Instant","provider":"OpenAI","benchmarkElo":2105,"acpl":47.36,"costPerTask":null},
+    {"rank":28,"model":"Grok 4.3","provider":"xAI","benchmarkElo":2060,"acpl":18.39,"costPerTask":null},
+    {"rank":29,"model":"GPT-4o","provider":"OpenAI","benchmarkElo":1690,"acpl":49.49,"costPerTask":null},
+    {"rank":30,"model":"Grok 4.20","provider":"xAI","benchmarkElo":1681,"acpl":70.14,"costPerTask":null},
+    {"rank":31,"model":"Grok 4.5","provider":"xAI","benchmarkElo":1680,"acpl":53.0,"note":"Rebenchmarked after errors in the original run; benchmark ELO changed from 1,457 to 1,680.","costPerTask":null},
+    {"rank":32,"model":"Claude Sonnet 5 (Max)","provider":"Anthropic","benchmarkElo":1680,"acpl":70.02,"costPerTask":null},
+    {"rank":33,"model":"Claude Opus 4.8 (Max) 1M","provider":"Anthropic","benchmarkElo":1670,"acpl":52.56,"costPerTask":null},
+    {"rank":34,"model":"Gemini 3.5 Flash","provider":"Google","benchmarkElo":1650,"acpl":59.32,"costPerTask":null},
+    {"rank":35,"model":"Space Bunny Alpha","provider":"Anonymous","benchmarkElo":1550,"acpl":81.24,"costPerTask":0.00,"note":"The provider is anonymous. OpenRouter routes requests to this stealth model but is not its developer, owner, or provider. $0.00/task is the reported cost for this evaluation."},
+    {"rank":36,"model":"GPT-OSS-120b","provider":"OpenAI","benchmarkElo":1460,"acpl":64.94,"costPerTask":null},
+    {"rank":37,"model":"Claude Opus 4.7 xhigh","provider":"Anthropic","benchmarkElo":1459,"acpl":93.18,"costPerTask":null},
+    {"rank":38,"model":"Claude Opus 4.7 (no thinking)","provider":"Anthropic","benchmarkElo":1455,"acpl":142.98,"costPerTask":null}
   ],
   "game": {
     "event": "GPT-5.6 Sol Pro vs Gemini 3.1 Pro",
