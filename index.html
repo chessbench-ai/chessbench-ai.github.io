@@ -218,9 +218,6 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
 #model-description { color: var(--muted); font-size: 13px; }
 .model-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; padding: 24px 0; margin: 24px 0 0; border-block: 1px solid var(--line); }
 .model-metrics dt { color: var(--muted); font-size: 12px; }
-.model-metrics .metric-cost { grid-column: 1 / -1; }
-.model-metrics .sample-value { font-size: 21px; line-height: 1.5; }
-.sample-value span { display: block; font: 11px/1.6 var(--sans); color: var(--muted); }
 .evaluation-notes { padding-left: 18px; margin: 20px 0 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
 .evaluation-notes li + li { margin-top: 8px; }
 dialog h2, .model-note, .evaluation-notes { overflow-wrap: anywhere; }
@@ -530,10 +527,9 @@ dialog h2, .model-note, .evaluation-notes { overflow-wrap: anywhere; }
     <h2 id="model-title"></h2><p id="model-description"></p>
     <dl class="model-metrics">
       <div><dt>Accuracy · Stockfish 19</dt><dd id="model-accuracy"></dd></div>
-      <div><dt>Evaluated sample</dt><dd id="model-sample" class="sample-value"></dd></div>
       <div><dt>Published Elo</dt><dd id="model-elo"></dd></div>
       <div><dt>Published ACPL</dt><dd id="model-acpl"></dd></div>
-      <div class="metric-cost"><dt>Published Cost per Task</dt><dd id="model-cost"></dd></div>
+      <div><dt>Published Cost per Task</dt><dd id="model-cost"></dd></div>
     </dl>
     <p class="dialog-note">Stockfish 19 · depth 12 · Lichess-formula Accuracy.<br>Elo, ACPL and costs are unchanged website values, not new engine results.</p>
     <p id="model-source" class="model-note" hidden></p>
@@ -1989,7 +1985,6 @@ window.ChessBenchData = {
     $('model-provider').textContent = model.provider;
     $('model-description').textContent = `Rank ${model.rank} of ${models.length} models, by unrounded sample Accuracy.`;
     $('model-accuracy').textContent = accuracy(model.accuracy);
-    $('model-sample').innerHTML = `${model.accuracyGames} ${model.accuracyGames === 1 ? 'game' : 'games'}<span>${model.accuracyMoves.toLocaleString('en-US')} legal moves (plies)</span>`;
     $('model-source').hidden = model.accuracySourceLabel === model.model;
     $('model-source').textContent = `Original source label: ${model.accuracySourceLabel}.`;
     $('model-evaluation-notes').hidden = !model.accuracyNotes.length;
