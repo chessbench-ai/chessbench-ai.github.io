@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Compare AI models by ChessBench rating. Explore benchmark results, methodology, and complete model-vs-model chess replays.">
+  <meta name="description" content="Compare ChessBench models by Stockfish 19 Accuracy. Explore evaluated game samples, methodology, and model-vs-model chess replays.">
   <meta name="theme-color" content="#fafaf7">
-  <title>ChessBench — AI Chess Leaderboard</title>
+  <title>ChessBench — AI Chess Accuracy</title>
   <style>
 /* ChessBench: a results page, not a product landing page. */
 :root {
@@ -40,7 +40,7 @@ svg { display: block; }
 .skip-link:focus { transform: none; }
 .site-header { position: sticky; z-index: 20; top: 0; background: var(--paper); border-bottom: 1px solid var(--line); }
 .header-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.wordmark { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; font-size: 21px; font-weight: 700; letter-spacing: -.8px; flex-shrink: 0; }
+.wordmark { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; font-size: 21px; font-weight: 700; letter-spacing: 0; flex-shrink: 0; }
 .brand-piece { font-family: Georgia, "DejaVu Sans", serif; color: var(--accent); font-size: 33px; line-height: 1; font-weight: 400; }
 .site-nav { display: flex; align-self: stretch; align-items: stretch; gap: 28px; }
 .site-nav a { display: flex; align-items: center; position: relative; color: var(--muted); font-size: 13px; text-decoration: none; white-space: nowrap; }
@@ -48,7 +48,7 @@ svg { display: block; }
 .site-nav a[aria-current]::after { content: ""; position: absolute; height: 2px; bottom: -1px; inset-inline: 0; background: var(--accent); }
 .intro { padding: 49px 0 29px; }
 .intro-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 30px; }
-h1 { margin: 0; font-size: clamp(30px, 3.1vw, 42px); line-height: 1.15; letter-spacing: -1.6px; font-weight: 650; }
+h1 { margin: 0; font-size: 42px; line-height: 1.15; letter-spacing: 0; font-weight: 650; }
 .intro-copy { max-width: 760px; margin: 17px 0 19px; color: var(--muted); font-size: 16px; line-height: 1.65; }
 .text-link { color: var(--accent); font-weight: 500; font-size: 13px; text-decoration: none; }
 .text-link:hover { text-decoration: underline; }
@@ -70,7 +70,7 @@ select { min-height: 42px; max-width: 100%; border: 1px solid #ccd2c6; border-ra
 .table-wrap { border-block: 1px solid #bfc7b8; background: var(--surface); }
 table { border-collapse: collapse; width: 100%; table-layout: fixed; }
 .col-rank { width: 72px; }
-.col-elo { width: 180px; }
+.col-accuracy { width: 180px; }
 .col-cost { width: 180px; }
 th { height: 48px; padding: 0 24px 0 14px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; text-align: left; font-weight: 500; background: var(--paper); }
 th.rank-cell { padding-left: 20px; }
@@ -87,16 +87,16 @@ tbody tr.is-leader { background: var(--accent-soft); }
 tbody tr.is-leader:hover { background: #e6efdf; }
 td.rank-cell { padding-left: 20px; color: #717867; font: 12px/1.5 var(--mono); }
 .is-leader .rank-cell { color: var(--accent); }
-.model-button { display: inline; padding: 0; border: 0; background: none; text-align: left; font-size: 14px; line-height: 1.4; font-weight: 550; letter-spacing: -.15px; cursor: pointer; }
+.model-button { display: inline; padding: 0; border: 0; background: none; text-align: left; font-size: 14px; line-height: 1.4; font-weight: 550; letter-spacing: 0; cursor: pointer; }
 .model-button:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 .model-provider { display: block; margin-top: 3px; font-size: 11px; color: var(--muted); line-height: 1.3; }
 .model-note-indicator { margin-left: 6px; font-size: 11px; font-weight: 400; color: var(--accent); vertical-align: top; }
-td.numeric { font: 14px/1.5 var(--mono); letter-spacing: -.25px; }
-td.elo-value { font-weight: 600; }
+td.numeric { font: 14px/1.5 var(--mono); letter-spacing: 0; }
+td.accuracy-value { font-weight: 600; }
 .cost-value { white-space: nowrap; }
 .cost-unit { font: 11px var(--sans); color: var(--muted); letter-spacing: 0; }
 .missing-value { color: var(--muted); }
-.is-leader td.elo-value { color: var(--accent); }
+.is-leader td.accuracy-value { color: var(--accent); }
 .table-footnote { display: flex; gap: 18px; justify-content: space-between; padding-top: 14px; color: var(--muted); font-size: 12px; }
 .table-footnote p { margin: 0; }
 .table-footnote a { text-decoration: none; }
@@ -107,7 +107,7 @@ td.elo-value { font-weight: 600; }
 .noscript-note { padding: 24px; }
 .section { position: relative; margin-top: 68px; padding-top: 34px; border-top: 1px solid var(--line); }
 .section-heading { display: flex; justify-content: space-between; align-items: start; gap: 24px; margin-bottom: 28px; }
-h2 { margin: 0; font-size: 25px; font-weight: 600; line-height: 1.3; letter-spacing: -.7px; }
+h2 { margin: 0; font-size: 25px; font-weight: 600; line-height: 1.3; letter-spacing: 0; }
 .section-heading p { margin: 9px 0 0; color: var(--muted); font-size: 14px; }
 .section-note { margin: 14px 0 0; font-size: 12px; color: var(--muted); }
 .anchor-alias { position: absolute; top: 0; }
@@ -175,7 +175,7 @@ input[type="range"] { accent-color: var(--accent); flex: 1; min-width: 0; height
 kbd { font: 10px var(--mono); padding: 1px 4px; border: 1px solid var(--line); border-radius: 2px; background: var(--surface); }
 .score-column { padding-top: 49px; }
 .match-heading { display: flex; align-items: start; justify-content: space-between; gap: 18px; border-top: 1px solid #bfc7b8; padding-top: 20px; }
-.match-heading h3 { margin: 0; font-size: 18px; letter-spacing: -.4px; line-height: 1.65; font-weight: 550; }
+.match-heading h3 { margin: 0; font-size: 18px; letter-spacing: 0; line-height: 1.65; font-weight: 550; }
 .versus { color: var(--muted); font-weight: 400; }
 .match-heading p { margin: 9px 0 0; color: var(--muted); font-size: 11px; }
 .match-result { color: var(--accent); font: 27px/1.5 var(--mono); white-space: nowrap; }
@@ -196,7 +196,7 @@ kbd { font: 10px var(--mono); padding: 1px 4px; border: 1px solid var(--line); b
 .update summary::-webkit-details-marker { display: none; }
 .update summary::marker { content: ""; }
 .update summary time { color: var(--muted); font-size: 12px; }
-.update summary h3 { margin: 0; font-size: 16px; font-weight: 500; line-height: 1.5; letter-spacing: -.15px; }
+.update summary h3 { margin: 0; font-size: 16px; font-weight: 500; line-height: 1.5; letter-spacing: 0; }
 .update summary:hover h3 { color: var(--accent); }
 .expand-mark { color: var(--muted); text-align: center; font-size: 19px; line-height: 1; }
 .update[open] .expand-mark { transform: rotate(45deg); }
@@ -206,7 +206,7 @@ kbd { font: 10px var(--mono); padding: 1px 4px; border: 1px solid var(--line); b
 .update-body .text-link { display: inline-block; margin-top: 2px; }
 .site-footer { margin-top: 85px; border-top: 1px solid var(--line); }
 .footer-inner { display: flex; align-items: center; gap: 22px; min-height: 100px; font-size: 12px; color: var(--muted); }
-.footer-brand { color: var(--ink); font-size: 15px; font-weight: 600; letter-spacing: -.35px; text-decoration: none; }
+.footer-brand { color: var(--ink); font-size: 15px; font-weight: 600; letter-spacing: 0; text-decoration: none; }
 .footer-inner p { margin: 0; }
 .footer-inner > a:last-child { margin-left: auto; text-decoration: none; }
 .footer-inner > a:last-child:hover { text-decoration: underline; }
@@ -219,7 +219,12 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
 .model-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; padding: 24px 0; margin: 24px 0 0; border-block: 1px solid var(--line); }
 .model-metrics dt { color: var(--muted); font-size: 12px; }
 .model-metrics .metric-cost { grid-column: 1 / -1; }
-.model-metrics dd { margin: 7px 0 0; font: 28px/1.3 var(--mono); letter-spacing: -1px; }
+.model-metrics .sample-value { font-size: 21px; line-height: 1.5; }
+.sample-value span { display: block; font: 11px/1.6 var(--sans); color: var(--muted); }
+.evaluation-notes { padding-left: 18px; margin: 20px 0 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.evaluation-notes li + li { margin-top: 8px; }
+dialog h2, .model-note, .evaluation-notes { overflow-wrap: anywhere; }
+.model-metrics dd { margin: 7px 0 0; font: 28px/1.3 var(--mono); letter-spacing: 0; }
 .model-note { margin: 22px 0 0; font-size: 13px; color: var(--muted); line-height: 1.75; }
 .dialog-note { margin: 22px 0 0; font-size: 12px; color: var(--muted); }
 @media (min-width: 1600px) { .container { width: min(1200px, calc(100% - 100px)); } }
@@ -232,7 +237,7 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
   .replay-controls { gap: 8px; flex-wrap: wrap; }
   .match-heading h3 { font-size: 16px; }
   .score-labels, .move-pair { grid-template-columns: 38px 1fr 1fr; }
-  .col-elo { width: 156px; }
+  .col-accuracy { width: 156px; }
   .col-cost { width: 160px; }
 }
 @media (max-width: 700px) {
@@ -246,7 +251,7 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
   .site-nav a { min-height: 39px; font-size: 12px; }
   .site-nav a[aria-current]::after { bottom: 0; }
   .intro { padding: 31px 0 24px; }
-  h1 { font-size: 30px; letter-spacing: -1px; }
+  h1 { font-size: 30px; letter-spacing: 0; }
   .intro-heading { display: block; }
   .intro-link { display: none; }
   .intro-copy { font-size: 14px; margin: 15px 0 18px; }
@@ -259,7 +264,7 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
   .result-count { grid-column: 2; grid-row: 2; }
   .reset-button { grid-column: 1 / -1; padding: 0 0 3px; text-align: left; }
   .col-rank { width: 34px; }
-  .col-elo { width: 74px; }
+  .col-accuracy { width: 84px; }
   .col-cost { width: 108px; }
   .cost-unit { font-size: 9px; }
   th { padding: 0 7px; font-size: 11px; height: 44px; }
@@ -269,7 +274,7 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
   .desktop-label, .column-hint { display: none; }
   .model-button { font-size: 12px; font-weight: 550; line-height: 1.45; overflow-wrap: anywhere; }
   .model-provider { font-size: 10px; margin-top: 4px; }
-  td.numeric { font-size: 12px; letter-spacing: -.4px; }
+  td.numeric { font-size: 12px; letter-spacing: 0; }
   .sort-button { gap: 4px; }
   .sort-direction { width: 8px; font-size: 13px; }
   .table-footnote { display: block; font-size: 11px; line-height: 1.8; }
@@ -323,8 +328,8 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
   .transport .icon-button { width: 32px; }
   .replay-options .icon-button { width: 32px; }
   .replay-options select { min-width: 54px; }
-  .col-elo { width: 65px; }
-  .col-cost { width: 100px; }
+  .col-accuracy { width: 80px; }
+  .col-cost { width: 95px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
 @media print {
@@ -358,9 +363,9 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
 
   <main id="main" class="container">
     <section class="intro" aria-labelledby="page-title">
-      <div class="intro-heading"><h1 id="page-title">AI chess leaderboard</h1><a class="text-link intro-link" href="#tv">Watch a game <span aria-hidden="true">↗</span></a></div>
-      <p class="intro-copy">Complete games. Compare playing strength across the field.</p>
-      <p class="dataset-meta"><span id="dataset-count">41 models · 9 named providers + 1 anonymous model</span><span class="meta-divider" aria-hidden="true">/</span><span>Updated <time id="dataset-date" datetime="2026-10-16">16 Oct 2026</time></span></p>
+      <div class="intro-heading"><h1 id="page-title">AI chess accuracy</h1><a class="text-link intro-link" href="#tv">Watch a game <span aria-hidden="true">↗</span></a></div>
+      <p class="intro-copy">Recorded games, evaluated with Stockfish 19. Compare move accuracy across 41 models.</p>
+      <p class="dataset-meta"><span id="dataset-count">41 models · 9 named providers + 1 anonymous model</span><span class="meta-divider" aria-hidden="true">/</span><span>Evaluated <time id="dataset-date" datetime="2026-10-17">17 Oct 2026</time></span><span class="meta-divider" aria-hidden="true">/</span><span>Stockfish 19 · depth 12</span></p>
     </section>
 
     <section id="leaderboard" class="leaderboard-section" aria-labelledby="leaderboard-title">
@@ -377,29 +382,31 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
       </div>
       <div class="table-wrap">
         <table id="leaderboard-table">
-          <caption class="sr-only">ChessBench model results. Select a model for details. Benchmark Elo measures field-relative strength. Cost per Task is in US dollars; a dash means not reported.</caption>
-          <colgroup><col class="col-rank"><col class="col-model"><col class="col-elo"><col class="col-cost"></colgroup>
+          <caption class="sr-only">ChessBench model results ranked by Stockfish 19 Accuracy. Select a model for sample details and published Elo and ACPL. Cost per Task is in US dollars; a dash means not reported.</caption>
+          <colgroup><col class="col-rank"><col class="col-model"><col class="col-accuracy"><col class="col-cost"></colgroup>
           <thead><tr>
             <th scope="col" class="rank-cell">Rank</th>
             <th scope="col">Model <span class="column-hint">/ provider</span></th>
-            <th scope="col" class="numeric" id="elo-heading" aria-sort="descending"><button type="button" class="sort-button" data-sort="benchmarkElo" aria-label="Sort by benchmark Elo" disabled><span><span class="desktop-label">Benchmark </span>Elo</span><span class="sort-direction" aria-hidden="true">↓</span></button></th>
+            <th scope="col" class="numeric" id="accuracy-heading" aria-sort="descending"><button type="button" class="sort-button" data-sort="accuracy" aria-label="Sort by Accuracy" disabled><span>Accuracy</span><span class="sort-direction" aria-hidden="true">↓</span></button></th>
             <th scope="col" class="numeric" id="cost-heading"><button type="button" class="sort-button" data-sort="costPerTask" aria-label="Sort by cost per task, ascending" disabled><span>Cost per Task</span><span class="sort-direction" aria-hidden="true">↕</span></button></th>
           </tr></thead>
           <tbody id="model-rows"></tbody>
         </table>
         <div class="empty-state" id="empty-state" hidden><h3>No models found</h3><p>Try a different model name or provider.</p><button class="button" type="button" id="empty-reset">Reset filters</button></div>
-        <noscript><p class="noscript-note">Enable JavaScript to explore the leaderboard, performance map, and game replay. Methodology and benchmark updates are available below.</p></noscript>
+        <noscript><p class="noscript-note">Enable JavaScript to explore the leaderboard and game replay. Methodology and benchmark updates are available below.</p></noscript>
       </div>
-      <div class="table-footnote"><p>Higher Elo is better. Costs in USD per task; — = not reported.</p><a href="#methodology">How to read these results <span aria-hidden="true">↗</span></a></div>
+      <div class="table-footnote"><p>Higher Accuracy is better. Samples include partial games and engine-assisted play. † = evaluation notes. Costs in USD; — = not reported.</p><a href="#methodology">How to read these results <span aria-hidden="true">↗</span></a></div>
     </section>
 
     <section id="methodology" class="section" aria-labelledby="methodology-title">
-      <div class="section-heading"><div><h2 id="methodology-title">What the numbers mean</h2><p>A field-relative measure of model performance, not a human chess rating.</p></div></div>
+      <div class="section-heading"><div><h2 id="methodology-title">What the numbers mean</h2><p>Accuracy of the available game samples, not a human chess rating.</p></div></div>
       <dl class="methodology-list">
-        <div><dt>Complete games</dt><dd>Models play full games. Planning, tactical calculation, recovery, and consistency all affect the result.</dd></div>
-        <div><dt>Benchmark Elo</dt><dd>A field-relative rating calculated within ChessBench. It compares performance among the tested models and is not a direct equivalent of a human chess rating.</dd></div>
-        <div><dt>Cost per Task</dt><dd>The reported cost in US dollars per task. A dash (—) means no cost has been reported, not that the task was free. Select the column heading to sort by cost; missing values remain at the end.</dd></div>
+        <div><dt>Stockfish 19 Accuracy</dt><dd>Legal recorded moves were evaluated with Stockfish 19 at depth 12, using one thread and 64 MiB of hash. Accuracy follows the <a href="https://lichess.org/page/accuracy" target="_blank" rel="noopener noreferrer">Lichess formula</a>: it measures loss of estimated winning chances rather than exact agreement with the engine. This is local analysis, not official Lichess server analysis.</dd></div>
+        <div><dt>Model score</dt><dd>Each color/game score combines a volatility-weighted mean and a harmonic mean. Model Accuracy is the move-count-weighted mean of those scores, with both colors included when attributed to the same model. This cross-game aggregation is specific to this analysis. Rankings use the full, unrounded values; displayed values have two decimal places.</dd></div>
+        <div><dt>Sample limitations</dt><dd>These results cover the available attributed archive and recovered chat games, not necessarily the entire published benchmark corpus. Incomplete games retain only their legal prefixes; missing or illegal continuations receive no invented Accuracy penalty. Short, theoretical or already decided games can score highly. Engine-assisted sources and retained duplicate records remain identified in model notes.</dd></div>
+        <div><dt>Cost per Task</dt><dd>The reported cost in US dollars per task. A dash (—) means no cost has been reported, not that the task was free.</dd></div>
       </dl>
+      <p class="methodology-note">Local Accuracy edition · evaluated 17 Oct 2026. Original model labels and user-confirmed attributions are retained. Accuracy is not a complete measure of playing strength.</p>
     </section>
 
     <section id="tv" class="section tv-section" aria-labelledby="tv-title">
@@ -433,20 +440,29 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
     </section>
 
     <section id="blog" class="section updates-section" aria-labelledby="updates-title">
-      <div class="section-heading"><div><h2 id="updates-title">Benchmark updates</h2><p>New results, corrections, and product notes.</p></div></div>
+      <div class="section-heading"><div><h2 id="updates-title">Benchmark updates</h2><p>News from ChessBench. Earlier posts retain their original ranks and metrics.</p></div></div>
       <div class="updates-list">
-        <details class="update" id="gemini-4-argon" open>
-          <summary><time datetime="2026-10-16">16 Oct 2026</time><h3>Gemini 4 Argon (High): 2,430 Elo at $0.45 per task</h3><span class="expand-mark" aria-hidden="true">+</span></summary>
+        <details class="update" id="accuracy-replaces-elo">
+          <summary><time datetime="2026-10-17">17 Oct 2026</time><h3>Accuracy replaces Elo as the main ChessBench ranking</h3><span class="expand-mark" aria-hidden="true">+</span></summary>
           <div class="update-body">
+            <p>ChessBench now ranks all 41 models by Accuracy instead of benchmark Elo. The new system puts engine-evaluated move quality at the center of the leaderboard: higher Accuracy means less loss of estimated winning chances across the evaluated moves.</p>
+            <p>The available game samples were reanalyzed with Stockfish 19 at depth 12. Scores use the Lichess Accuracy formula, with model results weighted by the number of evaluated moves. Rankings use the full scores, while the leaderboard displays two decimal places.</p>
+            <p>Elo is no longer the primary ranking metric. It remains available alongside ACPL in each model's details. Accuracy describes the recorded samples, not a human chess rating; sample size, incomplete games and engine assistance still matter when comparing results.</p>
+            <a class="text-link" href="#leaderboard">View the Accuracy leaderboard <span aria-hidden="true">↗</span></a>
+          </div>
+        </details>
+        <details class="update" id="gemini-4-argon">
+          <summary><time datetime="2026-10-16">16 Oct 2026</time><h3>Gemini 4 Argon (High) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary>
+          <div class="update-body"><p><strong>Original update: Gemini 4 Argon (High): 2,430 Elo at $0.45 per task</strong></p>
             <p>Gemini 4 Argon (High) joins the 41-model ChessBench field at rank 12 with 2,430 benchmark Elo, an average centipawn loss (ACPL) of 12.27, and a reported cost of $0.45/task. It sits between GLM-5.3 Flash at 2,450 Elo and Claude Opus 5 (high) at 2,400 Elo.</p>
             <p>Compared with Gemini 3.1 Pro, the new entry scores 190 Elo higher and reduces ACPL from 34.14 to 12.27 &mdash; a decrease of 21.87 centipawns, or approximately 64.1%. Gemini 3.1 Pro (High) remains 140 Elo ahead at 2,570, with a lower ACPL of 5.96.</p>
             <p>The $0.45/task figure is the reported cost for this evaluation. Benchmark Elo measures performance relative to the tested ChessBench field.</p>
             <a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a>
           </div>
         </details>
-        <details class="update" id="claude-sonnet-5-5-medium" open>
-          <summary><time datetime="2026-10-04">4 Oct 2026</time><h3>Claude Sonnet 5.5 (Medium): 2,350 Elo at $0.16 per task</h3><span class="expand-mark" aria-hidden="true">+</span></summary>
-          <div class="update-body">
+        <details class="update" id="claude-sonnet-5-5-medium">
+          <summary><time datetime="2026-10-04">4 Oct 2026</time><h3>Claude Sonnet 5.5 (Medium) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary>
+          <div class="update-body"><p><strong>Original update: Claude Sonnet 5.5 (Medium): 2,350 Elo at $0.16 per task</strong></p>
             <p>Claude Sonnet 5.5 (Medium) joins the 40-model ChessBench field at rank 15 with 2,350 benchmark Elo, an average centipawn loss (ACPL) of 19.75, and a reported cost of $0.16/task. It sits between Claude Fable 5.1 (Max) at 2,370 Elo and GPT-6 Pro (Max) at 2,340 Elo.</p>
             <p>Compared with Claude Sonnet 5 (Max), the new entry scores 670 Elo higher and reduces ACPL from 70.02 to 19.75 &mdash; a decrease of 50.27 centipawns, or approximately 71.8%. Claude Sonnet 5 (Max) now appears at rank 34. Its cost has not been reported, so a direct cost comparison is not available.</p>
             <p>Compared with Claude Opus 5.5 (Medium), it scores 70 Elo higher and reduces ACPL from 31.18 to 19.75 &mdash; a decrease of 11.43 centipawns, or approximately 36.7%. The reported cost falls from $0.58/task to $0.16/task, a decrease of $0.42. Opus 5.5 (Medium) costs approximately 3.63 times as much. Claude Fable 5.1 (Max) remains 20 Elo ahead with an ACPL of 18.54, at a reported cost of $44.46/task &mdash; approximately 278 times the cost of this entry.</p>
@@ -454,9 +470,9 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
             <a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a>
           </div>
         </details>
-        <details class="update" id="gpt-6-1-sol-max" open>
-          <summary><time datetime="2026-09-29">29 Sep 2026</time><h3>GPT-6.1 Sol (Max): 2,550 Elo at $0.31 per task</h3><span class="expand-mark" aria-hidden="true">+</span></summary>
-          <div class="update-body">
+        <details class="update" id="gpt-6-1-sol-max">
+          <summary><time datetime="2026-09-29">29 Sep 2026</time><h3>GPT-6.1 Sol (Max) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary>
+          <div class="update-body"><p><strong>Original update: GPT-6.1 Sol (Max): 2,550 Elo at $0.31 per task</strong></p>
             <p>GPT-6.1 Sol (Max) joins the 39-model ChessBench field at rank 7 with 2,550 benchmark Elo, an average centipawn loss (ACPL) of 6.54, and a reported cost of $0.31/task. It sits between Gemini 3.1 Pro (High) at 2,570 Elo and Qwen 3.8 Max at 2,500 Elo.</p>
             <p>Compared with GPT-6 Sol (Max), the new entry scores 60 Elo higher and reduces ACPL from 9.45 to 6.54 &mdash; a decrease of 2.91 centipawns, or approximately 30.8%. GPT-6 Sol (Max) now appears at rank 9. The new result remains 110 Elo behind the leaderboard&rsquo;s top entry, GPT-5.6 Sol Pro (Max), at 2,660 Elo.</p>
             <p>The higher score comes at a higher reported cost: $0.31/task versus $0.14/task for GPT-6 Sol (Max), an increase of $0.17. That is approximately 2.21 times as much. Grok 4.7 (xhigh) remains ahead on all three reported metrics, with 2,600 Elo, 5.52 ACPL, and $0.21/task.</p>
@@ -464,7 +480,7 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
             <a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a>
           </div>
         </details>
-        <details class="update" id="claude-opus-5-5-adaptive-thinking" open>
+        <details class="update" id="claude-opus-5-5-adaptive-thinking">
           <summary><time datetime="2026-09-26">26 Sep 2026</time><h3>Claude Opus 5.5 (Medium) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary>
           <div class="update-body">
             <p>Claude Opus 5.5 (Medium) joins the 38-model ChessBench field with 2,280 benchmark Elo, an average centipawn loss (ACPL) of 31.18, and a reported cost of $0.58/task. It is listed at rank 19, level on Elo with GPT-4.5 at rank 18.</p>
@@ -473,7 +489,7 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
             <a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a>
           </div>
         </details>
-        <details class="update" id="space-bunny-alpha-gpt-6-sol-max" open>
+        <details class="update" id="space-bunny-alpha-gpt-6-sol-max">
           <summary><time datetime="2026-09-23">23 Sep 2026</time><h3>Space Bunny Alpha and GPT-6 Sol (Max) join ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary>
           <div class="update-body">
             <p>Two new results bring the ChessBench leaderboard to 37 models. GPT-6 Sol (Max) enters at rank 8 with 2,490 benchmark Elo, an average centipawn loss (ACPL) of 9.45, and a reported cost of $0.14/task. Space Bunny Alpha enters at rank 34 with 1,550 benchmark Elo, 81.24 ACPL, and a reported cost of $0.00/task.</p>
@@ -483,20 +499,20 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
             <a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a>
           </div>
         </details>
-        <details class="update" id="grok-4-7-xhigh" open>
-          <summary><time datetime="2026-09-22">22 Sep 2026</time><h3>Grok 4.7 (xhigh): 2,600 Elo at $0.21 per task</h3><span class="expand-mark" aria-hidden="true">+</span></summary>
-          <div class="update-body">
+        <details class="update" id="grok-4-7-xhigh">
+          <summary><time datetime="2026-09-22">22 Sep 2026</time><h3>Grok 4.7 (xhigh) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary>
+          <div class="update-body"><p><strong>Original update: Grok 4.7 (xhigh): 2,600 Elo at $0.21 per task</strong></p>
             <p>Grok 4.7 (xhigh) joins ChessBench with 2,600 benchmark Elo, an average centipawn loss (ACPL) of 5.52, and a reported cost of $0.21/task. It enters at rank 4 out of 35 models, between GPT-5.5 Pro at 2,630 Elo and Kimi K3 (Max) at 2,590 Elo.</p>
             <p>Compared with Grok 4.6 (xhigh), the new result is 120 Elo higher, while average ACPL falls from 9.59 to 5.52 &mdash; a reduction of approximately 42.4%. This makes Grok 4.7 (xhigh) the highest-rated xAI entry in the current ChessBench field.</p>
             <p>The reported cost is $0.21 per task. A direct cost comparison with Grok 4.6 is not available because its cost has not been reported in the dataset. These results describe performance within ChessBench; benchmark Elo is relative to the tested field, not a human chess rating.</p>
             <a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a>
           </div>
         </details>
-        <details class="update" open><summary><time datetime="2026-09-18">18 Sep 2026</time><h3>Pareto 26.9 (Union Alpha) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Pareto 26.9 (Union Alpha) has been added with 2,330 benchmark Elo, 25.01 ACPL, and a cost of $0.05/task. It enters at rank 13, between GPT-6 Pro (Max) and Gemini 3.6 Flash.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
-        <details class="update" open><summary><time datetime="2026-09-07">7 Sep 2026</time><h3>Gemini 3.8 Flash (medium) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Gemini 3.8 Flash (medium) has been added with 2,300 benchmark Elo, 30.74 ACPL, and a cost of $0.08/task. It enters at rank 13, after Gemini 3.6 Flash, which also has 2,300 benchmark Elo, and ahead of GPT-4.5.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
-        <details class="update" open><summary><time datetime="2026-09-07">7 Sep 2026</time><h3>Claude Fable 5.1 (Max) joins ChessBench; Cost per Task added</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Claude Fable 5.1 (Max) has been added as a separate model with 2,370 benchmark Elo, 18.54 ACPL, and a cost of $44.46/task. It enters at rank 10, between Gemma 4 and GPT-6 Pro (Max).</p><p></p><p>The leaderboard now includes Cost per Task. Costs not yet reported are shown as a dash (—). ACPL and cost are also available in model details.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
-        <details class="update" open><summary><time datetime="2026-09-05">5 Sep 2026</time><h3>GPT-6 Pro (Max) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>GPT-6 Pro (Max) has been added to ChessBench with a benchmark Elo of 2,340. It enters at rank 10, between Gemma 4 and Gemini 3.6 Flash.</p><p>The leaderboard now includes 30 models across seven providers.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
-        <details class="update" open><summary><time datetime="2026-08-13">13 Aug 2026</time><h3>Gemini 3.7 Flash (High) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Gemini 3.7 Flash (High) has been added to ChessBench with a benchmark ELO of 2,230 It enters at rank 17, between MiniMax M3 and ChatGPT 5.4 Pro.</p><p>The leaderboard consolidates GPT-5.6 Sol Pro (Max) and its Stealth Testing checkpoint into a single rank-one entry, with the checkpoint’s 2,650 ELO shown as secondary information. Claude Fable 5 (Max) therefore moves to rank 2.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
+        <details class="update"><summary><time datetime="2026-09-18">18 Sep 2026</time><h3>Pareto 26.9 (Union Alpha) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Pareto 26.9 (Union Alpha) has been added with 2,330 benchmark Elo, 25.01 ACPL, and a cost of $0.05/task. It enters at rank 13, between GPT-6 Pro (Max) and Gemini 3.6 Flash.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
+        <details class="update"><summary><time datetime="2026-09-07">7 Sep 2026</time><h3>Gemini 3.8 Flash (medium) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Gemini 3.8 Flash (medium) has been added with 2,300 benchmark Elo, 30.74 ACPL, and a cost of $0.08/task. It enters at rank 13, after Gemini 3.6 Flash, which also has 2,300 benchmark Elo, and ahead of GPT-4.5.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
+        <details class="update"><summary><time datetime="2026-09-07">7 Sep 2026</time><h3>Claude Fable 5.1 (Max) joins ChessBench; Cost per Task added</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Claude Fable 5.1 (Max) has been added as a separate model with 2,370 benchmark Elo, 18.54 ACPL, and a cost of $44.46/task. It enters at rank 10, between Gemma 4 and GPT-6 Pro (Max).</p><p></p><p>The leaderboard now includes Cost per Task. Costs not yet reported are shown as a dash (—). ACPL and cost are also available in model details.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
+        <details class="update"><summary><time datetime="2026-09-05">5 Sep 2026</time><h3>GPT-6 Pro (Max) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>GPT-6 Pro (Max) has been added to ChessBench with a benchmark Elo of 2,340. It enters at rank 10, between Gemma 4 and Gemini 3.6 Flash.</p><p>The leaderboard now includes 30 models across seven providers.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
+        <details class="update"><summary><time datetime="2026-08-13">13 Aug 2026</time><h3>Gemini 3.7 Flash (High) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Gemini 3.7 Flash (High) has been added to ChessBench with a benchmark ELO of 2,230 It enters at rank 17, between MiniMax M3 and ChatGPT 5.4 Pro.</p><p>The leaderboard consolidates GPT-5.6 Sol Pro (Max) and its Stealth Testing checkpoint into a single rank-one entry, with the checkpoint’s 2,650 ELO shown as secondary information. Claude Fable 5 (Max) therefore moves to rank 2.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
         <details class="update"><summary><time datetime="2026-08-13">13 Aug 2026</time><h3>Grok 4.6 (xhigh) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Grok 4.6 (xhigh) has been added to ChessBench with a benchmark ELO of 2,480 The result places it at rank 7, between Qwen 3.8 Max and Claude Opus 5 (high), and makes it the strongest xAI model in the current field.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
         <details class="update"><summary><time datetime="2026-08-05">5 Aug 2026</time><h3>Qwen 3.8 Max joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Qwen 3.8 Max joins with 2,500 benchmark ELO. It places at rank 6, between Gemini 3.1 Pro (High) and Grok 4.6 (xhigh), and adds Alibaba to the provider field.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
         <details class="update"><summary><time datetime="2026-07-26">26 Jul 2026</time><h3>Claude Opus 5 (high) joins ChessBench</h3><span class="expand-mark" aria-hidden="true">+</span></summary><div class="update-body"><p>Claude Opus 5 (high) enters at 2,400 benchmark ELO. Compared to the original Opus 5 configuration, this represents a substantial improvement in playing strength, moving the entry closer to the current frontier.</p><a class="text-link" href="#leaderboard">View leaderboard <span aria-hidden="true">↗</span></a></div></details>
@@ -507,58 +523,770 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
     </section>
   </main>
 
-  <footer class="site-footer"><div class="container footer-inner"><a class="footer-brand" href="#">ChessBench</a><p>Measuring how AI models play chess.</p><a href="https://github.com/chessbench-ai/chessbench-ai.github.io" target="_blank" rel="noopener noreferrer">Source on GitHub <span aria-hidden="true">↗</span></a></div></footer>
+  <footer class="site-footer"><div class="container footer-inner"><a class="footer-brand" href="#">ChessBench</a><p>Local Accuracy edition · Stockfish 19 · 17 Oct 2026.</p><a href="https://github.com/chessbench-ai/chessbench-ai.github.io" target="_blank" rel="noopener noreferrer">Source on GitHub <span aria-hidden="true">↗</span></a></div></footer>
 
-  <dialog id="model-dialog" aria-labelledby="model-title" aria-describedby="model-description"><div class="dialog-topline"><span id="model-provider"></span><form method="dialog"><button class="icon-button" aria-label="Close model details" autofocus><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></form></div><h2 id="model-title"></h2><p id="model-description"></p><dl class="model-metrics"><div><dt>Benchmark Elo</dt><dd id="model-elo"></dd></div><div><dt>ACPL</dt><dd id="model-acpl"></dd></div><div class="metric-cost"><dt>Cost per Task</dt><dd id="model-cost"></dd></div></dl><p id="model-note" class="model-note" hidden></p><p class="dialog-note">Elo is relative to the ChessBench field.</p></dialog>
+  <dialog id="model-dialog" aria-labelledby="model-title" aria-describedby="model-description">
+    <div class="dialog-topline"><span id="model-provider"></span><form method="dialog"><button class="icon-button" aria-label="Close model details" autofocus><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></form></div>
+    <h2 id="model-title"></h2><p id="model-description"></p>
+    <dl class="model-metrics">
+      <div><dt>Accuracy · Stockfish 19</dt><dd id="model-accuracy"></dd></div>
+      <div><dt>Evaluated sample</dt><dd id="model-sample" class="sample-value"></dd></div>
+      <div><dt>Published Elo</dt><dd id="model-elo"></dd></div>
+      <div><dt>Published ACPL</dt><dd id="model-acpl"></dd></div>
+      <div class="metric-cost"><dt>Published Cost per Task</dt><dd id="model-cost"></dd></div>
+    </dl>
+    <p class="dialog-note">Stockfish 19 · depth 12 · Lichess-formula Accuracy.<br>Elo, ACPL and costs are unchanged website values, not new engine results.</p>
+    <p id="model-source" class="model-note" hidden></p>
+    <ul id="model-evaluation-notes" class="evaluation-notes" hidden></ul>
+    <p id="model-note" class="model-note" hidden></p>
+  </dialog>
 <script>
-// Base ChessBench data with local result and cost updates; sourceCommit identifies the baseline.
-// Update scores, costPerTask (USD; null = not reported), and replay data here.
+// Local Accuracy edition. Published Elo, ACPL, costs and replay are preserved.
+// Accuracy is Stockfish 19 depth-12 analysis of the attributed available samples.
 // Added-provider references: https://unbiased.ai/ and https://huggingface.co/zai-org/GLM-5.3-Flash
 window.ChessBenchData = {
-  "updated": "2026-10-16",
-  "sourceCommit": "473e1230f6654e5e50304d7178c8cc1680f33ea6",
+  "updated": "2026-10-17",
+  "sourceCommit": "e18ed7384f9fb9b2b4e5446d1581167d93faec1c",
   "models": [
-    {"rank":1,"model":"GPT-5.6 Sol Pro (Max)","provider":"OpenAI","benchmarkElo":2660,"acpl":3.62,"checkpointLabel":"Stealth Testing","checkpointElo":2650,"note":"The Stealth Testing checkpoint is consolidated into this entry and recorded at 2,650 benchmark ELO.","costPerTask":null},
-    {"rank":2,"model":"Claude Fable 5 (Max)","provider":"Anthropic","benchmarkElo":2640,"acpl":4.01,"costPerTask":null},
-    {"rank":3,"model":"GPT-5.5 Pro","provider":"OpenAI","benchmarkElo":2630,"acpl":4.28,"costPerTask":null},
-    {"rank":4,"model":"Grok 4.7 (xhigh)","provider":"xAI","benchmarkElo":2600,"acpl":5.52,"costPerTask":0.21},
-    {"rank":5,"model":"Kimi K3 (Max)","provider":"Moonshot AI","benchmarkElo":2590,"acpl":5.35,"costPerTask":null},
-    {"rank":6,"model":"Gemini 3.1 Pro (High)","provider":"Google","benchmarkElo":2570,"acpl":5.96,"costPerTask":null},
-    {"rank":7,"model":"GPT-6.1 Sol (Max)","provider":"OpenAI","benchmarkElo":2550,"acpl":6.54,"costPerTask":0.31},
-    {"rank":8,"model":"Qwen 3.8 Max","provider":"Alibaba","benchmarkElo":2500,"acpl":8.18,"costPerTask":null},
-    {"rank":9,"model":"GPT-6 Sol (Max)","provider":"OpenAI","benchmarkElo":2490,"acpl":9.45,"costPerTask":0.14},
-    {"rank":10,"model":"Grok 4.6 (xhigh)","provider":"xAI","benchmarkElo":2480,"acpl":9.59,"costPerTask":null},
-    {"rank":11,"model":"GLM-5.3 Flash","provider":"Z.ai","benchmarkElo":2450,"acpl":9.9,"costPerTask":null},
-    {"rank":12,"model":"Gemini 4 Argon (High)","provider":"Google","benchmarkElo":2430,"acpl":12.27,"costPerTask":0.45},
-    {"rank":13,"model":"Claude Opus 5 (high)","provider":"Anthropic","benchmarkElo":2400,"acpl":17.53,"costPerTask":null},
-    {"rank":14,"model":"Gemma 4","provider":"Google","benchmarkElo":2380,"acpl":17.75,"costPerTask":null},
-    {"rank":15,"model":"Claude Fable 5.1 (Max)","provider":"Anthropic","benchmarkElo":2370,"acpl":18.54,"costPerTask":44.46},
-    {"rank":16,"model":"Claude Sonnet 5.5 (Medium)","provider":"Anthropic","benchmarkElo":2350,"acpl":19.75,"costPerTask":0.16},
-    {"rank":17,"model":"GPT-6 Pro (Max)","provider":"OpenAI","benchmarkElo":2340,"acpl":23.45,"costPerTask":null},
-    {"rank":18,"model":"Pareto 26.9 (Union Alpha)","provider":"Unbiased","benchmarkElo":2330,"acpl":25.01,"costPerTask":0.05},
-    {"rank":19,"model":"Gemini 3.6 Flash","provider":"Google","benchmarkElo":2300,"acpl":24.81,"costPerTask":null},
-    {"rank":20,"model":"Gemini 3.8 Flash (medium)","provider":"Google","benchmarkElo":2300,"acpl":30.74,"costPerTask":0.08},
-    {"rank":21,"model":"GPT-4.5","provider":"OpenAI","benchmarkElo":2280,"acpl":31.08,"costPerTask":null},
-    {"rank":22,"model":"Claude Opus 5.5 (Medium)","provider":"Anthropic","benchmarkElo":2280,"acpl":31.18,"costPerTask":0.58},
-    {"rank":23,"model":"Claude Opus 4.7 (Adaptive Thinking)","provider":"Anthropic","benchmarkElo":2260,"acpl":26.78,"costPerTask":null},
-    {"rank":24,"model":"Claude Opus 4.8 (Adaptive Thinking)","provider":"Anthropic","benchmarkElo":2250,"acpl":31.94,"costPerTask":null},
-    {"rank":25,"model":"Gemini 3.1 Pro","provider":"Google","benchmarkElo":2240,"acpl":34.14,"costPerTask":null},
-    {"rank":26,"model":"Minimax M3","provider":"MiniMax","benchmarkElo":2235,"acpl":33.87,"costPerTask":null},
-    {"rank":27,"model":"Gemini 3.7 Flash (High)","provider":"Google","benchmarkElo":2230,"acpl":39.65,"costPerTask":null},
-    {"rank":28,"model":"ChatGPT 5.4 Pro","provider":"OpenAI","benchmarkElo":2223,"acpl":49.61,"costPerTask":null},
-    {"rank":29,"model":"Gemini 3.5 Flash-Lite","provider":"Google","benchmarkElo":2200,"acpl":16.4,"note":"Illegal moves and quick terminations affected game outcomes and lowered its benchmark rating.","costPerTask":null},
-    {"rank":30,"model":"GPT-5.3 Instant","provider":"OpenAI","benchmarkElo":2105,"acpl":47.36,"costPerTask":null},
-    {"rank":31,"model":"Grok 4.3","provider":"xAI","benchmarkElo":2060,"acpl":18.39,"costPerTask":null},
-    {"rank":32,"model":"GPT-4o","provider":"OpenAI","benchmarkElo":1690,"acpl":49.49,"costPerTask":null},
-    {"rank":33,"model":"Grok 4.20","provider":"xAI","benchmarkElo":1681,"acpl":70.14,"costPerTask":null},
-    {"rank":34,"model":"Grok 4.5","provider":"xAI","benchmarkElo":1680,"acpl":53.0,"note":"Rebenchmarked after errors in the original run; benchmark ELO changed from 1,457 to 1,680.","costPerTask":null},
-    {"rank":35,"model":"Claude Sonnet 5 (Max)","provider":"Anthropic","benchmarkElo":1680,"acpl":70.02,"costPerTask":null},
-    {"rank":36,"model":"Claude Opus 4.8 (Max) 1M","provider":"Anthropic","benchmarkElo":1670,"acpl":52.56,"costPerTask":null},
-    {"rank":37,"model":"Gemini 3.5 Flash","provider":"Google","benchmarkElo":1650,"acpl":59.32,"costPerTask":null},
-    {"rank":38,"model":"Space Bunny Alpha","provider":"Anonymous","benchmarkElo":1550,"acpl":81.24,"costPerTask":0.00,"note":"The provider is anonymous. OpenRouter routes requests to this stealth model but is not its developer, owner, or provider. $0.00/task is the reported cost for this evaluation."},
-    {"rank":39,"model":"GPT-OSS-120b","provider":"OpenAI","benchmarkElo":1460,"acpl":64.94,"costPerTask":null},
-    {"rank":40,"model":"Claude Opus 4.7 xhigh","provider":"Anthropic","benchmarkElo":1459,"acpl":93.18,"costPerTask":null},
-    {"rank":41,"model":"Claude Opus 4.7 (no thinking)","provider":"Anthropic","benchmarkElo":1455,"acpl":142.98,"costPerTask":null}
+    {
+      "rank": 1,
+      "model": "Grok 4.7 (xhigh)",
+      "provider": "xAI",
+      "benchmarkElo": 2600,
+      "acpl": 5.52,
+      "costPerTask": 0.21,
+      "publishedRank": 4,
+      "accuracy": 99.39723748952794,
+      "accuracyGames": 2,
+      "accuracyMoves": 138,
+      "accuracySourceLabel": "Grok 4.7 (xhigh)",
+      "accuracyNotes": [],
+      "accuracySourceNote": "",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 2,
+      "model": "Claude Fable 5 (Max)",
+      "provider": "Anthropic",
+      "benchmarkElo": 2640,
+      "acpl": 4.01,
+      "costPerTask": null,
+      "publishedRank": 2,
+      "accuracy": 99.12868735754446,
+      "accuracyGames": 1,
+      "accuracyMoves": 93,
+      "accuracySourceLabel": "Fable 5 /w tools + Stockfish (temporary)",
+      "accuracyNotes": [
+        "The source explicitly used tools and Stockfish. This is not evidence of unaided model performance.",
+        "Model attribution and setting were confirmed by the user on 17 Oct 2026 for both colors."
+      ],
+      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Originalquelle nennt ausdruecklich Tools + Stockfish. Diese Unterstuetzung bleibt Teil des Samples; kein Nachweis toolfreier Modellleistung.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 3,
+      "model": "GPT-5.6 Sol Pro (Max)",
+      "provider": "OpenAI",
+      "benchmarkElo": 2660,
+      "acpl": 3.62,
+      "checkpointLabel": "Stealth Testing",
+      "checkpointElo": 2650,
+      "note": "The Stealth Testing checkpoint is consolidated into this entry and recorded at 2,650 benchmark ELO.",
+      "costPerTask": null,
+      "publishedRank": 1,
+      "accuracy": 99.12852515293531,
+      "accuracyGames": 2,
+      "accuracyMoves": 232,
+      "accuracySourceLabel": "GPT-5.6 Sol Pro (Max)",
+      "accuracyNotes": [
+        "Main sample only; the Stealth Testing checkpoint is kept separate.",
+        "The PGN or original evaluation notes mention Stockfish/engine assistance. This is not evidence of unaided model performance.",
+        "The available PGN sample does not exactly reproduce the published ACPL value."
+      ],
+      "accuracySourceNote": "Hauptsample. Stealth-Checkpoint separat ausgewiesen; nicht mit dem Hauptsample vermischt. PGN-Stichprobe deckt den publizierten ACPL-Wert nicht exakt ab. Stockfish-/Engine-Hinweis in PGN oder lokalen Bewertungsnotizen; kein Nachweis reiner Modellleistung.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 4,
+      "model": "GPT-6.1 Sol (Max)",
+      "provider": "OpenAI",
+      "benchmarkElo": 2550,
+      "acpl": 6.54,
+      "costPerTask": 0.31,
+      "publishedRank": 7,
+      "accuracy": 99.08949297434978,
+      "accuracyGames": 2,
+      "accuracyMoves": 164,
+      "accuracySourceLabel": "GPT-6.1 Sol (Max)",
+      "accuracyNotes": [
+        "The PGN or original evaluation notes mention Stockfish/engine assistance. This is not evidence of unaided model performance."
+      ],
+      "accuracySourceNote": "Stockfish-/Engine-Hinweis in PGN oder lokalen Bewertungsnotizen; kein Nachweis reiner Modellleistung.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 5,
+      "model": "Gemini 3.1 Pro (High)",
+      "provider": "Google",
+      "benchmarkElo": 2570,
+      "acpl": 5.96,
+      "costPerTask": null,
+      "publishedRank": 6,
+      "accuracy": 98.90878591106063,
+      "accuracyGames": 1,
+      "accuracyMoves": 28,
+      "accuracySourceLabel": "Gemini 3.1 Pro (High)",
+      "accuracyNotes": [],
+      "accuracySourceNote": "",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 6,
+      "model": "Kimi K3 (Max)",
+      "provider": "Moonshot AI",
+      "benchmarkElo": 2590,
+      "acpl": 5.35,
+      "costPerTask": null,
+      "publishedRank": 5,
+      "accuracy": 98.0524667745146,
+      "accuracyGames": 1,
+      "accuracyMoves": 105,
+      "accuracySourceLabel": "Kimi K3 (Max)",
+      "accuracyNotes": [
+        "The PGN or original evaluation notes mention Stockfish/engine assistance. This is not evidence of unaided model performance.",
+        "The available PGN sample does not exactly reproduce the published ACPL value."
+      ],
+      "accuracySourceNote": "PGN-Stichprobe deckt den publizierten ACPL-Wert nicht exakt ab. Stockfish-/Engine-Hinweis in PGN oder lokalen Bewertungsnotizen; kein Nachweis reiner Modellleistung.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 7,
+      "model": "Qwen 3.8 Max",
+      "provider": "Alibaba",
+      "benchmarkElo": 2500,
+      "acpl": 8.18,
+      "costPerTask": null,
+      "publishedRank": 8,
+      "accuracy": 97.63103373520367,
+      "accuracyGames": 2,
+      "accuracyMoves": 66,
+      "accuracySourceLabel": "Qwen 3.8 Max",
+      "accuracyNotes": [],
+      "accuracySourceNote": "",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 8,
+      "model": "GPT-5.5 Pro",
+      "provider": "OpenAI",
+      "benchmarkElo": 2630,
+      "acpl": 4.28,
+      "costPerTask": null,
+      "publishedRank": 3,
+      "accuracy": 97.28746739084062,
+      "accuracyGames": 1,
+      "accuracyMoves": 50,
+      "accuracySourceLabel": "GPT-5.5 Pro",
+      "accuracyNotes": [],
+      "accuracySourceNote": "",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 9,
+      "model": "GPT-6 Sol (Max)",
+      "provider": "OpenAI",
+      "benchmarkElo": 2490,
+      "acpl": 9.45,
+      "costPerTask": 0.14,
+      "publishedRank": 9,
+      "accuracy": 97.16733076009484,
+      "accuracyGames": 2,
+      "accuracyMoves": 87,
+      "accuracySourceLabel": "GPT-6 Sol",
+      "accuracyNotes": [
+        "Model attribution and setting were confirmed by the user on 17 Oct 2026 for both colors."
+      ],
+      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Originalquelllabel GPT-6 Sol erhalten. Max-Reasoning nachtraeglich bestaetigt.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 10,
+      "model": "GLM-5.3 Flash",
+      "provider": "Z.ai",
+      "benchmarkElo": 2450,
+      "acpl": 9.9,
+      "costPerTask": null,
+      "publishedRank": 11,
+      "accuracy": 96.72601186957093,
+      "accuracyGames": 2,
+      "accuracyMoves": 40,
+      "accuracySourceLabel": "ox-alpha",
+      "accuracyNotes": [
+        "Both source games are incomplete. Only their 40 stored legal moves are evaluated.",
+        "Model attribution and setting were confirmed by the user on 17 Oct 2026 for both colors."
+      ],
+      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Originalquelllabel ox-alpha erhalten. Beide Archiveintraege nur teilweise auswertbar. Keine erfundene Accuracy-Strafe fuer fehlende oder illegale Fortsetzungen.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 11,
+      "model": "Grok 4.6 (xhigh)",
+      "provider": "xAI",
+      "benchmarkElo": 2480,
+      "acpl": 9.59,
+      "costPerTask": null,
+      "publishedRank": 10,
+      "accuracy": 96.02159045667517,
+      "accuracyGames": 2,
+      "accuracyMoves": 75,
+      "accuracySourceLabel": "Grok 4.6 (xhigh)",
+      "accuracyNotes": [
+        "1 of 2 source games are incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 12,
+      "model": "Gemini 4 Argon (High)",
+      "provider": "Google",
+      "benchmarkElo": 2430,
+      "acpl": 12.27,
+      "costPerTask": 0.45,
+      "publishedRank": 12,
+      "accuracy": 94.66860237152491,
+      "accuracyGames": 2,
+      "accuracyMoves": 165,
+      "accuracySourceLabel": "Gemini 4 Argon (High)",
+      "accuracyNotes": [],
+      "accuracySourceNote": "",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 13,
+      "model": "Claude Opus 5 (high)",
+      "provider": "Anthropic",
+      "benchmarkElo": 2400,
+      "acpl": 17.53,
+      "costPerTask": null,
+      "publishedRank": 13,
+      "accuracy": 94.48771585612363,
+      "accuracyGames": 2,
+      "accuracyMoves": 95,
+      "accuracySourceLabel": "Opus 5",
+      "accuracyNotes": [
+        "One of the two source games is incomplete.",
+        "Model attribution and setting were confirmed by the user on 17 Oct 2026 for both colors."
+      ],
+      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Originalquelllabel Opus 5 erhalten. Einer von zwei Archiveintraegen nur teilweise auswertbar. Keine erfundene Accuracy-Strafe fuer fehlende oder illegale Fortsetzungen.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 14,
+      "model": "Gemini 3.5 Flash-Lite",
+      "provider": "Google",
+      "benchmarkElo": 2200,
+      "acpl": 16.4,
+      "note": "Illegal moves and quick terminations affected game outcomes and lowered its benchmark rating.",
+      "costPerTask": null,
+      "publishedRank": 29,
+      "accuracy": 91.36898850381908,
+      "accuracyGames": 4,
+      "accuracyMoves": 129,
+      "accuracySourceLabel": "Gemini 3.5 Flash-Lite",
+      "accuracyNotes": [
+        "All four source games are incomplete: two illegal continuations were excluded and two outputs ended early. Only 129 legal moves are evaluated. High opening accuracy does not establish stronger overall play."
+      ],
+      "accuracySourceNote": "Originalchat und gleichnamige Quelldatei belegen beide Farben. Reasoning nicht angegeben. Separate Recovery-Partien, kein kanonischer Archivimport. Alle 4 Verlaeufe unvollstaendig: 2 illegale Fortsetzungen ausgeschlossen, 2 kurze abgebrochene Ausgaben. 129 legale Zuege. Hohe Eroeffnungs-Accuracy belegt keine hoehere Gesamtspielstaerke.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 15,
+      "model": "Grok 4.3",
+      "provider": "xAI",
+      "benchmarkElo": 2060,
+      "acpl": 18.39,
+      "costPerTask": null,
+      "publishedRank": 31,
+      "accuracy": 89.86597304683542,
+      "accuracyGames": 1,
+      "accuracyMoves": 33,
+      "accuracySourceLabel": "Grok 4.3",
+      "accuracyNotes": [
+        "1 of 1 source game is incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 16,
+      "model": "Gemma 4",
+      "provider": "Google",
+      "benchmarkElo": 2380,
+      "acpl": 17.75,
+      "costPerTask": null,
+      "publishedRank": 14,
+      "accuracy": 89.83799727832488,
+      "accuracyGames": 2,
+      "accuracyMoves": 40,
+      "accuracySourceLabel": "Gemma 4",
+      "accuracyNotes": [
+        "2 of 2 source games are incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "2 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 17,
+      "model": "Gemini 3.6 Flash",
+      "provider": "Google",
+      "benchmarkElo": 2300,
+      "acpl": 24.81,
+      "costPerTask": null,
+      "publishedRank": 19,
+      "accuracy": 88.82317224025651,
+      "accuracyGames": 5,
+      "accuracyMoves": 345,
+      "accuracySourceLabel": "Gemini 3.6 Flash",
+      "accuracyNotes": [
+        "Five games from four runs, including both A/B options. Both colors are attributed to this model. Not all reported draws can be verified as repetitions."
+      ],
+      "accuracySourceNote": "Originalchat und gleichnamige Quelldatei belegen beide Farben. Reasoning nicht angegeben. Separate Recovery-Partien, kein kanonischer Archivimport. 5 Partien aus 4 Laeufen inklusive beider A/B-Optionen. 345 legale Zuege. Gemeldete Remis sind nicht alle als Stellungswiederholung nachweisbar.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 18,
+      "model": "GPT-6 Pro (Max)",
+      "provider": "OpenAI",
+      "benchmarkElo": 2340,
+      "acpl": 23.45,
+      "costPerTask": null,
+      "publishedRank": 17,
+      "accuracy": 87.8087749861939,
+      "accuracyGames": 2,
+      "accuracyMoves": 231,
+      "accuracySourceLabel": "GPT-6 Pro",
+      "accuracyNotes": [
+        "Game 1 is a draw by agreement according to its source, not a rule-based draw established by the moves. Game 2 claims limited search from move 20; that claim is not independently verified.",
+        "Model attribution and setting were confirmed by the user on 17 Oct 2026 for both colors."
+      ],
+      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Partie 1: Remis durch Vereinbarung laut Quelle, kein aus den Zuegen beweisbares Regelremis. Partie 2 nennt eigene begrenzte Suche ab 20..., nicht unabhaengig bestaetigt.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 19,
+      "model": "Pareto 26.9 (Union Alpha)",
+      "provider": "Unbiased",
+      "benchmarkElo": 2330,
+      "acpl": 25.01,
+      "costPerTask": 0.05,
+      "publishedRank": 18,
+      "accuracy": 87.62984236600344,
+      "accuracyGames": 2,
+      "accuracyMoves": 155,
+      "accuracySourceLabel": "Union Alpha / Pareto 26.9",
+      "accuracyNotes": [
+        "The PGN or original evaluation notes mention Stockfish/engine assistance. This is not evidence of unaided model performance."
+      ],
+      "accuracySourceNote": "Dieselben beiden Modellbezeichnungen in umgekehrter Reihenfolge. Stockfish-/Engine-Hinweis in PGN oder lokalen Bewertungsnotizen; kein Nachweis reiner Modellleistung.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 20,
+      "model": "GPT-4.5",
+      "provider": "OpenAI",
+      "benchmarkElo": 2280,
+      "acpl": 31.08,
+      "costPerTask": null,
+      "publishedRank": 21,
+      "accuracy": 85.84600965316066,
+      "accuracyGames": 3,
+      "accuracyMoves": 269,
+      "accuracySourceLabel": "GPT-4.5",
+      "accuracyNotes": [
+        "1 of 3 source games are incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 21,
+      "model": "Gemini 3.1 Pro",
+      "provider": "Google",
+      "benchmarkElo": 2240,
+      "acpl": 34.14,
+      "costPerTask": null,
+      "publishedRank": 25,
+      "accuracy": 85.75371886051053,
+      "accuracyGames": 1,
+      "accuracyMoves": 74,
+      "accuracySourceLabel": "Gemini 3.1 Pro",
+      "accuracyNotes": [
+        "1 of 1 source game is incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 22,
+      "model": "Claude Fable 5.1 (Max)",
+      "provider": "Anthropic",
+      "benchmarkElo": 2370,
+      "acpl": 18.54,
+      "costPerTask": 44.46,
+      "publishedRank": 15,
+      "accuracy": 85.70510399188257,
+      "accuracyGames": 1,
+      "accuracyMoves": 59,
+      "accuracySourceLabel": "Claude Fable 5.1 (Max)",
+      "accuracyNotes": [
+        "1 of 1 source game is incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 23,
+      "model": "Gemini 3.8 Flash (medium)",
+      "provider": "Google",
+      "benchmarkElo": 2300,
+      "acpl": 30.74,
+      "costPerTask": 0.08,
+      "publishedRank": 20,
+      "accuracy": 85.69654882222467,
+      "accuracyGames": 2,
+      "accuracyMoves": 184,
+      "accuracySourceLabel": "Unbenannte Partien vom 07.09.2026",
+      "accuracyNotes": [
+        "Game 1 permits a repetition claim; game 2 is a draw only according to its source. Engine names in the source PGN are unverified.",
+        "Model attribution and setting were confirmed by the user on 17 Oct 2026 for both colors."
+      ],
+      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Originaltext ohne Modellnamen erhalten. Partie 1 mit beanspruchbarer Stellungswiederholung; Partie 2 Remis nur laut Quelle. Engine-Bezeichnungen im Quell-PGN sind unbestaetigt.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 24,
+      "model": "Claude Opus 5.5 (Medium)",
+      "provider": "Anthropic",
+      "benchmarkElo": 2280,
+      "acpl": 31.18,
+      "costPerTask": 0.58,
+      "publishedRank": 22,
+      "accuracy": 85.61492276123546,
+      "accuracyGames": 2,
+      "accuracyMoves": 173,
+      "accuracySourceLabel": "Claude Opus 5.5 (Adaptive Thinking)",
+      "accuracyNotes": [
+        "The public website explicitly renamed this configuration from Adaptive Thinking to Medium. Its source claims a move generator and shallow search; those claims are not independently verified."
+      ],
+      "accuracySourceNote": "Explizite Website-Umbenennung in GitHub-Commit ed13fc6. Quellkommentar nennt eigenen Zuggenerator und flache Suche; nicht unabhaengig bestaetigt.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 25,
+      "model": "Claude Sonnet 5.5 (Medium)",
+      "provider": "Anthropic",
+      "benchmarkElo": 2350,
+      "acpl": 19.75,
+      "costPerTask": 0.16,
+      "publishedRank": 16,
+      "accuracy": 84.88741620320987,
+      "accuracyGames": 2,
+      "accuracyMoves": 53,
+      "accuracySourceLabel": "Claude Sonnet 5.5 (Medium)",
+      "accuracyNotes": [
+        "1 of 2 source games are incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 26,
+      "model": "Grok 4.20",
+      "provider": "xAI",
+      "benchmarkElo": 1681,
+      "acpl": 70.14,
+      "costPerTask": null,
+      "publishedRank": 33,
+      "accuracy": 83.76677801100351,
+      "accuracyGames": 2,
+      "accuracyMoves": 63,
+      "accuracySourceLabel": "Grok 4.20",
+      "accuracyNotes": [
+        "1 of 2 source games are incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 27,
+      "model": "Gemini 3.7 Flash (High)",
+      "provider": "Google",
+      "benchmarkElo": 2230,
+      "acpl": 39.65,
+      "costPerTask": null,
+      "publishedRank": 27,
+      "accuracy": 82.95822400152535,
+      "accuracyGames": 2,
+      "accuracyMoves": 197,
+      "accuracySourceLabel": "Gemini 3.7 Flash",
+      "accuracyNotes": [
+        "The source PGN specifies model gemini-3.7-flash-high and High effort."
+      ],
+      "accuracySourceNote": "PGN nennt Model gemini-3.7-flash-high und Effort High.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 28,
+      "model": "GPT-OSS-120b",
+      "provider": "OpenAI",
+      "benchmarkElo": 1460,
+      "acpl": 64.94,
+      "costPerTask": null,
+      "publishedRank": 39,
+      "accuracy": 81.64587010589713,
+      "accuracyGames": 2,
+      "accuracyMoves": 54,
+      "accuracySourceLabel": "GPT-OSS-120b",
+      "accuracyNotes": [
+        "1 of 2 source games are incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 29,
+      "model": "ChatGPT 5.4 Pro",
+      "provider": "OpenAI",
+      "benchmarkElo": 2223,
+      "acpl": 49.61,
+      "costPerTask": null,
+      "publishedRank": 28,
+      "accuracy": 81.59076532480387,
+      "accuracyGames": 2,
+      "accuracyMoves": 66,
+      "accuracySourceLabel": "ChatGPT 5.4 Pro",
+      "accuracyNotes": [
+        "1 of 2 source games are incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 30,
+      "model": "GPT-5.3 Instant",
+      "provider": "OpenAI",
+      "benchmarkElo": 2105,
+      "acpl": 47.36,
+      "costPerTask": null,
+      "publishedRank": 30,
+      "accuracy": 79.9216336695729,
+      "accuracyGames": 1,
+      "accuracyMoves": 47,
+      "accuracySourceLabel": "GPT-5.3 Instant",
+      "accuracyNotes": [],
+      "accuracySourceNote": "",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 31,
+      "model": "Claude Sonnet 5 (Max)",
+      "provider": "Anthropic",
+      "benchmarkElo": 1680,
+      "acpl": 70.02,
+      "costPerTask": null,
+      "publishedRank": 35,
+      "accuracy": 79.617296829918,
+      "accuracyGames": 2,
+      "accuracyMoves": 260,
+      "accuracySourceLabel": "Claude Sonnet 5 (Max)",
+      "accuracyNotes": [],
+      "accuracySourceNote": "",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 32,
+      "model": "Claude Opus 4.7 (Adaptive Thinking)",
+      "provider": "Anthropic",
+      "benchmarkElo": 2260,
+      "acpl": 26.78,
+      "costPerTask": null,
+      "publishedRank": 23,
+      "accuracy": 77.88313848051521,
+      "accuracyGames": 1,
+      "accuracyMoves": 32,
+      "accuracySourceLabel": "Claude Opus 4.7 (Adaptive Thinking)",
+      "accuracyNotes": [
+        "1 of 1 source game is incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 33,
+      "model": "Minimax M3",
+      "provider": "MiniMax",
+      "benchmarkElo": 2235,
+      "acpl": 33.87,
+      "costPerTask": null,
+      "publishedRank": 26,
+      "accuracy": 73.14872389138476,
+      "accuracyGames": 2,
+      "accuracyMoves": 52,
+      "accuracySourceLabel": "Minimax M3",
+      "accuracyNotes": [
+        "2 of 2 source games are incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "2 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 34,
+      "model": "Grok 4.5",
+      "provider": "xAI",
+      "benchmarkElo": 1680,
+      "acpl": 53,
+      "note": "Rebenchmarked after errors in the original run; benchmark ELO changed from 1,457 to 1,680.",
+      "costPerTask": null,
+      "publishedRank": 34,
+      "accuracy": 72.98696100282196,
+      "accuracyGames": 4,
+      "accuracyMoves": 209,
+      "accuracySourceLabel": "Grok 4.5",
+      "accuracyNotes": [
+        "2 of 4 source games are incomplete; only stored legal moves are evaluated.",
+        "One duplicate archive record is retained in this sample."
+      ],
+      "accuracySourceNote": "2 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe. Ein doppelter Archiveintrag wird mitgezaehlt.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 35,
+      "model": "GPT-4o",
+      "provider": "OpenAI",
+      "benchmarkElo": 1690,
+      "acpl": 49.49,
+      "costPerTask": null,
+      "publishedRank": 32,
+      "accuracy": 70.71646944485653,
+      "accuracyGames": 1,
+      "accuracyMoves": 82,
+      "accuracySourceLabel": "GPT-4o",
+      "accuracyNotes": [
+        "1 of 1 source game is incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 36,
+      "model": "Claude Opus 4.8 (Adaptive Thinking)",
+      "provider": "Anthropic",
+      "benchmarkElo": 2250,
+      "acpl": 31.94,
+      "costPerTask": null,
+      "publishedRank": 24,
+      "accuracy": 68.7680876030228,
+      "accuracyGames": 1,
+      "accuracyMoves": 31,
+      "accuracySourceLabel": "Claude Opus 4.8 (Adaptive Thinking)",
+      "accuracyNotes": [
+        "1 of 1 source game is incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 37,
+      "model": "Claude Opus 4.8 (Max) 1M",
+      "provider": "Anthropic",
+      "benchmarkElo": 1670,
+      "acpl": 52.56,
+      "costPerTask": null,
+      "publishedRank": 36,
+      "accuracy": 67.96901276034012,
+      "accuracyGames": 2,
+      "accuracyMoves": 101,
+      "accuracySourceLabel": "Claude Opus 4.8 (Max) 1M",
+      "accuracyNotes": [
+        "2 of 2 source games are incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "2 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 38,
+      "model": "Gemini 3.5 Flash",
+      "provider": "Google",
+      "benchmarkElo": 1650,
+      "acpl": 59.32,
+      "costPerTask": null,
+      "publishedRank": 37,
+      "accuracy": 67.41238301791105,
+      "accuracyGames": 1,
+      "accuracyMoves": 57,
+      "accuracySourceLabel": "Gemini 3.5 Flash",
+      "accuracyNotes": [
+        "1 of 1 source game is incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 39,
+      "model": "Claude Opus 4.7 (no thinking)",
+      "provider": "Anthropic",
+      "benchmarkElo": 1455,
+      "acpl": 142.98,
+      "costPerTask": null,
+      "publishedRank": 41,
+      "accuracy": 57.87540258974004,
+      "accuracyGames": 4,
+      "accuracyMoves": 174,
+      "accuracySourceLabel": "Claude Opus 4.7 (no thinking)",
+      "accuracyNotes": [
+        "3 of 4 source games are incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "3 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 40,
+      "model": "Space Bunny Alpha",
+      "provider": "Anonymous",
+      "benchmarkElo": 1550,
+      "acpl": 81.24,
+      "costPerTask": 0,
+      "note": "The provider is anonymous. OpenRouter routes requests to this stealth model but is not its developer, owner, or provider. $0.00/task is the reported cost for this evaluation.",
+      "publishedRank": 38,
+      "accuracy": 56.96966162473499,
+      "accuracyGames": 2,
+      "accuracyMoves": 34,
+      "accuracySourceLabel": "Space Bunny Alpha",
+      "accuracyNotes": [
+        "2 of 2 source games are incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "2 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    },
+    {
+      "rank": 41,
+      "model": "Claude Opus 4.7 xhigh",
+      "provider": "Anthropic",
+      "benchmarkElo": 1459,
+      "acpl": 93.18,
+      "costPerTask": null,
+      "publishedRank": 40,
+      "accuracy": 54.519284768809214,
+      "accuracyGames": 2,
+      "accuracyMoves": 101,
+      "accuracySourceLabel": "Claude Opus 4.7 xhigh",
+      "accuracyNotes": [
+        "2 of 2 source games are incomplete; only stored legal moves are evaluated."
+      ],
+      "accuracySourceNote": "2 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
+      "accuracyAttributionConfirmed": true
+    }
   ],
   "game": {
     "event": "GPT-5.6 Sol Pro vs Gemini 3.1 Pro",
@@ -570,67 +1298,564 @@ window.ChessBenchData = {
     "endDate": "2026.07.12",
     "pgn": "[Event \"GPT-5.6 Sol Pro vs Gemini 3.1 Pro\"]\n[Site \"ChessBench TV\"]\n[Date \"2026.07.11\"]\n[Round \"1\"]\n[White \"GPT-5.6 Sol Pro\"]\n[Black \"Gemini 3.1 Pro\"]\n[Result \"1-0\"]\n[Termination \"Black resigned\"]\n[Variant \"Standard\"]\n[UTCDate \"2026.07.11\"]\n[UTCTime \"19:27:23\"]\n[EndDate \"2026.07.12\"]\n\n1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 a6\n6. Be3 e5 7. Nb3 Be6 8. f3 Be7 9. Qd2 O-O 10. O-O-O Nbd7\n11. g4 b5 12. g5 b4 13. Ne2 Ne8 14. f4 a5 15. f5 a4\n16. fxe6 axb3 17. cxb3 fxe6 18. Bh3 Rxa2 19. Bxe6+ Kh8\n20. Ng3 Qa5 21. Nf5 Ra1+ 22. Kc2 Qc7+ 23. Bc4 d5\n24. Rxa1 dxc4 25. Ra7 cxb3+ 26. Kxb3 Nc5+ 27. Bxc5 Qxc5\n28. Rxe7 Qc3+ 29. bxc3 bxc3 30. Qd8 {Gemini 3.1 Pro resigned.} 1-0",
     "positions": [
-      {"fen":"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1","san":"Start","from":null,"to":null,"moveNumber":0,"side":null,"check":null},
-      {"fen":"rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1","san":"e4","from":"e2","to":"e4","moveNumber":1,"side":"white","check":null},
-      {"fen":"rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2","san":"c5","from":"c7","to":"c5","moveNumber":1,"side":"black","check":null},
-      {"fen":"rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2","san":"Nf3","from":"g1","to":"f3","moveNumber":2,"side":"white","check":null},
-      {"fen":"rnbqkbnr/pp2pppp/3p4/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 3","san":"d6","from":"d7","to":"d6","moveNumber":2,"side":"black","check":null},
-      {"fen":"rnbqkbnr/pp2pppp/3p4/2p5/3PP3/5N2/PPP2PPP/RNBQKB1R b KQkq - 0 3","san":"d4","from":"d2","to":"d4","moveNumber":3,"side":"white","check":null},
-      {"fen":"rnbqkbnr/pp2pppp/3p4/8/3pP3/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 4","san":"cxd4","from":"c5","to":"d4","moveNumber":3,"side":"black","check":null},
-      {"fen":"rnbqkbnr/pp2pppp/3p4/8/3NP3/8/PPP2PPP/RNBQKB1R b KQkq - 0 4","san":"Nxd4","from":"f3","to":"d4","moveNumber":4,"side":"white","check":null},
-      {"fen":"rnbqkb1r/pp2pppp/3p1n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 1 5","san":"Nf6","from":"g8","to":"f6","moveNumber":4,"side":"black","check":null},
-      {"fen":"rnbqkb1r/pp2pppp/3p1n2/8/3NP3/2N5/PPP2PPP/R1BQKB1R b KQkq - 2 5","san":"Nc3","from":"b1","to":"c3","moveNumber":5,"side":"white","check":null},
-      {"fen":"rnbqkb1r/1p2pppp/p2p1n2/8/3NP3/2N5/PPP2PPP/R1BQKB1R w KQkq - 0 6","san":"a6","from":"a7","to":"a6","moveNumber":5,"side":"black","check":null},
-      {"fen":"rnbqkb1r/1p2pppp/p2p1n2/8/3NP3/2N1B3/PPP2PPP/R2QKB1R b KQkq - 1 6","san":"Be3","from":"c1","to":"e3","moveNumber":6,"side":"white","check":null},
-      {"fen":"rnbqkb1r/1p3ppp/p2p1n2/4p3/3NP3/2N1B3/PPP2PPP/R2QKB1R w KQkq - 0 7","san":"e5","from":"e7","to":"e5","moveNumber":6,"side":"black","check":null},
-      {"fen":"rnbqkb1r/1p3ppp/p2p1n2/4p3/4P3/1NN1B3/PPP2PPP/R2QKB1R b KQkq - 1 7","san":"Nb3","from":"d4","to":"b3","moveNumber":7,"side":"white","check":null},
-      {"fen":"rn1qkb1r/1p3ppp/p2pbn2/4p3/4P3/1NN1B3/PPP2PPP/R2QKB1R w KQkq - 2 8","san":"Be6","from":"c8","to":"e6","moveNumber":7,"side":"black","check":null},
-      {"fen":"rn1qkb1r/1p3ppp/p2pbn2/4p3/4P3/1NN1BP2/PPP3PP/R2QKB1R b KQkq - 0 8","san":"f3","from":"f2","to":"f3","moveNumber":8,"side":"white","check":null},
-      {"fen":"rn1qk2r/1p2bppp/p2pbn2/4p3/4P3/1NN1BP2/PPP3PP/R2QKB1R w KQkq - 1 9","san":"Be7","from":"f8","to":"e7","moveNumber":8,"side":"black","check":null},
-      {"fen":"rn1qk2r/1p2bppp/p2pbn2/4p3/4P3/1NN1BP2/PPPQ2PP/R3KB1R b KQkq - 2 9","san":"Qd2","from":"d1","to":"d2","moveNumber":9,"side":"white","check":null},
-      {"fen":"rn1q1rk1/1p2bppp/p2pbn2/4p3/4P3/1NN1BP2/PPPQ2PP/R3KB1R w KQ - 3 10","san":"O-O","from":"e8","to":"g8","moveNumber":9,"side":"black","check":null},
-      {"fen":"rn1q1rk1/1p2bppp/p2pbn2/4p3/4P3/1NN1BP2/PPPQ2PP/2KR1B1R b - - 4 10","san":"O-O-O","from":"e1","to":"c1","moveNumber":10,"side":"white","check":null},
-      {"fen":"r2q1rk1/1p1nbppp/p2pbn2/4p3/4P3/1NN1BP2/PPPQ2PP/2KR1B1R w - - 5 11","san":"Nbd7","from":"b8","to":"d7","moveNumber":10,"side":"black","check":null},
-      {"fen":"r2q1rk1/1p1nbppp/p2pbn2/4p3/4P1P1/1NN1BP2/PPPQ3P/2KR1B1R b - - 0 11","san":"g4","from":"g2","to":"g4","moveNumber":11,"side":"white","check":null},
-      {"fen":"r2q1rk1/3nbppp/p2pbn2/1p2p3/4P1P1/1NN1BP2/PPPQ3P/2KR1B1R w - - 0 12","san":"b5","from":"b7","to":"b5","moveNumber":11,"side":"black","check":null},
-      {"fen":"r2q1rk1/3nbppp/p2pbn2/1p2p1P1/4P3/1NN1BP2/PPPQ3P/2KR1B1R b - - 0 12","san":"g5","from":"g4","to":"g5","moveNumber":12,"side":"white","check":null},
-      {"fen":"r2q1rk1/3nbppp/p2pbn2/4p1P1/1p2P3/1NN1BP2/PPPQ3P/2KR1B1R w - - 0 13","san":"b4","from":"b5","to":"b4","moveNumber":12,"side":"black","check":null},
-      {"fen":"r2q1rk1/3nbppp/p2pbn2/4p1P1/1p2P3/1N2BP2/PPPQN2P/2KR1B1R b - - 1 13","san":"Ne2","from":"c3","to":"e2","moveNumber":13,"side":"white","check":null},
-      {"fen":"r2qnrk1/3nbppp/p2pb3/4p1P1/1p2P3/1N2BP2/PPPQN2P/2KR1B1R w - - 2 14","san":"Ne8","from":"f6","to":"e8","moveNumber":13,"side":"black","check":null},
-      {"fen":"r2qnrk1/3nbppp/p2pb3/4p1P1/1p2PP2/1N2B3/PPPQN2P/2KR1B1R b - - 0 14","san":"f4","from":"f3","to":"f4","moveNumber":14,"side":"white","check":null},
-      {"fen":"r2qnrk1/3nbppp/3pb3/p3p1P1/1p2PP2/1N2B3/PPPQN2P/2KR1B1R w - - 0 15","san":"a5","from":"a6","to":"a5","moveNumber":14,"side":"black","check":null},
-      {"fen":"r2qnrk1/3nbppp/3pb3/p3pPP1/1p2P3/1N2B3/PPPQN2P/2KR1B1R b - - 0 15","san":"f5","from":"f4","to":"f5","moveNumber":15,"side":"white","check":null},
-      {"fen":"r2qnrk1/3nbppp/3pb3/4pPP1/pp2P3/1N2B3/PPPQN2P/2KR1B1R w - - 0 16","san":"a4","from":"a5","to":"a4","moveNumber":15,"side":"black","check":null},
-      {"fen":"r2qnrk1/3nbppp/3pP3/4p1P1/pp2P3/1N2B3/PPPQN2P/2KR1B1R b - - 0 16","san":"fxe6","from":"f5","to":"e6","moveNumber":16,"side":"white","check":null},
-      {"fen":"r2qnrk1/3nbppp/3pP3/4p1P1/1p2P3/1p2B3/PPPQN2P/2KR1B1R w - - 0 17","san":"axb3","from":"a4","to":"b3","moveNumber":16,"side":"black","check":null},
-      {"fen":"r2qnrk1/3nbppp/3pP3/4p1P1/1p2P3/1P2B3/PP1QN2P/2KR1B1R b - - 0 17","san":"cxb3","from":"c2","to":"b3","moveNumber":17,"side":"white","check":null},
-      {"fen":"r2qnrk1/3nb1pp/3pp3/4p1P1/1p2P3/1P2B3/PP1QN2P/2KR1B1R w - - 0 18","san":"fxe6","from":"f7","to":"e6","moveNumber":17,"side":"black","check":null},
-      {"fen":"r2qnrk1/3nb1pp/3pp3/4p1P1/1p2P3/1P2B2B/PP1QN2P/2KR3R b - - 1 18","san":"Bh3","from":"f1","to":"h3","moveNumber":18,"side":"white","check":null},
-      {"fen":"3qnrk1/3nb1pp/3pp3/4p1P1/1p2P3/1P2B2B/rP1QN2P/2KR3R w - - 0 19","san":"Rxa2","from":"a8","to":"a2","moveNumber":18,"side":"black","check":null},
-      {"fen":"3qnrk1/3nb1pp/3pB3/4p1P1/1p2P3/1P2B3/rP1QN2P/2KR3R b - - 0 19","san":"Bxe6+","from":"h3","to":"e6","moveNumber":19,"side":"white","check":"g8"},
-      {"fen":"3qnr1k/3nb1pp/3pB3/4p1P1/1p2P3/1P2B3/rP1QN2P/2KR3R w - - 1 20","san":"Kh8","from":"g8","to":"h8","moveNumber":19,"side":"black","check":null},
-      {"fen":"3qnr1k/3nb1pp/3pB3/4p1P1/1p2P3/1P2B1N1/rP1Q3P/2KR3R b - - 2 20","san":"Ng3","from":"e2","to":"g3","moveNumber":20,"side":"white","check":null},
-      {"fen":"4nr1k/3nb1pp/3pB3/q3p1P1/1p2P3/1P2B1N1/rP1Q3P/2KR3R w - - 3 21","san":"Qa5","from":"d8","to":"a5","moveNumber":20,"side":"black","check":null},
-      {"fen":"4nr1k/3nb1pp/3pB3/q3pNP1/1p2P3/1P2B3/rP1Q3P/2KR3R b - - 4 21","san":"Nf5","from":"g3","to":"f5","moveNumber":21,"side":"white","check":null},
-      {"fen":"4nr1k/3nb1pp/3pB3/q3pNP1/1p2P3/1P2B3/1P1Q3P/r1KR3R w - - 5 22","san":"Ra1+","from":"a2","to":"a1","moveNumber":21,"side":"black","check":"c1"},
-      {"fen":"4nr1k/3nb1pp/3pB3/q3pNP1/1p2P3/1P2B3/1PKQ3P/r2R3R b - - 6 22","san":"Kc2","from":"c1","to":"c2","moveNumber":22,"side":"white","check":null},
-      {"fen":"4nr1k/2qnb1pp/3pB3/4pNP1/1p2P3/1P2B3/1PKQ3P/r2R3R w - - 7 23","san":"Qc7+","from":"a5","to":"c7","moveNumber":22,"side":"black","check":"c2"},
-      {"fen":"4nr1k/2qnb1pp/3p4/4pNP1/1pB1P3/1P2B3/1PKQ3P/r2R3R b - - 8 23","san":"Bc4","from":"e6","to":"c4","moveNumber":23,"side":"white","check":null},
-      {"fen":"4nr1k/2qnb1pp/8/3ppNP1/1pB1P3/1P2B3/1PKQ3P/r2R3R w - - 0 24","san":"d5","from":"d6","to":"d5","moveNumber":23,"side":"black","check":null},
-      {"fen":"4nr1k/2qnb1pp/8/3ppNP1/1pB1P3/1P2B3/1PKQ3P/R6R b - - 0 24","san":"Rxa1","from":"d1","to":"a1","moveNumber":24,"side":"white","check":null},
-      {"fen":"4nr1k/2qnb1pp/8/4pNP1/1pp1P3/1P2B3/1PKQ3P/R6R w - - 0 25","san":"dxc4","from":"d5","to":"c4","moveNumber":24,"side":"black","check":null},
-      {"fen":"4nr1k/R1qnb1pp/8/4pNP1/1pp1P3/1P2B3/1PKQ3P/7R b - - 1 25","san":"Ra7","from":"a1","to":"a7","moveNumber":25,"side":"white","check":null},
-      {"fen":"4nr1k/R1qnb1pp/8/4pNP1/1p2P3/1p2B3/1PKQ3P/7R w - - 0 26","san":"cxb3+","from":"c4","to":"b3","moveNumber":25,"side":"black","check":"c2"},
-      {"fen":"4nr1k/R1qnb1pp/8/4pNP1/1p2P3/1K2B3/1P1Q3P/7R b - - 0 26","san":"Kxb3","from":"c2","to":"b3","moveNumber":26,"side":"white","check":null},
-      {"fen":"4nr1k/R1q1b1pp/8/2n1pNP1/1p2P3/1K2B3/1P1Q3P/7R w - - 1 27","san":"Nc5+","from":"d7","to":"c5","moveNumber":26,"side":"black","check":"b3"},
-      {"fen":"4nr1k/R1q1b1pp/8/2B1pNP1/1p2P3/1K6/1P1Q3P/7R b - - 0 27","san":"Bxc5","from":"e3","to":"c5","moveNumber":27,"side":"white","check":null},
-      {"fen":"4nr1k/R3b1pp/8/2q1pNP1/1p2P3/1K6/1P1Q3P/7R w - - 0 28","san":"Qxc5","from":"c7","to":"c5","moveNumber":27,"side":"black","check":null},
-      {"fen":"4nr1k/4R1pp/8/2q1pNP1/1p2P3/1K6/1P1Q3P/7R b - - 0 28","san":"Rxe7","from":"a7","to":"e7","moveNumber":28,"side":"white","check":null},
-      {"fen":"4nr1k/4R1pp/8/4pNP1/1p2P3/1Kq5/1P1Q3P/7R w - - 1 29","san":"Qc3+","from":"c5","to":"c3","moveNumber":28,"side":"black","check":"b3"},
-      {"fen":"4nr1k/4R1pp/8/4pNP1/1p2P3/1KP5/3Q3P/7R b - - 0 29","san":"bxc3","from":"b2","to":"c3","moveNumber":29,"side":"white","check":null},
-      {"fen":"4nr1k/4R1pp/8/4pNP1/4P3/1Kp5/3Q3P/7R w - - 0 30","san":"bxc3","from":"b4","to":"c3","moveNumber":29,"side":"black","check":null},
-      {"fen":"3Qnr1k/4R1pp/8/4pNP1/4P3/1Kp5/7P/7R b - - 1 30","san":"Qd8","from":"d2","to":"d8","moveNumber":30,"side":"white","check":null}
+      {
+        "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        "san": "Start",
+        "from": null,
+        "to": null,
+        "moveNumber": 0,
+        "side": null,
+        "check": null
+      },
+      {
+        "fen": "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1",
+        "san": "e4",
+        "from": "e2",
+        "to": "e4",
+        "moveNumber": 1,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+        "san": "c5",
+        "from": "c7",
+        "to": "c5",
+        "moveNumber": 1,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+        "san": "Nf3",
+        "from": "g1",
+        "to": "f3",
+        "moveNumber": 2,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "rnbqkbnr/pp2pppp/3p4/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 3",
+        "san": "d6",
+        "from": "d7",
+        "to": "d6",
+        "moveNumber": 2,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "rnbqkbnr/pp2pppp/3p4/2p5/3PP3/5N2/PPP2PPP/RNBQKB1R b KQkq - 0 3",
+        "san": "d4",
+        "from": "d2",
+        "to": "d4",
+        "moveNumber": 3,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "rnbqkbnr/pp2pppp/3p4/8/3pP3/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 4",
+        "san": "cxd4",
+        "from": "c5",
+        "to": "d4",
+        "moveNumber": 3,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "rnbqkbnr/pp2pppp/3p4/8/3NP3/8/PPP2PPP/RNBQKB1R b KQkq - 0 4",
+        "san": "Nxd4",
+        "from": "f3",
+        "to": "d4",
+        "moveNumber": 4,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "rnbqkb1r/pp2pppp/3p1n2/8/3NP3/8/PPP2PPP/RNBQKB1R w KQkq - 1 5",
+        "san": "Nf6",
+        "from": "g8",
+        "to": "f6",
+        "moveNumber": 4,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "rnbqkb1r/pp2pppp/3p1n2/8/3NP3/2N5/PPP2PPP/R1BQKB1R b KQkq - 2 5",
+        "san": "Nc3",
+        "from": "b1",
+        "to": "c3",
+        "moveNumber": 5,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "rnbqkb1r/1p2pppp/p2p1n2/8/3NP3/2N5/PPP2PPP/R1BQKB1R w KQkq - 0 6",
+        "san": "a6",
+        "from": "a7",
+        "to": "a6",
+        "moveNumber": 5,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "rnbqkb1r/1p2pppp/p2p1n2/8/3NP3/2N1B3/PPP2PPP/R2QKB1R b KQkq - 1 6",
+        "san": "Be3",
+        "from": "c1",
+        "to": "e3",
+        "moveNumber": 6,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "rnbqkb1r/1p3ppp/p2p1n2/4p3/3NP3/2N1B3/PPP2PPP/R2QKB1R w KQkq - 0 7",
+        "san": "e5",
+        "from": "e7",
+        "to": "e5",
+        "moveNumber": 6,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "rnbqkb1r/1p3ppp/p2p1n2/4p3/4P3/1NN1B3/PPP2PPP/R2QKB1R b KQkq - 1 7",
+        "san": "Nb3",
+        "from": "d4",
+        "to": "b3",
+        "moveNumber": 7,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "rn1qkb1r/1p3ppp/p2pbn2/4p3/4P3/1NN1B3/PPP2PPP/R2QKB1R w KQkq - 2 8",
+        "san": "Be6",
+        "from": "c8",
+        "to": "e6",
+        "moveNumber": 7,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "rn1qkb1r/1p3ppp/p2pbn2/4p3/4P3/1NN1BP2/PPP3PP/R2QKB1R b KQkq - 0 8",
+        "san": "f3",
+        "from": "f2",
+        "to": "f3",
+        "moveNumber": 8,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "rn1qk2r/1p2bppp/p2pbn2/4p3/4P3/1NN1BP2/PPP3PP/R2QKB1R w KQkq - 1 9",
+        "san": "Be7",
+        "from": "f8",
+        "to": "e7",
+        "moveNumber": 8,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "rn1qk2r/1p2bppp/p2pbn2/4p3/4P3/1NN1BP2/PPPQ2PP/R3KB1R b KQkq - 2 9",
+        "san": "Qd2",
+        "from": "d1",
+        "to": "d2",
+        "moveNumber": 9,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "rn1q1rk1/1p2bppp/p2pbn2/4p3/4P3/1NN1BP2/PPPQ2PP/R3KB1R w KQ - 3 10",
+        "san": "O-O",
+        "from": "e8",
+        "to": "g8",
+        "moveNumber": 9,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "rn1q1rk1/1p2bppp/p2pbn2/4p3/4P3/1NN1BP2/PPPQ2PP/2KR1B1R b - - 4 10",
+        "san": "O-O-O",
+        "from": "e1",
+        "to": "c1",
+        "moveNumber": 10,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "r2q1rk1/1p1nbppp/p2pbn2/4p3/4P3/1NN1BP2/PPPQ2PP/2KR1B1R w - - 5 11",
+        "san": "Nbd7",
+        "from": "b8",
+        "to": "d7",
+        "moveNumber": 10,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "r2q1rk1/1p1nbppp/p2pbn2/4p3/4P1P1/1NN1BP2/PPPQ3P/2KR1B1R b - - 0 11",
+        "san": "g4",
+        "from": "g2",
+        "to": "g4",
+        "moveNumber": 11,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "r2q1rk1/3nbppp/p2pbn2/1p2p3/4P1P1/1NN1BP2/PPPQ3P/2KR1B1R w - - 0 12",
+        "san": "b5",
+        "from": "b7",
+        "to": "b5",
+        "moveNumber": 11,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "r2q1rk1/3nbppp/p2pbn2/1p2p1P1/4P3/1NN1BP2/PPPQ3P/2KR1B1R b - - 0 12",
+        "san": "g5",
+        "from": "g4",
+        "to": "g5",
+        "moveNumber": 12,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "r2q1rk1/3nbppp/p2pbn2/4p1P1/1p2P3/1NN1BP2/PPPQ3P/2KR1B1R w - - 0 13",
+        "san": "b4",
+        "from": "b5",
+        "to": "b4",
+        "moveNumber": 12,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "r2q1rk1/3nbppp/p2pbn2/4p1P1/1p2P3/1N2BP2/PPPQN2P/2KR1B1R b - - 1 13",
+        "san": "Ne2",
+        "from": "c3",
+        "to": "e2",
+        "moveNumber": 13,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "r2qnrk1/3nbppp/p2pb3/4p1P1/1p2P3/1N2BP2/PPPQN2P/2KR1B1R w - - 2 14",
+        "san": "Ne8",
+        "from": "f6",
+        "to": "e8",
+        "moveNumber": 13,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "r2qnrk1/3nbppp/p2pb3/4p1P1/1p2PP2/1N2B3/PPPQN2P/2KR1B1R b - - 0 14",
+        "san": "f4",
+        "from": "f3",
+        "to": "f4",
+        "moveNumber": 14,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "r2qnrk1/3nbppp/3pb3/p3p1P1/1p2PP2/1N2B3/PPPQN2P/2KR1B1R w - - 0 15",
+        "san": "a5",
+        "from": "a6",
+        "to": "a5",
+        "moveNumber": 14,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "r2qnrk1/3nbppp/3pb3/p3pPP1/1p2P3/1N2B3/PPPQN2P/2KR1B1R b - - 0 15",
+        "san": "f5",
+        "from": "f4",
+        "to": "f5",
+        "moveNumber": 15,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "r2qnrk1/3nbppp/3pb3/4pPP1/pp2P3/1N2B3/PPPQN2P/2KR1B1R w - - 0 16",
+        "san": "a4",
+        "from": "a5",
+        "to": "a4",
+        "moveNumber": 15,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "r2qnrk1/3nbppp/3pP3/4p1P1/pp2P3/1N2B3/PPPQN2P/2KR1B1R b - - 0 16",
+        "san": "fxe6",
+        "from": "f5",
+        "to": "e6",
+        "moveNumber": 16,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "r2qnrk1/3nbppp/3pP3/4p1P1/1p2P3/1p2B3/PPPQN2P/2KR1B1R w - - 0 17",
+        "san": "axb3",
+        "from": "a4",
+        "to": "b3",
+        "moveNumber": 16,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "r2qnrk1/3nbppp/3pP3/4p1P1/1p2P3/1P2B3/PP1QN2P/2KR1B1R b - - 0 17",
+        "san": "cxb3",
+        "from": "c2",
+        "to": "b3",
+        "moveNumber": 17,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "r2qnrk1/3nb1pp/3pp3/4p1P1/1p2P3/1P2B3/PP1QN2P/2KR1B1R w - - 0 18",
+        "san": "fxe6",
+        "from": "f7",
+        "to": "e6",
+        "moveNumber": 17,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "r2qnrk1/3nb1pp/3pp3/4p1P1/1p2P3/1P2B2B/PP1QN2P/2KR3R b - - 1 18",
+        "san": "Bh3",
+        "from": "f1",
+        "to": "h3",
+        "moveNumber": 18,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "3qnrk1/3nb1pp/3pp3/4p1P1/1p2P3/1P2B2B/rP1QN2P/2KR3R w - - 0 19",
+        "san": "Rxa2",
+        "from": "a8",
+        "to": "a2",
+        "moveNumber": 18,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "3qnrk1/3nb1pp/3pB3/4p1P1/1p2P3/1P2B3/rP1QN2P/2KR3R b - - 0 19",
+        "san": "Bxe6+",
+        "from": "h3",
+        "to": "e6",
+        "moveNumber": 19,
+        "side": "white",
+        "check": "g8"
+      },
+      {
+        "fen": "3qnr1k/3nb1pp/3pB3/4p1P1/1p2P3/1P2B3/rP1QN2P/2KR3R w - - 1 20",
+        "san": "Kh8",
+        "from": "g8",
+        "to": "h8",
+        "moveNumber": 19,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "3qnr1k/3nb1pp/3pB3/4p1P1/1p2P3/1P2B1N1/rP1Q3P/2KR3R b - - 2 20",
+        "san": "Ng3",
+        "from": "e2",
+        "to": "g3",
+        "moveNumber": 20,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "4nr1k/3nb1pp/3pB3/q3p1P1/1p2P3/1P2B1N1/rP1Q3P/2KR3R w - - 3 21",
+        "san": "Qa5",
+        "from": "d8",
+        "to": "a5",
+        "moveNumber": 20,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "4nr1k/3nb1pp/3pB3/q3pNP1/1p2P3/1P2B3/rP1Q3P/2KR3R b - - 4 21",
+        "san": "Nf5",
+        "from": "g3",
+        "to": "f5",
+        "moveNumber": 21,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "4nr1k/3nb1pp/3pB3/q3pNP1/1p2P3/1P2B3/1P1Q3P/r1KR3R w - - 5 22",
+        "san": "Ra1+",
+        "from": "a2",
+        "to": "a1",
+        "moveNumber": 21,
+        "side": "black",
+        "check": "c1"
+      },
+      {
+        "fen": "4nr1k/3nb1pp/3pB3/q3pNP1/1p2P3/1P2B3/1PKQ3P/r2R3R b - - 6 22",
+        "san": "Kc2",
+        "from": "c1",
+        "to": "c2",
+        "moveNumber": 22,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "4nr1k/2qnb1pp/3pB3/4pNP1/1p2P3/1P2B3/1PKQ3P/r2R3R w - - 7 23",
+        "san": "Qc7+",
+        "from": "a5",
+        "to": "c7",
+        "moveNumber": 22,
+        "side": "black",
+        "check": "c2"
+      },
+      {
+        "fen": "4nr1k/2qnb1pp/3p4/4pNP1/1pB1P3/1P2B3/1PKQ3P/r2R3R b - - 8 23",
+        "san": "Bc4",
+        "from": "e6",
+        "to": "c4",
+        "moveNumber": 23,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "4nr1k/2qnb1pp/8/3ppNP1/1pB1P3/1P2B3/1PKQ3P/r2R3R w - - 0 24",
+        "san": "d5",
+        "from": "d6",
+        "to": "d5",
+        "moveNumber": 23,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "4nr1k/2qnb1pp/8/3ppNP1/1pB1P3/1P2B3/1PKQ3P/R6R b - - 0 24",
+        "san": "Rxa1",
+        "from": "d1",
+        "to": "a1",
+        "moveNumber": 24,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "4nr1k/2qnb1pp/8/4pNP1/1pp1P3/1P2B3/1PKQ3P/R6R w - - 0 25",
+        "san": "dxc4",
+        "from": "d5",
+        "to": "c4",
+        "moveNumber": 24,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "4nr1k/R1qnb1pp/8/4pNP1/1pp1P3/1P2B3/1PKQ3P/7R b - - 1 25",
+        "san": "Ra7",
+        "from": "a1",
+        "to": "a7",
+        "moveNumber": 25,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "4nr1k/R1qnb1pp/8/4pNP1/1p2P3/1p2B3/1PKQ3P/7R w - - 0 26",
+        "san": "cxb3+",
+        "from": "c4",
+        "to": "b3",
+        "moveNumber": 25,
+        "side": "black",
+        "check": "c2"
+      },
+      {
+        "fen": "4nr1k/R1qnb1pp/8/4pNP1/1p2P3/1K2B3/1P1Q3P/7R b - - 0 26",
+        "san": "Kxb3",
+        "from": "c2",
+        "to": "b3",
+        "moveNumber": 26,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "4nr1k/R1q1b1pp/8/2n1pNP1/1p2P3/1K2B3/1P1Q3P/7R w - - 1 27",
+        "san": "Nc5+",
+        "from": "d7",
+        "to": "c5",
+        "moveNumber": 26,
+        "side": "black",
+        "check": "b3"
+      },
+      {
+        "fen": "4nr1k/R1q1b1pp/8/2B1pNP1/1p2P3/1K6/1P1Q3P/7R b - - 0 27",
+        "san": "Bxc5",
+        "from": "e3",
+        "to": "c5",
+        "moveNumber": 27,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "4nr1k/R3b1pp/8/2q1pNP1/1p2P3/1K6/1P1Q3P/7R w - - 0 28",
+        "san": "Qxc5",
+        "from": "c7",
+        "to": "c5",
+        "moveNumber": 27,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "4nr1k/4R1pp/8/2q1pNP1/1p2P3/1K6/1P1Q3P/7R b - - 0 28",
+        "san": "Rxe7",
+        "from": "a7",
+        "to": "e7",
+        "moveNumber": 28,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "4nr1k/4R1pp/8/4pNP1/1p2P3/1Kq5/1P1Q3P/7R w - - 1 29",
+        "san": "Qc3+",
+        "from": "c5",
+        "to": "c3",
+        "moveNumber": 28,
+        "side": "black",
+        "check": "b3"
+      },
+      {
+        "fen": "4nr1k/4R1pp/8/4pNP1/1p2P3/1KP5/3Q3P/7R b - - 0 29",
+        "san": "bxc3",
+        "from": "b2",
+        "to": "c3",
+        "moveNumber": 29,
+        "side": "white",
+        "check": null
+      },
+      {
+        "fen": "4nr1k/4R1pp/8/4pNP1/4P3/1Kp5/3Q3P/7R w - - 0 30",
+        "san": "bxc3",
+        "from": "b4",
+        "to": "c3",
+        "moveNumber": 29,
+        "side": "black",
+        "check": null
+      },
+      {
+        "fen": "3Qnr1k/4R1pp/8/4pNP1/4P3/1Kp5/7P/7R b - - 1 30",
+        "san": "Qd8",
+        "from": "d2",
+        "to": "d8",
+        "moveNumber": 30,
+        "side": "white",
+        "check": null
+      }
     ]
+  },
+  "publishedUpdated": "2026-10-16",
+  "publishedDeclaredCommit": "473e1230f6654e5e50304d7178c8cc1680f33ea6",
+  "accuracyAnalysis": {
+    "engine": "Stockfish 19",
+    "depth": 12,
+    "threads": 1,
+    "hashMiB": 64,
+    "engineSha256": "8eed61129d1493c5d1f2fd9323f0c54c47ac49319911fbde18c6b9c87e8b13c5",
+    "engineRelease": "https://github.com/official-stockfish/Stockfish/releases/tag/sf_19",
+    "evaluated": "2026-10-17",
+    "method": "Lichess-formula Accuracy, locally evaluated with Stockfish 19 at depth 12; not official Lichess server analysis.",
+    "aggregation": "Move-count-weighted arithmetic mean of each color/game Accuracy within the attributed sample. Duplicate records are retained within included samples. Not a Lichess-defined cross-game metric.",
+    "scope": "All 41 public model labels in the frozen 2026-10-17 website snapshot. Numeric values measure available attributed archive and recovered chat samples, not a claim to reproduce the entire public benchmark corpus. All displayed current Accuracy values are newly evaluated with Stockfish 19.",
+    "reportSha256": "53e8a09814d4aaee07d7d4e017fe5f47c9abaabfe81d0720b610e9dfbf6dc517",
+    "downloadedWebsiteSha256": "960dac222c06f44aa3aa38856fccddc7b6debb404c2e8cb2107f939c2f1f2739",
+    "publishedSource": "https://github.com/chessbench-ai/chessbench-ai.github.io/blob/e18ed7384f9fb9b2b4e5446d1581167d93faec1c/index.html"
   }
 };
 </script>
@@ -656,16 +1881,18 @@ window.ChessBenchData = {
   const elo = (value) => Number(value).toLocaleString('en-US');
   const hasMetric = (value) => typeof value === 'number' && Number.isFinite(value) && value >= 0;
   const decimal = (value) => hasMetric(value) ? value.toFixed(2) : '—';
+  const accuracy = (value) => hasMetric(value) ? `${value.toFixed(2)}%` : '—';
+  const hasNote = (model) => Boolean(model.note || model.accuracyNotes.length);
   const cost = (value) => hasMetric(value) ? `$${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 3 })}` : '—';
   const costMarkup = (value) => hasMetric(value)
     ? `${cost(value)}<span class="cost-unit">/task</span>`
     : '<span class="missing-value" aria-label="Not reported" title="Not reported">—</span>';
   const sortColumns = {
-    benchmarkElo: { label: 'benchmark Elo', defaultDirection: 'desc' },
+    accuracy: { label: 'Accuracy', defaultDirection: 'desc' },
     costPerTask: { label: 'cost per task', defaultDirection: 'asc' }
   };
   const normalized = (value) => String(value).normalize('NFKC').toLocaleLowerCase('en').trim();
-  const state = { query: '', provider: 'All', sort: 'benchmarkElo', direction: 'desc', selectedRank: null };
+  const state = { query: '', provider: 'All', sort: 'accuracy', direction: 'desc', selectedRank: null };
   const providers = [...new Set(models.map((model) => model.provider))].sort((a, b) => a.localeCompare(b));
   let visibleModels = [...models];
 
@@ -712,8 +1939,8 @@ window.ChessBenchData = {
     $('model-rows').innerHTML = visibleModels.map((model) => `
       <tr data-rank="${model.rank}"${model.rank === 1 ? ' class="is-leader"' : ''}>
         <td class="rank-cell">${model.rank}</td>
-        <td><button type="button" class="model-button" data-model="${model.rank}" aria-label="${escapeHTML(model.model)}, view results${model.note ? ' and evaluation note' : ''}">${escapeHTML(model.model)}${model.note ? '<span class="model-note-indicator" aria-hidden="true">†</span>' : ''}</button><span class="model-provider">${escapeHTML(model.provider)}</span></td>
-        <td class="numeric elo-value">${elo(model.benchmarkElo)}</td>
+        <td><button type="button" class="model-button" data-model="${model.rank}" aria-label="${escapeHTML(model.model)}, view results${hasNote(model) ? ' and evaluation note' : ''}">${escapeHTML(model.model)}${hasNote(model) ? '<span class="model-note-indicator" aria-hidden="true">†</span>' : ''}</button><span class="model-provider">${escapeHTML(model.provider)}</span></td>
+        <td class="numeric accuracy-value">${accuracy(model.accuracy)}</td>
         <td class="numeric cost-value">${costMarkup(model.costPerTask)}</td>
       </tr>`).join('');
     $('empty-state').hidden = visibleModels.length > 0;
@@ -760,12 +1987,22 @@ window.ChessBenchData = {
     state.selectedRank = model.rank;
     $('model-title').textContent = model.model;
     $('model-provider').textContent = model.provider;
-    $('model-description').textContent = `Rank ${model.rank} of ${models.length} tested models, by benchmark Elo.`;
+    $('model-description').textContent = `Rank ${model.rank} of ${models.length} models, by unrounded sample Accuracy.`;
+    $('model-accuracy').textContent = accuracy(model.accuracy);
+    $('model-sample').innerHTML = `${model.accuracyGames} ${model.accuracyGames === 1 ? 'game' : 'games'}<span>${model.accuracyMoves.toLocaleString('en-US')} legal moves (plies)</span>`;
+    $('model-source').hidden = model.accuracySourceLabel === model.model;
+    $('model-source').textContent = `Original source label: ${model.accuracySourceLabel}.`;
+    $('model-evaluation-notes').hidden = !model.accuracyNotes.length;
+    $('model-evaluation-notes').replaceChildren(...model.accuracyNotes.map((note) => {
+      const item = document.createElement('li');
+      item.textContent = note;
+      return item;
+    }));
     $('model-elo').textContent = elo(model.benchmarkElo);
     $('model-acpl').textContent = decimal(model.acpl);
     $('model-cost').innerHTML = costMarkup(model.costPerTask);
     $('model-note').hidden = !model.note;
-    $('model-note').textContent = model.note || '';
+    $('model-note').textContent = model.note ? `Original website note: ${model.note}` : '';
     $('model-dialog').showModal();
   }
   $('model-rows').addEventListener('click', (event) => {
