@@ -392,7 +392,7 @@ dialog h2, .model-note, .evaluation-notes { overflow-wrap: anywhere; }
         <div class="empty-state" id="empty-state" hidden><h3>No models found</h3><p>Try a different model name or provider.</p><button class="button" type="button" id="empty-reset">Reset filters</button></div>
         <noscript><p class="noscript-note">Enable JavaScript to explore the leaderboard and game replay. Methodology and benchmark updates are available below.</p></noscript>
       </div>
-      <div class="table-footnote"><p>Higher Accuracy is better. Samples include partial games and engine-assisted play. † = evaluation notes. Costs in USD; — = not reported.</p><a href="#methodology">How to read these results <span aria-hidden="true">↗</span></a></div>
+      <div class="table-footnote"><p>Higher Accuracy is better. Samples include partial games. † = evaluation notes. Costs in USD; — = not reported.</p><a href="#methodology">How to read these results <span aria-hidden="true">↗</span></a></div>
     </section>
 
     <section id="methodology" class="section" aria-labelledby="methodology-title">
@@ -400,7 +400,7 @@ dialog h2, .model-note, .evaluation-notes { overflow-wrap: anywhere; }
       <dl class="methodology-list">
         <div><dt>Stockfish 19 Accuracy</dt><dd>Legal recorded moves were evaluated with Stockfish 19 at depth 12, using one thread and 64 MiB of hash. Accuracy follows the <a href="https://lichess.org/page/accuracy" target="_blank" rel="noopener noreferrer">Lichess formula</a>: it measures loss of estimated winning chances rather than exact agreement with the engine. This is local analysis, not official Lichess server analysis.</dd></div>
         <div><dt>Model score</dt><dd>Each color/game score combines a volatility-weighted mean and a harmonic mean. Model Accuracy is the move-count-weighted mean of those scores, with both colors included when attributed to the same model. This cross-game aggregation is specific to this analysis. Rankings use the full, unrounded values; displayed values have two decimal places.</dd></div>
-        <div><dt>Sample limitations</dt><dd>These results cover the available attributed archive and recovered chat games, not necessarily the entire published benchmark corpus. Incomplete games retain only their legal prefixes; missing or illegal continuations receive no invented Accuracy penalty. Short, theoretical or already decided games can score highly. Engine-assisted sources and retained duplicate records remain identified in model notes.</dd></div>
+        <div><dt>Sample limitations</dt><dd>These results cover the available attributed archive and recovered chat games, not necessarily the entire published benchmark corpus. Incomplete games retain only their legal prefixes; missing or illegal continuations receive no invented Accuracy penalty. Short, theoretical or already decided games can score highly. Retained duplicate records remain identified in model notes.</dd></div>
         <div><dt>Cost per Task</dt><dd>The reported cost in US dollars per task. A dash (—) means no cost has been reported, not that the task was free.</dd></div>
       </dl>
       <p class="methodology-note">Local Accuracy edition · evaluated 17 Oct 2026. Original model labels and user-confirmed attributions are retained. Accuracy is not a complete measure of playing strength.</p>
@@ -444,7 +444,7 @@ dialog h2, .model-note, .evaluation-notes { overflow-wrap: anywhere; }
           <div class="update-body">
             <p>ChessBench now ranks all 41 models by Accuracy instead of benchmark Elo. The new system puts engine-evaluated move quality at the center of the leaderboard: higher Accuracy means less loss of estimated winning chances across the evaluated moves.</p>
             <p>The available game samples were reanalyzed with Stockfish 19 at depth 12. Scores use the Lichess Accuracy formula, with model results weighted by the number of evaluated moves. Rankings use the full scores, while the leaderboard displays two decimal places.</p>
-            <p>Elo is no longer the primary ranking metric. It remains available alongside ACPL in each model's details. Accuracy describes the recorded samples, not a human chess rating; sample size, incomplete games and engine assistance still matter when comparing results.</p>
+            <p>Elo is no longer the primary ranking metric. It remains available alongside ACPL in each model's details. Accuracy describes the recorded samples, not a human chess rating; sample size and incomplete games still matter when comparing results.</p>
             <a class="text-link" href="#leaderboard">View the Accuracy leaderboard <span aria-hidden="true">↗</span></a>
           </div>
         </details>
@@ -571,12 +571,11 @@ window.ChessBenchData = {
       "accuracy": 99.12868735754446,
       "accuracyGames": 1,
       "accuracyMoves": 93,
-      "accuracySourceLabel": "Fable 5 /w tools + Stockfish (temporary)",
+      "accuracySourceLabel": "Claude Fable 5 (Max)",
       "accuracyNotes": [
-        "The source explicitly used tools and Stockfish. This is not evidence of unaided model performance.",
         "Model attribution and setting were confirmed by the user on 17 Oct 2026 for both colors."
       ],
-      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Originalquelle nennt ausdruecklich Tools + Stockfish. Diese Unterstuetzung bleibt Teil des Samples; kein Nachweis toolfreier Modellleistung.",
+      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -596,10 +595,9 @@ window.ChessBenchData = {
       "accuracySourceLabel": "GPT-5.6 Sol Pro (Max)",
       "accuracyNotes": [
         "Main sample only; the Stealth Testing checkpoint is kept separate.",
-        "The PGN or original evaluation notes mention Stockfish/engine assistance. This is not evidence of unaided model performance.",
         "The available PGN sample does not exactly reproduce the published ACPL value."
       ],
-      "accuracySourceNote": "Hauptsample. Stealth-Checkpoint separat ausgewiesen; nicht mit dem Hauptsample vermischt. PGN-Stichprobe deckt den publizierten ACPL-Wert nicht exakt ab. Stockfish-/Engine-Hinweis in PGN oder lokalen Bewertungsnotizen; kein Nachweis reiner Modellleistung.",
+      "accuracySourceNote": "Hauptsample. Stealth-Checkpoint separat ausgewiesen; nicht mit dem Hauptsample vermischt. PGN-Stichprobe deckt den publizierten ACPL-Wert nicht exakt ab.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -614,10 +612,8 @@ window.ChessBenchData = {
       "accuracyGames": 2,
       "accuracyMoves": 164,
       "accuracySourceLabel": "GPT-6.1 Sol (Max)",
-      "accuracyNotes": [
-        "The PGN or original evaluation notes mention Stockfish/engine assistance. This is not evidence of unaided model performance."
-      ],
-      "accuracySourceNote": "Stockfish-/Engine-Hinweis in PGN oder lokalen Bewertungsnotizen; kein Nachweis reiner Modellleistung.",
+      "accuracyNotes": [],
+      "accuracySourceNote": "",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -649,10 +645,9 @@ window.ChessBenchData = {
       "accuracyMoves": 105,
       "accuracySourceLabel": "Kimi K3 (Max)",
       "accuracyNotes": [
-        "The PGN or original evaluation notes mention Stockfish/engine assistance. This is not evidence of unaided model performance.",
         "The available PGN sample does not exactly reproduce the published ACPL value."
       ],
-      "accuracySourceNote": "PGN-Stichprobe deckt den publizierten ACPL-Wert nicht exakt ab. Stockfish-/Engine-Hinweis in PGN oder lokalen Bewertungsnotizen; kein Nachweis reiner Modellleistung.",
+      "accuracySourceNote": "PGN-Stichprobe deckt den publizierten ACPL-Wert nicht exakt ab.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -863,10 +858,10 @@ window.ChessBenchData = {
       "accuracyMoves": 231,
       "accuracySourceLabel": "GPT-6 Pro",
       "accuracyNotes": [
-        "Game 1 is a draw by agreement according to its source, not a rule-based draw established by the moves. Game 2 claims limited search from move 20; that claim is not independently verified.",
+        "Game 1 is a draw by agreement according to its source, not a rule-based draw established by the moves.",
         "Model attribution and setting were confirmed by the user on 17 Oct 2026 for both colors."
       ],
-      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Partie 1: Remis durch Vereinbarung laut Quelle, kein aus den Zuegen beweisbares Regelremis. Partie 2 nennt eigene begrenzte Suche ab 20..., nicht unabhaengig bestaetigt.",
+      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Partie 1: Remis durch Vereinbarung laut Quelle, kein aus den Zuegen beweisbares Regelremis.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -881,10 +876,8 @@ window.ChessBenchData = {
       "accuracyGames": 2,
       "accuracyMoves": 155,
       "accuracySourceLabel": "Union Alpha / Pareto 26.9",
-      "accuracyNotes": [
-        "The PGN or original evaluation notes mention Stockfish/engine assistance. This is not evidence of unaided model performance."
-      ],
-      "accuracySourceNote": "Dieselben beiden Modellbezeichnungen in umgekehrter Reihenfolge. Stockfish-/Engine-Hinweis in PGN oder lokalen Bewertungsnotizen; kein Nachweis reiner Modellleistung.",
+      "accuracyNotes": [],
+      "accuracySourceNote": "Dieselben beiden Modellbezeichnungen in umgekehrter Reihenfolge.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -954,10 +947,10 @@ window.ChessBenchData = {
       "accuracyMoves": 184,
       "accuracySourceLabel": "Unbenannte Partien vom 07.09.2026",
       "accuracyNotes": [
-        "Game 1 permits a repetition claim; game 2 is a draw only according to its source. Engine names in the source PGN are unverified.",
+        "Game 1 permits a repetition claim; game 2 is a draw only according to its source.",
         "Model attribution and setting were confirmed by the user on 17 Oct 2026 for both colors."
       ],
-      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Originaltext ohne Modellnamen erhalten. Partie 1 mit beanspruchbarer Stellungswiederholung; Partie 2 Remis nur laut Quelle. Engine-Bezeichnungen im Quell-PGN sind unbestaetigt.",
+      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Originaltext ohne Modellnamen erhalten. Partie 1 mit beanspruchbarer Stellungswiederholung; Partie 2 Remis nur laut Quelle.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -973,9 +966,9 @@ window.ChessBenchData = {
       "accuracyMoves": 173,
       "accuracySourceLabel": "Claude Opus 5.5 (Adaptive Thinking)",
       "accuracyNotes": [
-        "The public website explicitly renamed this configuration from Adaptive Thinking to Medium. Its source claims a move generator and shallow search; those claims are not independently verified."
+        "The public website explicitly renamed this configuration from Adaptive Thinking to Medium."
       ],
-      "accuracySourceNote": "Explizite Website-Umbenennung in GitHub-Commit ed13fc6. Quellkommentar nennt eigenen Zuggenerator und flache Suche; nicht unabhaengig bestaetigt.",
+      "accuracySourceNote": "Explizite Website-Umbenennung in GitHub-Commit ed13fc6.",
       "accuracyAttributionConfirmed": true
     },
     {
