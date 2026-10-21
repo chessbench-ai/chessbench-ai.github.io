@@ -90,7 +90,6 @@ td.rank-cell { padding-left: 20px; color: #717867; font: 12px/1.5 var(--mono); }
 .model-button { display: inline; padding: 0; border: 0; background: none; text-align: left; font-size: 14px; line-height: 1.4; font-weight: 550; letter-spacing: 0; cursor: pointer; }
 .model-button:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 .model-provider { display: block; margin-top: 3px; font-size: 11px; color: var(--muted); line-height: 1.3; }
-.model-note-indicator { margin-left: 6px; font-size: 11px; font-weight: 400; color: var(--accent); vertical-align: top; }
 td.numeric { font: 14px/1.5 var(--mono); letter-spacing: 0; }
 td.accuracy-value { font-weight: 600; }
 .cost-value { white-space: nowrap; }
@@ -218,12 +217,8 @@ dialog h2 { font-size: 26px; line-height: 1.35; }
 #model-description { color: var(--muted); font-size: 13px; }
 .model-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; padding: 24px 0; margin: 24px 0 0; border-block: 1px solid var(--line); }
 .model-metrics dt { color: var(--muted); font-size: 12px; }
-.evaluation-notes { padding-left: 18px; margin: 20px 0 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
-.evaluation-notes li + li { margin-top: 8px; }
-dialog h2, .model-note, .evaluation-notes { overflow-wrap: anywhere; }
+dialog h2 { overflow-wrap: anywhere; }
 .model-metrics dd { margin: 7px 0 0; font: 28px/1.3 var(--mono); letter-spacing: 0; }
-.model-note { margin: 22px 0 0; font-size: 13px; color: var(--muted); line-height: 1.75; }
-.dialog-note { margin: 22px 0 0; font-size: 12px; color: var(--muted); }
 @media (min-width: 1600px) { .container { width: min(1200px, calc(100% - 100px)); } }
 @media (max-width: 960px) {
   .container { width: calc(100% - 48px); }
@@ -392,7 +387,7 @@ dialog h2, .model-note, .evaluation-notes { overflow-wrap: anywhere; }
         <div class="empty-state" id="empty-state" hidden><h3>No models found</h3><p>Try a different model name or provider.</p><button class="button" type="button" id="empty-reset">Reset filters</button></div>
         <noscript><p class="noscript-note">Enable JavaScript to explore the leaderboard and game replay. Methodology and benchmark updates are available below.</p></noscript>
       </div>
-      <div class="table-footnote"><p>Higher Accuracy is better. Samples include partial games. † = evaluation notes. Costs in USD; — = not reported.</p><a href="#methodology">How to read these results <span aria-hidden="true">↗</span></a></div>
+      <div class="table-footnote"><p>Higher Accuracy is better. Samples include partial games. Costs in USD; — = not reported.</p><a href="#methodology">How to read these results <span aria-hidden="true">↗</span></a></div>
     </section>
 
     <section id="methodology" class="section" aria-labelledby="methodology-title">
@@ -400,7 +395,7 @@ dialog h2, .model-note, .evaluation-notes { overflow-wrap: anywhere; }
       <dl class="methodology-list">
         <div><dt>Stockfish 19 Accuracy</dt><dd>Legal recorded moves were evaluated with Stockfish 19 at depth 12, using one thread and 64 MiB of hash. Accuracy follows the <a href="https://lichess.org/page/accuracy" target="_blank" rel="noopener noreferrer">Lichess formula</a>: it measures loss of estimated winning chances rather than exact agreement with the engine. This is local analysis, not official Lichess server analysis.</dd></div>
         <div><dt>Model score</dt><dd>Each color/game score combines a volatility-weighted mean and a harmonic mean. Model Accuracy is the move-count-weighted mean of those scores, with both colors included when attributed to the same model. This cross-game aggregation is specific to this analysis. Rankings use the full, unrounded values; displayed values have two decimal places.</dd></div>
-        <div><dt>Sample limitations</dt><dd>These results cover the available attributed archive and recovered chat games, not necessarily the entire published benchmark corpus. Incomplete games retain only their legal prefixes; missing or illegal continuations receive no invented Accuracy penalty. Short, theoretical or already decided games can score highly. Retained duplicate records remain identified in model notes.</dd></div>
+        <div><dt>Sample limitations</dt><dd>These results cover the available attributed archive and recovered chat games, not necessarily the entire published benchmark corpus. Incomplete games retain only their legal prefixes; missing or illegal continuations receive no invented Accuracy penalty. Short, theoretical or already decided games can score highly.</dd></div>
         <div><dt>Cost per Task</dt><dd>The reported cost in US dollars per task. A dash (—) means no cost has been reported, not that the task was free.</dd></div>
       </dl>
       <p class="methodology-note">Local Accuracy edition · evaluated 17 Oct 2026. Original model labels and user-confirmed attributions are retained. Accuracy is not a complete measure of playing strength.</p>
@@ -531,10 +526,6 @@ dialog h2, .model-note, .evaluation-notes { overflow-wrap: anywhere; }
       <div><dt>Published ACPL</dt><dd id="model-acpl"></dd></div>
       <div><dt>Published Cost per Task</dt><dd id="model-cost"></dd></div>
     </dl>
-    <p class="dialog-note">Stockfish 19 · depth 12 · Lichess-formula Accuracy.<br>Elo, ACPL and costs are unchanged website values, not new engine results.</p>
-    <p id="model-source" class="model-note" hidden></p>
-    <ul id="model-evaluation-notes" class="evaluation-notes" hidden></ul>
-    <p id="model-note" class="model-note" hidden></p>
   </dialog>
 <script>
 // Local Accuracy edition. Published Elo, ACPL, costs and replay are preserved.
@@ -555,9 +546,6 @@ window.ChessBenchData = {
       "accuracy": 99.39723748952794,
       "accuracyGames": 2,
       "accuracyMoves": 138,
-      "accuracySourceLabel": "Grok 4.7 (xhigh)",
-      "accuracyNotes": [],
-      "accuracySourceNote": "",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -571,11 +559,6 @@ window.ChessBenchData = {
       "accuracy": 99.12868735754446,
       "accuracyGames": 1,
       "accuracyMoves": 93,
-      "accuracySourceLabel": "Claude Fable 5 (Max)",
-      "accuracyNotes": [
-        "Model attribution and setting were confirmed by the user on 17 Oct 2026 for both colors."
-      ],
-      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -586,18 +569,11 @@ window.ChessBenchData = {
       "acpl": 3.62,
       "checkpointLabel": "Stealth Testing",
       "checkpointElo": 2650,
-      "note": "The Stealth Testing checkpoint is consolidated into this entry and recorded at 2,650 benchmark ELO.",
       "costPerTask": null,
       "publishedRank": 1,
       "accuracy": 99.12852515293531,
       "accuracyGames": 2,
       "accuracyMoves": 232,
-      "accuracySourceLabel": "GPT-5.6 Sol Pro (Max)",
-      "accuracyNotes": [
-        "Main sample only; the Stealth Testing checkpoint is kept separate.",
-        "The available PGN sample does not exactly reproduce the published ACPL value."
-      ],
-      "accuracySourceNote": "Hauptsample. Stealth-Checkpoint separat ausgewiesen; nicht mit dem Hauptsample vermischt. PGN-Stichprobe deckt den publizierten ACPL-Wert nicht exakt ab.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -611,9 +587,6 @@ window.ChessBenchData = {
       "accuracy": 99.08949297434978,
       "accuracyGames": 2,
       "accuracyMoves": 164,
-      "accuracySourceLabel": "GPT-6.1 Sol (Max)",
-      "accuracyNotes": [],
-      "accuracySourceNote": "",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -627,9 +600,6 @@ window.ChessBenchData = {
       "accuracy": 98.90878591106063,
       "accuracyGames": 1,
       "accuracyMoves": 28,
-      "accuracySourceLabel": "Gemini 3.1 Pro (High)",
-      "accuracyNotes": [],
-      "accuracySourceNote": "",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -643,11 +613,6 @@ window.ChessBenchData = {
       "accuracy": 98.0524667745146,
       "accuracyGames": 1,
       "accuracyMoves": 105,
-      "accuracySourceLabel": "Kimi K3 (Max)",
-      "accuracyNotes": [
-        "The available PGN sample does not exactly reproduce the published ACPL value."
-      ],
-      "accuracySourceNote": "PGN-Stichprobe deckt den publizierten ACPL-Wert nicht exakt ab.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -661,9 +626,6 @@ window.ChessBenchData = {
       "accuracy": 97.63103373520367,
       "accuracyGames": 2,
       "accuracyMoves": 66,
-      "accuracySourceLabel": "Qwen 3.8 Max",
-      "accuracyNotes": [],
-      "accuracySourceNote": "",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -677,9 +639,6 @@ window.ChessBenchData = {
       "accuracy": 97.28746739084062,
       "accuracyGames": 1,
       "accuracyMoves": 50,
-      "accuracySourceLabel": "GPT-5.5 Pro",
-      "accuracyNotes": [],
-      "accuracySourceNote": "",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -693,11 +652,6 @@ window.ChessBenchData = {
       "accuracy": 97.16733076009484,
       "accuracyGames": 2,
       "accuracyMoves": 87,
-      "accuracySourceLabel": "GPT-6 Sol",
-      "accuracyNotes": [
-        "Model attribution and setting were confirmed by the user on 17 Oct 2026 for both colors."
-      ],
-      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Originalquelllabel GPT-6 Sol erhalten. Max-Reasoning nachtraeglich bestaetigt.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -711,12 +665,6 @@ window.ChessBenchData = {
       "accuracy": 96.72601186957093,
       "accuracyGames": 2,
       "accuracyMoves": 40,
-      "accuracySourceLabel": "ox-alpha",
-      "accuracyNotes": [
-        "Both source games are incomplete. Only their 40 stored legal moves are evaluated.",
-        "Model attribution and setting were confirmed by the user on 17 Oct 2026 for both colors."
-      ],
-      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Originalquelllabel ox-alpha erhalten. Beide Archiveintraege nur teilweise auswertbar. Keine erfundene Accuracy-Strafe fuer fehlende oder illegale Fortsetzungen.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -730,11 +678,6 @@ window.ChessBenchData = {
       "accuracy": 96.02159045667517,
       "accuracyGames": 2,
       "accuracyMoves": 75,
-      "accuracySourceLabel": "Grok 4.6 (xhigh)",
-      "accuracyNotes": [
-        "1 of 2 source games are incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -748,9 +691,6 @@ window.ChessBenchData = {
       "accuracy": 94.66860237152491,
       "accuracyGames": 2,
       "accuracyMoves": 165,
-      "accuracySourceLabel": "Gemini 4 Argon (High)",
-      "accuracyNotes": [],
-      "accuracySourceNote": "",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -764,12 +704,6 @@ window.ChessBenchData = {
       "accuracy": 94.48771585612363,
       "accuracyGames": 2,
       "accuracyMoves": 95,
-      "accuracySourceLabel": "Opus 5",
-      "accuracyNotes": [
-        "One of the two source games is incomplete.",
-        "Model attribution and setting were confirmed by the user on 17 Oct 2026 for both colors."
-      ],
-      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Originalquelllabel Opus 5 erhalten. Einer von zwei Archiveintraegen nur teilweise auswertbar. Keine erfundene Accuracy-Strafe fuer fehlende oder illegale Fortsetzungen.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -778,17 +712,11 @@ window.ChessBenchData = {
       "provider": "Google",
       "benchmarkElo": 2200,
       "acpl": 16.4,
-      "note": "Illegal moves and quick terminations affected game outcomes and lowered its benchmark rating.",
       "costPerTask": null,
       "publishedRank": 29,
       "accuracy": 91.36898850381908,
       "accuracyGames": 4,
       "accuracyMoves": 129,
-      "accuracySourceLabel": "Gemini 3.5 Flash-Lite",
-      "accuracyNotes": [
-        "All four source games are incomplete: two illegal continuations were excluded and two outputs ended early. Only 129 legal moves are evaluated. High opening accuracy does not establish stronger overall play."
-      ],
-      "accuracySourceNote": "Originalchat und gleichnamige Quelldatei belegen beide Farben. Reasoning nicht angegeben. Separate Recovery-Partien, kein kanonischer Archivimport. Alle 4 Verlaeufe unvollstaendig: 2 illegale Fortsetzungen ausgeschlossen, 2 kurze abgebrochene Ausgaben. 129 legale Zuege. Hohe Eroeffnungs-Accuracy belegt keine hoehere Gesamtspielstaerke.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -802,11 +730,6 @@ window.ChessBenchData = {
       "accuracy": 89.86597304683542,
       "accuracyGames": 1,
       "accuracyMoves": 33,
-      "accuracySourceLabel": "Grok 4.3",
-      "accuracyNotes": [
-        "1 of 1 source game is incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -820,11 +743,6 @@ window.ChessBenchData = {
       "accuracy": 89.83799727832488,
       "accuracyGames": 2,
       "accuracyMoves": 40,
-      "accuracySourceLabel": "Gemma 4",
-      "accuracyNotes": [
-        "2 of 2 source games are incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "2 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -838,11 +756,6 @@ window.ChessBenchData = {
       "accuracy": 88.82317224025651,
       "accuracyGames": 5,
       "accuracyMoves": 345,
-      "accuracySourceLabel": "Gemini 3.6 Flash",
-      "accuracyNotes": [
-        "Five games from four runs, including both A/B options. Both colors are attributed to this model. Not all reported draws can be verified as repetitions."
-      ],
-      "accuracySourceNote": "Originalchat und gleichnamige Quelldatei belegen beide Farben. Reasoning nicht angegeben. Separate Recovery-Partien, kein kanonischer Archivimport. 5 Partien aus 4 Laeufen inklusive beider A/B-Optionen. 345 legale Zuege. Gemeldete Remis sind nicht alle als Stellungswiederholung nachweisbar.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -856,12 +769,6 @@ window.ChessBenchData = {
       "accuracy": 87.8087749861939,
       "accuracyGames": 2,
       "accuracyMoves": 231,
-      "accuracySourceLabel": "GPT-6 Pro",
-      "accuracyNotes": [
-        "Game 1 is a draw by agreement according to its source, not a rule-based draw established by the moves.",
-        "Model attribution and setting were confirmed by the user on 17 Oct 2026 for both colors."
-      ],
-      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Partie 1: Remis durch Vereinbarung laut Quelle, kein aus den Zuegen beweisbares Regelremis.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -875,9 +782,6 @@ window.ChessBenchData = {
       "accuracy": 87.62984236600344,
       "accuracyGames": 2,
       "accuracyMoves": 155,
-      "accuracySourceLabel": "Union Alpha / Pareto 26.9",
-      "accuracyNotes": [],
-      "accuracySourceNote": "Dieselben beiden Modellbezeichnungen in umgekehrter Reihenfolge.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -891,11 +795,6 @@ window.ChessBenchData = {
       "accuracy": 85.84600965316066,
       "accuracyGames": 3,
       "accuracyMoves": 269,
-      "accuracySourceLabel": "GPT-4.5",
-      "accuracyNotes": [
-        "1 of 3 source games are incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -909,11 +808,6 @@ window.ChessBenchData = {
       "accuracy": 85.75371886051053,
       "accuracyGames": 1,
       "accuracyMoves": 74,
-      "accuracySourceLabel": "Gemini 3.1 Pro",
-      "accuracyNotes": [
-        "1 of 1 source game is incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -927,11 +821,6 @@ window.ChessBenchData = {
       "accuracy": 85.70510399188257,
       "accuracyGames": 1,
       "accuracyMoves": 59,
-      "accuracySourceLabel": "Claude Fable 5.1 (Max)",
-      "accuracyNotes": [
-        "1 of 1 source game is incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -945,12 +834,6 @@ window.ChessBenchData = {
       "accuracy": 85.69654882222467,
       "accuracyGames": 2,
       "accuracyMoves": 184,
-      "accuracySourceLabel": "Unbenannte Partien vom 07.09.2026",
-      "accuracyNotes": [
-        "Game 1 permits a repetition claim; game 2 is a draw only according to its source.",
-        "Model attribution and setting were confirmed by the user on 17 Oct 2026 for both colors."
-      ],
-      "accuracySourceNote": "Zuordnung fuer beide Farben am 17.10.2026 direkt vom Nutzer bestaetigt. Originaltext ohne Modellnamen erhalten. Partie 1 mit beanspruchbarer Stellungswiederholung; Partie 2 Remis nur laut Quelle.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -964,11 +847,6 @@ window.ChessBenchData = {
       "accuracy": 85.61492276123546,
       "accuracyGames": 2,
       "accuracyMoves": 173,
-      "accuracySourceLabel": "Claude Opus 5.5 (Adaptive Thinking)",
-      "accuracyNotes": [
-        "The public website explicitly renamed this configuration from Adaptive Thinking to Medium."
-      ],
-      "accuracySourceNote": "Explizite Website-Umbenennung in GitHub-Commit ed13fc6.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -982,11 +860,6 @@ window.ChessBenchData = {
       "accuracy": 84.88741620320987,
       "accuracyGames": 2,
       "accuracyMoves": 53,
-      "accuracySourceLabel": "Claude Sonnet 5.5 (Medium)",
-      "accuracyNotes": [
-        "1 of 2 source games are incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1000,11 +873,6 @@ window.ChessBenchData = {
       "accuracy": 83.76677801100351,
       "accuracyGames": 2,
       "accuracyMoves": 63,
-      "accuracySourceLabel": "Grok 4.20",
-      "accuracyNotes": [
-        "1 of 2 source games are incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1018,11 +886,6 @@ window.ChessBenchData = {
       "accuracy": 82.95822400152535,
       "accuracyGames": 2,
       "accuracyMoves": 197,
-      "accuracySourceLabel": "Gemini 3.7 Flash",
-      "accuracyNotes": [
-        "The source PGN specifies model gemini-3.7-flash-high and High effort."
-      ],
-      "accuracySourceNote": "PGN nennt Model gemini-3.7-flash-high und Effort High.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1036,11 +899,6 @@ window.ChessBenchData = {
       "accuracy": 81.64587010589713,
       "accuracyGames": 2,
       "accuracyMoves": 54,
-      "accuracySourceLabel": "GPT-OSS-120b",
-      "accuracyNotes": [
-        "1 of 2 source games are incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1054,11 +912,6 @@ window.ChessBenchData = {
       "accuracy": 81.59076532480387,
       "accuracyGames": 2,
       "accuracyMoves": 66,
-      "accuracySourceLabel": "ChatGPT 5.4 Pro",
-      "accuracyNotes": [
-        "1 of 2 source games are incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1072,9 +925,6 @@ window.ChessBenchData = {
       "accuracy": 79.9216336695729,
       "accuracyGames": 1,
       "accuracyMoves": 47,
-      "accuracySourceLabel": "GPT-5.3 Instant",
-      "accuracyNotes": [],
-      "accuracySourceNote": "",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1088,9 +938,6 @@ window.ChessBenchData = {
       "accuracy": 79.617296829918,
       "accuracyGames": 2,
       "accuracyMoves": 260,
-      "accuracySourceLabel": "Claude Sonnet 5 (Max)",
-      "accuracyNotes": [],
-      "accuracySourceNote": "",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1104,11 +951,6 @@ window.ChessBenchData = {
       "accuracy": 77.88313848051521,
       "accuracyGames": 1,
       "accuracyMoves": 32,
-      "accuracySourceLabel": "Claude Opus 4.7 (Adaptive Thinking)",
-      "accuracyNotes": [
-        "1 of 1 source game is incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1122,11 +964,6 @@ window.ChessBenchData = {
       "accuracy": 73.14872389138476,
       "accuracyGames": 2,
       "accuracyMoves": 52,
-      "accuracySourceLabel": "Minimax M3",
-      "accuracyNotes": [
-        "2 of 2 source games are incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "2 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1135,18 +972,11 @@ window.ChessBenchData = {
       "provider": "xAI",
       "benchmarkElo": 1680,
       "acpl": 53,
-      "note": "Rebenchmarked after errors in the original run; benchmark ELO changed from 1,457 to 1,680.",
       "costPerTask": null,
       "publishedRank": 34,
       "accuracy": 72.98696100282196,
       "accuracyGames": 4,
       "accuracyMoves": 209,
-      "accuracySourceLabel": "Grok 4.5",
-      "accuracyNotes": [
-        "2 of 4 source games are incomplete; only stored legal moves are evaluated.",
-        "One duplicate archive record is retained in this sample."
-      ],
-      "accuracySourceNote": "2 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe. Ein doppelter Archiveintrag wird mitgezaehlt.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1160,11 +990,6 @@ window.ChessBenchData = {
       "accuracy": 70.71646944485653,
       "accuracyGames": 1,
       "accuracyMoves": 82,
-      "accuracySourceLabel": "GPT-4o",
-      "accuracyNotes": [
-        "1 of 1 source game is incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1178,11 +1003,6 @@ window.ChessBenchData = {
       "accuracy": 68.7680876030228,
       "accuracyGames": 1,
       "accuracyMoves": 31,
-      "accuracySourceLabel": "Claude Opus 4.8 (Adaptive Thinking)",
-      "accuracyNotes": [
-        "1 of 1 source game is incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1196,11 +1016,6 @@ window.ChessBenchData = {
       "accuracy": 67.96901276034012,
       "accuracyGames": 2,
       "accuracyMoves": 101,
-      "accuracySourceLabel": "Claude Opus 4.8 (Max) 1M",
-      "accuracyNotes": [
-        "2 of 2 source games are incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "2 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1214,11 +1029,6 @@ window.ChessBenchData = {
       "accuracy": 67.41238301791105,
       "accuracyGames": 1,
       "accuracyMoves": 57,
-      "accuracySourceLabel": "Gemini 3.5 Flash",
-      "accuracyNotes": [
-        "1 of 1 source game is incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "1 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1232,11 +1042,6 @@ window.ChessBenchData = {
       "accuracy": 57.87540258974004,
       "accuracyGames": 4,
       "accuracyMoves": 174,
-      "accuracySourceLabel": "Claude Opus 4.7 (no thinking)",
-      "accuracyNotes": [
-        "3 of 4 source games are incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "3 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1246,16 +1051,10 @@ window.ChessBenchData = {
       "benchmarkElo": 1550,
       "acpl": 81.24,
       "costPerTask": 0,
-      "note": "The provider is anonymous. OpenRouter routes requests to this stealth model but is not its developer, owner, or provider. $0.00/task is the reported cost for this evaluation.",
       "publishedRank": 38,
       "accuracy": 56.96966162473499,
       "accuracyGames": 2,
       "accuracyMoves": 34,
-      "accuracySourceLabel": "Space Bunny Alpha",
-      "accuracyNotes": [
-        "2 of 2 source games are incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "2 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     },
     {
@@ -1269,11 +1068,6 @@ window.ChessBenchData = {
       "accuracy": 54.519284768809214,
       "accuracyGames": 2,
       "accuracyMoves": 101,
-      "accuracySourceLabel": "Claude Opus 4.7 xhigh",
-      "accuracyNotes": [
-        "2 of 2 source games are incomplete; only stored legal moves are evaluated."
-      ],
-      "accuracySourceNote": "2 Archiveintraege nur teilweise auswertbar. Illegale Folgezüge ohne erfundene Accuracy-Strafe.",
       "accuracyAttributionConfirmed": true
     }
   ],
@@ -1871,7 +1665,6 @@ window.ChessBenchData = {
   const hasMetric = (value) => typeof value === 'number' && Number.isFinite(value) && value >= 0;
   const decimal = (value) => hasMetric(value) ? value.toFixed(2) : '—';
   const accuracy = (value) => hasMetric(value) ? `${value.toFixed(2)}%` : '—';
-  const hasNote = (model) => Boolean(model.note || model.accuracyNotes.length);
   const cost = (value) => hasMetric(value) ? `$${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 3 })}` : '—';
   const costMarkup = (value) => hasMetric(value)
     ? `${cost(value)}<span class="cost-unit">/task</span>`
@@ -1928,7 +1721,7 @@ window.ChessBenchData = {
     $('model-rows').innerHTML = visibleModels.map((model) => `
       <tr data-rank="${model.rank}"${model.rank === 1 ? ' class="is-leader"' : ''}>
         <td class="rank-cell">${model.rank}</td>
-        <td><button type="button" class="model-button" data-model="${model.rank}" aria-label="${escapeHTML(model.model)}, view results${hasNote(model) ? ' and evaluation note' : ''}">${escapeHTML(model.model)}${hasNote(model) ? '<span class="model-note-indicator" aria-hidden="true">†</span>' : ''}</button><span class="model-provider">${escapeHTML(model.provider)}</span></td>
+        <td><button type="button" class="model-button" data-model="${model.rank}" aria-label="${escapeHTML(model.model)}, view results">${escapeHTML(model.model)}</button><span class="model-provider">${escapeHTML(model.provider)}</span></td>
         <td class="numeric accuracy-value">${accuracy(model.accuracy)}</td>
         <td class="numeric cost-value">${costMarkup(model.costPerTask)}</td>
       </tr>`).join('');
@@ -1978,19 +1771,9 @@ window.ChessBenchData = {
     $('model-provider').textContent = model.provider;
     $('model-description').textContent = `Rank ${model.rank} of ${models.length} models, by unrounded sample Accuracy.`;
     $('model-accuracy').textContent = accuracy(model.accuracy);
-    $('model-source').hidden = model.accuracySourceLabel === model.model;
-    $('model-source').textContent = `Original source label: ${model.accuracySourceLabel}.`;
-    $('model-evaluation-notes').hidden = !model.accuracyNotes.length;
-    $('model-evaluation-notes').replaceChildren(...model.accuracyNotes.map((note) => {
-      const item = document.createElement('li');
-      item.textContent = note;
-      return item;
-    }));
     $('model-elo').textContent = elo(model.benchmarkElo);
     $('model-acpl').textContent = decimal(model.acpl);
     $('model-cost').innerHTML = costMarkup(model.costPerTask);
-    $('model-note').hidden = !model.note;
-    $('model-note').textContent = model.note ? `Original website note: ${model.note}` : '';
     $('model-dialog').showModal();
   }
   $('model-rows').addEventListener('click', (event) => {
